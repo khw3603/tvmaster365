@@ -1,11 +1,23 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const multer = require('multer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'content.json');
+const POSTS_FILE = path.join(__dirname, 'data', 'posts.json');
+const UPLOADS_DIR = path.join(__dirname, 'data', 'uploads');
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin365';
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+    cb(null, UPLOADS_DIR);
+  },
+  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname.replace(/[^a-zA-Z0-9._-]/g, '_'))
+});
+const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
 app.use(express.json({ limit: '2mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -181,6 +193,106 @@ app.post('/api/content', (req, res) => {
   } catch (e) {
     res.status(500).json({ ok: false, error: e.message });
   }
+});
+
+// ── 블로그 포스트 CRUD ─────────────────────────────────────────────────────────
+
+function loadPosts() {
+  try { return JSON.parse(fs.readFileSync(POSTS_FILE, 'utf8')); } catch { return []; }
+}
+function savePosts(posts) {
+  fs.mkdirSync(path.dirname(POSTS_FILE), { recursive: true });
+  fs.writeFileSync(POSTS_FILE, JSON.stringify(posts, null, 2), 'utf8');
+}
+
+app.use('/data/uploads', express.static(UPLOADS_DIR));
+
+// 포스트 목록
+app.get('/api/posts', (req, res) => {
+  const posts = loadPosts();
+  const limit = parseInt(req.query.limit) || 200;
+  res.json(posts.slice(0, limit));
+});
+
+// 포스트 상세
+app.get('/api/posts/:slug', (req, res) => {
+  const post = loadPosts().find(p => p.slug === req.params.slug);
+  if (!post) return res.status(404).json({ error: 'not found' });
+  res.json(post);
+});
+
+// 포스트 등록 (블로그 자동 발행 앱에서 호출)
+app.post('/api/posts', upload.single('thumbnail'), (req, res) => {
+  const { region, title, body, slug, meta_description } = req.body;
+  if (!title || !slug) return res.status(400).json({ error: 'title, slug 필수' });
+  const posts = loadPosts();
+  if (posts.find(p => p.slug === slug)) return res.status(409).json({ error: '중복 slug' });
+  const thumbnailUrl = req.file ? `/data/uploads/${req.file.filename}` : '';
+  const post = {
+    id: Date.now().toString(),
+    slug, region: region || '', title, body: body || '',
+    thumbnail_url: thumbnailUrl,
+    meta_description: meta_description || '',
+    created_at: Date.now()
+  };
+  posts.unshift(post);
+  savePosts(posts);
+  res.json({ ok: true, id: post.id, slug: post.slug, url: `/blog/${post.slug}` });
+});
+
+// 포스트 삭제
+app.delete('/api/posts/:id', (req, res) => {
+  const posts = loadPosts().filter(p => p.id !== req.params.id);
+  savePosts(posts);
+  res.json({ ok: true });
+});
+
+// 블로그 포스트 페이지
+app.get('/blog/:slug', (req, res) => {
+  const post = loadPosts().find(p => p.slug === req.params.slug);
+  if (!post) return res.status(404).send('Not found');
+  const html = `<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${post.title} | TV마스터365</title>
+<meta name="description" content="${(post.meta_description||'').replace(/"/g,'&quot;')}">
+<link rel="canonical" href="https://tvmaster365-production.up.railway.app/blog/${post.slug}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:#F7F7F6;color:#111214;line-height:1.8}
+.wrap{max-width:780px;margin:0 auto;padding:40px 24px 80px}
+h1{font-size:clamp(22px,3.5vw,32px);font-weight:900;line-height:1.3;margin-bottom:16px;letter-spacing:-.025em}
+h2{font-size:20px;font-weight:700;margin:36px 0 12px;padding-top:8px;border-top:2px solid #E8E8E8}
+h3{font-size:16px;font-weight:700;margin:24px 0 8px;color:#333}
+p{margin-bottom:14px;font-size:15.5px}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin-bottom:6px;font-size:15px}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}
+th{background:#111214;color:#fff;padding:10px 12px;text-align:left}
+td{padding:9px 12px;border-bottom:1px solid #E0E0E0}
+tr:nth-child(even) td{background:#F5F5F4}
+.post-date{font-size:12.5px;color:#999;margin-bottom:28px}
+.post-img-wrap{margin:20px 0;border-radius:8px;overflow:hidden}
+.post-img-wrap img{width:100%;display:block}
+.post-toc{background:#fff;border:1px solid #E0E0E0;border-radius:8px;padding:18px 22px;margin:20px 0 32px}
+.post-toc strong{display:block;font-size:14px;font-weight:700;margin-bottom:10px}
+.toc-list{padding-left:20px}
+.toc-list li{margin-bottom:4px;font-size:13.5px}
+.toc-list .toc-sub{padding-left:16px;list-style:circle;color:#555}
+.cta-box{background:#111214;color:#fff;border-radius:10px;padding:28px 24px;margin:40px 0;text-align:center}
+.cta-box h3{color:#fff;border:none;margin:0 0 8px;font-size:18px}
+.cta-box p{color:rgba(255,255,255,.75);margin:0 0 16px}
+.cta-box a{display:inline-block;background:#D42B2B;color:#fff;padding:10px 24px;border-radius:7px;font-weight:700;text-decoration:none;font-size:15px}
+.hdr{background:#111214;padding:14px 24px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+.hdr-logo{color:#fff;font-weight:900;font-size:16px;text-decoration:none}
+.hdr-logo span{color:#D42B2B}
+.hdr-back{color:rgba(255,255,255,.6);font-size:13px;text-decoration:none;margin-left:auto}
+.hdr-back:hover{color:#fff}
+</style></head><body>
+<nav class="hdr"><a class="hdr-logo" href="/"><span>TV</span>마스터365</a><a class="hdr-back" href="/">← 홈으로</a></nav>
+<div class="wrap">${post.body}</div>
+</body></html>`;
+  res.send(html);
 });
 
 app.listen(PORT, () => {
