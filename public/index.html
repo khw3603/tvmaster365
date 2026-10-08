@@ -6,11 +6,11 @@
 <title>TV마스터365 — 무타공 TV 벽걸이 설치 전문</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap">
 <style>
-:root {
+:root{
   --bg:#F7F7F6;--bg2:#FFFFFF;--fg:#111214;--fg2:#545454;--fg3:#8A8A8A;
   --accent:#D42B2B;--accent-h:#B01E1E;--accent-lit:#E84444;
   --dark:#111214;--dark2:#1C1E21;--dark3:#242628;
-  --border:rgba(0,0,0,.09);--dark-border:rgba(255,255,255,.08);
+  --border:rgba(0,0,0,.09);
   --radius:12px;--radius-s:8px;--nav-h:64px;--max:1160px;
   --font:'Noto Sans KR',-apple-system,sans-serif;
 }
@@ -45,13 +45,11 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 
 /* HERO */
 .hero{background:var(--dark);position:relative;overflow:hidden;padding-block:90px 100px;display:flex;align-items:center;min-height:560px}
-.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 55% 70% at 72% 50%,rgba(180,30,30,.13) 0%,transparent 70%),radial-gradient(ellipse 35% 50% at 25% 25%,rgba(120,20,20,.07) 0%,transparent 65%)}
+.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 55% 70% at 72% 50%,rgba(180,30,30,.13) 0%,transparent 70%)}
 .hero-art{position:absolute;right:max(4%,calc(50% - 570px + 24px));top:50%;transform:translateY(-50%);width:40%;max-width:480px}
 .hero-wall-plate{width:100%;aspect-ratio:16/9.5;background:linear-gradient(160deg,#1a1b1f,#131416);border-radius:6px;border:1.5px solid rgba(255,255,255,.07);box-shadow:0 2px 60px rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;position:relative}
 .hero-tv{width:88%;aspect-ratio:16/9;background:#0a0b0d;border-radius:3px;border:1.5px solid rgba(255,255,255,.1)}
 .hero-tv-inner{width:100%;height:100%;background:linear-gradient(140deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);border-radius:2px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.1);font-size:11px;letter-spacing:.12em}
-.hero-bracket-post{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);width:5px;height:18px;background:rgba(255,255,255,.15);border-radius:0 0 2px 2px}
-.hero-art-label{position:absolute;bottom:-42px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10.5px;color:rgba(255,255,255,.32);letter-spacing:.08em}
 .hero-content{position:relative;z-index:2;max-width:500px}
 .hero .eyebrow{color:var(--accent-lit)}
 .hero-title{font-size:clamp(30px,4.5vw,52px);font-weight:900;line-height:1.18;letter-spacing:-.03em;color:#fff;margin-bottom:18px;text-wrap:balance}
@@ -131,7 +129,6 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .cmp.pro .cmp-list li{color:rgba(255,255,255,.72)}
 .ci{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;margin-top:2px}
 .ci.bad{background:rgba(0,0,0,.06);color:var(--fg3)}.ci.good{background:var(--accent);color:#fff}
-.cmp.pro .ci.bad{background:rgba(255,255,255,.08);color:rgba(255,255,255,.3)}
 .cmp-foot{margin-top:18px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg3);font-style:italic}
 .cmp.pro .cmp-foot{border-color:rgba(255,255,255,.08);color:rgba(255,255,255,.38)}
 .cmp.pro .cmp-foot strong{color:rgba(255,255,255,.75)}
@@ -171,9 +168,6 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 
 /* CTA */
 .sec-cta{background:var(--accent);color:#fff;text-align:center;padding-block:80px}
-.cta-flow{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:36px;flex-wrap:wrap}
-.cta-step{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.16);padding:7px 15px;border-radius:20px;font-size:13px;font-weight:600}
-.cta-arr{color:rgba(255,255,255,.45);font-size:14px}
 .cta-title{font-size:clamp(26px,4vw,42px);font-weight:900;line-height:1.2;margin-bottom:14px;text-wrap:balance}
 .cta-sub{font-size:16.5px;color:rgba(255,255,255,.78);margin-bottom:34px}
 .btn-wh{display:inline-flex;align-items:center;gap:7px;padding:15px 30px;background:#fff;color:var(--accent);font-size:15.5px;font-weight:800;border-radius:9px;transition:transform .14s}
@@ -193,7 +187,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .ftr-bizinfo span{font-size:12px;color:rgba(255,255,255,.3);line-height:1.6}
 .ftr-col-ttl{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:14px}
 .ftr-links{list-style:none;display:flex;flex-direction:column;gap:9px}
-.ftr-links a{font-size:13.5px;color:rgba(255,255,255,.55);transition:color .12s}
+.ftr-links a{font-size:13.5px;color:rgba(255,255,255,.55);transition:color .12px}
 .ftr-links a:hover{color:#fff}
 .ftr-bot{border-top:1px solid rgba(255,255,255,.06);padding-top:22px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px}
 .ftr-copy{font-size:12px;color:rgba(255,255,255,.28)}
@@ -208,9 +202,9 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 
 /* ADMIN */
 #admin-view{display:none;min-height:100vh;background:#F0F1F3}
-.adm-login{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#F0F1F3}
+.adm-login{display:flex;align-items:center;justify-content:center;min-height:100vh}
 .adm-login-box{background:#fff;border-radius:16px;padding:40px;width:100%;max-width:380px;box-shadow:0 4px 24px rgba(0,0,0,.08)}
-.adm-login-logo{font-size:22px;font-weight:900;color:#111214;margin-bottom:6px;letter-spacing:-.02em}
+.adm-login-logo{font-size:22px;font-weight:900;color:#111214;margin-bottom:6px}
 .adm-login-logo span{color:var(--accent)}
 .adm-login-sub{font-size:13px;color:#888;margin-bottom:28px}
 .adm-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
@@ -223,55 +217,57 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .adm-shell{display:none;min-height:100vh;flex-direction:column}
 .adm-shell.active{display:flex}
 .adm-topbar{height:56px;background:#fff;border-bottom:1px solid #E5E6E8;display:flex;align-items:center;padding-inline:24px;gap:16px;flex-shrink:0;position:sticky;top:0;z-index:50}
-.adm-topbar-logo{font-size:16px;font-weight:800;color:#111214;letter-spacing:-.02em}
+.adm-topbar-logo{font-size:16px;font-weight:800;color:#111214}
 .adm-topbar-logo span{color:var(--accent)}
-.adm-topbar-badge{font-size:11px;font-weight:700;padding:2px 8px;background:rgba(212,43,43,.1);color:var(--accent);border-radius:20px;letter-spacing:.04em}
+.adm-topbar-badge{font-size:11px;font-weight:700;padding:2px 8px;background:rgba(212,43,43,.1);color:var(--accent);border-radius:20px}
 .adm-topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
-.adm-preview-btn{padding:7px 14px;background:#F0F1F3;border:none;border-radius:7px;font-family:var(--font);font-size:13px;font-weight:600;color:#444;cursor:pointer;transition:background .12s}
+.adm-preview-btn{padding:7px 14px;background:#F0F1F3;border:none;border-radius:7px;font-family:var(--font);font-size:13px;font-weight:600;color:#444;cursor:pointer}
 .adm-preview-btn:hover{background:#E4E5E7}
-.adm-save-btn{padding:7px 18px;background:var(--accent);color:#fff;border:none;border-radius:7px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:background .14s}
+.adm-save-btn{padding:7px 18px;background:var(--accent);color:#fff;border:none;border-radius:7px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer}
 .adm-save-btn:hover{background:var(--accent-h)}
 .adm-save-btn:disabled{background:#ccc;cursor:not-allowed}
 .adm-logout{padding:7px 12px;background:none;border:1px solid #E0E0E0;border-radius:7px;font-family:var(--font);font-size:12.5px;color:#888;cursor:pointer}
-.adm-body{display:flex;flex:1}
-.adm-sidebar{width:220px;background:#fff;border-right:1px solid #E5E6E8;padding:16px;flex-shrink:0}
-.adm-sidebar-ttl{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#AAA;padding:4px 8px;margin-bottom:6px}
-.adm-nav-btn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;background:none;border:none;border-radius:8px;font-family:var(--font);font-size:14px;font-weight:500;color:#444;cursor:pointer;text-align:left;transition:background .12s,color .12s}
+.adm-body{display:flex;flex:1;min-height:0}
+.adm-sidebar{width:210px;background:#fff;border-right:1px solid #E5E6E8;padding:16px;flex-shrink:0;overflow-y:auto}
+.adm-sidebar-ttl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#BBB;padding:4px 8px;margin-bottom:5px;margin-top:16px}
+.adm-sidebar-ttl:first-child{margin-top:0}
+.adm-nav-btn{display:flex;align-items:center;gap:8px;width:100%;padding:8px 10px;background:none;border:none;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:500;color:#444;cursor:pointer;text-align:left;transition:background .12s,color .12s}
 .adm-nav-btn:hover{background:#F5F5F5;color:#111}
 .adm-nav-btn.active{background:rgba(212,43,43,.08);color:var(--accent);font-weight:700}
-.adm-content{flex:1;padding:32px;overflow-y:auto;min-width:0}
+.adm-content{flex:1;padding:28px 32px;overflow-y:auto;min-width:0}
 .adm-section{display:none}.adm-section.active{display:block}
-.adm-sec-title{font-size:20px;font-weight:800;color:#111214;margin-bottom:6px;letter-spacing:-.02em}
-.adm-sec-sub{font-size:13.5px;color:#888;margin-bottom:28px}
-.adm-card{background:#fff;border-radius:12px;padding:24px;margin-bottom:20px;border:1px solid #E8E9EB}
-.adm-card-title{font-size:14px;font-weight:700;color:#333;margin-bottom:16px}
-.adm-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:14px}
+.adm-sec-title{font-size:20px;font-weight:800;color:#111214;margin-bottom:5px}
+.adm-sec-sub{font-size:13px;color:#999;margin-bottom:24px}
+.adm-card{background:#fff;border-radius:12px;padding:22px;margin-bottom:18px;border:1px solid #E8E9EB}
+.adm-card-title{font-size:13px;font-weight:700;color:#666;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #F0F0F0}
+.adm-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:13px;margin-bottom:13px}
 .adm-fld{display:flex;flex-direction:column;gap:5px}
-.adm-fld label{font-size:12px;font-weight:600;color:#666;letter-spacing:.02em}
-.adm-fld input,.adm-fld textarea,.adm-fld select{padding:9px 12px;border:1.5px solid #E0E1E3;border-radius:8px;font-family:var(--font);font-size:14px;color:#111;outline:none;transition:border-color .13s;background:#fff;resize:vertical}
+.adm-fld label{font-size:11.5px;font-weight:600;color:#777}
+.adm-fld input,.adm-fld textarea{padding:8px 11px;border:1.5px solid #E0E1E3;border-radius:8px;font-family:var(--font);font-size:13.5px;color:#111;outline:none;transition:border-color .13s;background:#fff;resize:vertical}
 .adm-fld input:focus,.adm-fld textarea:focus{border-color:var(--accent)}
-.adm-fld textarea{min-height:80px}
+.adm-fld textarea{min-height:76px}
 .adm-fld.full{grid-column:1/-1}
-.adm-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
-.adm-list-item{background:#F8F9FA;border:1px solid #E8E9EB;border-radius:10px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px}
+.adm-list{display:flex;flex-direction:column;gap:9px;margin-bottom:16px}
+.adm-list-item{background:#F8F9FA;border:1px solid #E8E9EB;border-radius:10px;padding:13px 15px;display:flex;align-items:flex-start;gap:11px}
 .adm-list-item-body{flex:1;min-width:0}
-.adm-list-item-title{font-size:14px;font-weight:700;color:#222;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.adm-list-item-sub{font-size:12.5px;color:#888}
+.adm-list-item-title{font-size:13.5px;font-weight:700;color:#222;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.adm-list-item-sub{font-size:12px;color:#999}
 .adm-list-actions{display:flex;gap:6px;flex-shrink:0}
-.adm-btn-edit,.adm-btn-del{padding:5px 11px;border:none;border-radius:6px;font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:background .12s}
+.adm-btn-edit,.adm-btn-del{padding:5px 10px;border:none;border-radius:6px;font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;transition:background .12s}
 .adm-btn-edit{background:#F0F1F3;color:#444}.adm-btn-edit:hover{background:#E4E5E7}
 .adm-btn-del{background:rgba(212,43,43,.09);color:var(--accent)}.adm-btn-del:hover{background:rgba(212,43,43,.16)}
-.adm-add-btn{display:flex;align-items:center;gap:7px;padding:10px 18px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-family:var(--font);font-size:13.5px;font-weight:700;cursor:pointer;transition:background .14s}
+.adm-add-btn{display:flex;align-items:center;gap:7px;padding:9px 16px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer}
 .adm-add-btn:hover{background:var(--accent-h)}
+.adm-hint{font-size:11.5px;color:#BBB;margin-top:5px;line-height:1.55}
 .adm-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
-.adm-modal{background:#fff;border-radius:14px;width:100%;max-width:560px;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden}
-.adm-modal-hdr{padding:20px 24px;border-bottom:1px solid #EAEBEC;display:flex;align-items:center;justify-content:space-between}
+.adm-modal{background:#fff;border-radius:14px;width:100%;max-width:540px;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
+.adm-modal-hdr{padding:18px 22px;border-bottom:1px solid #EAEBEC;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .adm-modal-title{font-size:16px;font-weight:800;color:#111}
 .adm-modal-close{background:none;border:none;font-size:20px;color:#888;cursor:pointer;line-height:1;padding:4px}
-.adm-modal-body{padding:24px;display:flex;flex-direction:column;gap:14px}
-.adm-modal-foot{padding:16px 24px;border-top:1px solid #EAEBEC;display:flex;justify-content:flex-end;gap:10px}
-.adm-btn-cancel{padding:9px 18px;background:#F0F1F3;border:none;border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;color:#555;cursor:pointer}
-.adm-btn-ok{padding:9px 22px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer}
+.adm-modal-body{padding:22px;display:flex;flex-direction:column;gap:13px;overflow-y:auto}
+.adm-modal-foot{padding:14px 22px;border-top:1px solid #EAEBEC;display:flex;justify-content:flex-end;gap:10px;flex-shrink:0}
+.adm-btn-cancel{padding:9px 16px;background:#F0F1F3;border:none;border-radius:8px;font-family:var(--font);font-size:13.5px;font-weight:600;color:#555;cursor:pointer}
+.adm-btn-ok{padding:9px 20px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:var(--font);font-size:13.5px;font-weight:700;cursor:pointer}
 .adm-btn-ok:hover{background:var(--accent-h)}
 .adm-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#111;color:#fff;padding:11px 22px;border-radius:40px;font-size:13.5px;font-weight:600;z-index:300;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap}
 .adm-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -279,22 +275,21 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 
 @media(max-width:820px){
   .nav{display:none}.mob-menu{display:flex}
-  .hero{padding-block:60px 70px;min-height:auto}.hero-art{display:none}
+  .hero{padding-block:60px;min-height:auto}.hero-art{display:none}
   .steps,.cases-grid,.rev-grid{grid-template-columns:1fr}
-  .cmp-grid{grid-template-columns:1fr}
-  .price-grid{grid-template-columns:1fr 1fr}
+  .cmp-grid,.price-grid{grid-template-columns:1fr}
   .proc-steps{grid-template-columns:1fr 1fr}
   .proc-step{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
   .proc-step:nth-child(2n){border-left:1px solid rgba(255,255,255,.06)}
-  .proc-step:last-child{border-bottom:none}
   .ftr-grid{grid-template-columns:1fr 1fr}
   .sec{padding-block:56px}
-  .hero-stats{gap:22px}
+  .adm-sidebar{width:180px}
 }
 @media(max-width:480px){
-  .price-grid,.proc-steps,.ftr-grid,.cmp-grid{grid-template-columns:1fr}
+  .price-grid,.proc-steps,.ftr-grid{grid-template-columns:1fr}
   .proc-step{border-left:none!important}
   .hero-cta{flex-direction:column}
+  .adm-sidebar{display:none}
 }
 </style>
 </head>
@@ -306,7 +301,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
   <div class="wrap hdr-in">
     <a href="/" class="logo">
       <div class="logo-mark">TV</div>
-      <span class="logo-name" id="p-logo"></span>
+      <span class="logo-name" id="p-logo-name"></span>
     </a>
     <nav class="nav">
       <div class="nav-item"><button class="nav-btn">서비스 안내 ▾</button>
@@ -322,66 +317,45 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
         <div class="nav-drop"><a href="#">회사 소개</a><a href="#">시공 기사 소개</a><a href="#">오시는 길</a></div>
       </div>
     </nav>
-    <div class="hdr-cta"><a href="#" class="btn-qt">무료 견적 →</a></div>
+    <div class="hdr-cta"><a href="#" class="btn-qt" id="p-hdr-cta">무료 견적 →</a></div>
     <button class="mob-menu">☰</button>
   </div>
 </header>
 
 <section class="hero">
   <div class="hero-glow"></div>
-  <div class="hero-art">
-    <div class="hero-wall-plate">
-      <div class="hero-tv"><div class="hero-tv-inner">SMART TV</div></div>
-      <div class="hero-bracket-post"></div>
-      <div class="hero-art-label">무타공 브라켓 시공</div>
-    </div>
-  </div>
+  <div class="hero-art"><div class="hero-wall-plate"><div class="hero-tv"><div class="hero-tv-inner">SMART TV</div></div></div></div>
   <div class="wrap">
     <div class="hero-content">
-      <div class="eyebrow" id="p-eyebrow"></div>
-      <h1 class="hero-title" id="p-title"></h1>
-      <p class="hero-sub" id="p-sub"></p>
+      <div class="eyebrow" id="p-hero-eyebrow"></div>
+      <h1 class="hero-title" id="p-hero-title"></h1>
+      <p class="hero-sub" id="p-hero-sub"></p>
       <div class="hero-cta">
-        <a href="#" class="btn-primary" id="p-cta1"></a>
-        <a href="#" class="btn-ghost" id="p-cta2"></a>
+        <a href="#" class="btn-primary" id="p-hero-cta1"></a>
+        <a href="#" class="btn-ghost" id="p-hero-cta2"></a>
       </div>
-      <div class="hero-stats" id="p-stats"></div>
+      <div class="hero-stats" id="p-hero-stats"></div>
     </div>
   </div>
 </section>
 
 <section class="sec sec-problem">
   <div class="wrap">
-    <div class="eyebrow">THE PROBLEM</div>
-    <h2 class="sec-title">무타공 업체를 고를 때,<br>이 4가지를 꼭 확인하세요.</h2>
-    <p class="sec-sub">가격과 완성 사진만으로는 차이가 보이지 않습니다. 무엇이 적혀 있지 않은지를 보면 어떤 업체인지 알 수 있습니다.</p>
-    <div class="prob-grid">
-      <div class="prob-card"><div class="prob-no">CHECK 01</div><p class="prob-txt">별점과 가격은 보여도, 대형 TV를 지탱할 수 있는 근거 자료는 적혀 있지 않습니다.</p></div>
-      <div class="prob-card"><div class="prob-no">CHECK 02</div><p class="prob-txt">어떤 브라켓으로 어떻게 거는지가 빠지면, 가장 싼 곳을 고를 수밖에 없습니다.</p></div>
-      <div class="prob-card"><div class="prob-no">CHECK 03</div><p class="prob-txt">간이사업자·부업 기사는 문제가 생겼을 때 연락이 닿지 않는 경우가 있습니다.</p></div>
-      <div class="prob-card"><div class="prob-no">CHECK 04</div><p class="prob-txt">TV가 떨어지거나 벽이 손상됐을 때, 보상은 보험 가입 여부와 시공 기록에서 시작됩니다.</p></div>
-    </div>
-    <div class="prob-footer"><strong id="p-prob-nm"></strong>는 이 4가지를 모두 먼저 보여드립니다. 벽을 뚫지 않고도 어떻게 TV 하중을 지탱하는지, 구조부터 설명해 드립니다.</div>
+    <div class="eyebrow" id="p-prob-eyebrow"></div>
+    <h2 class="sec-title" id="p-prob-title"></h2>
+    <p class="sec-sub" id="p-prob-sub"></p>
+    <div class="prob-grid" id="p-prob-cards"></div>
+    <div class="prob-footer" id="p-prob-footer"></div>
   </div>
 </section>
 
 <section class="sec sec-sol">
   <div class="wrap">
-    <div class="eyebrow">THE SOLUTION</div>
-    <h2 class="sec-title">벽은 그대로, 100인치까지 겁니다.</h2>
-    <p class="sec-sub">벽을 뚫지 않고도 TV 하중을 안전하게 지탱하는 방법을 4단계로 보여드립니다.</p>
-    <div class="steps">
-      <div class="step"><div class="step-n">1</div><div class="step-title">단자함 안에 본체 고정</div><p class="step-desc">콘센트 안쪽 단자함에 본체(함체)를 끼워 고정합니다. 벽에 구멍을 내지 않습니다.</p></div>
-      <div class="step"><div class="step-n">2</div><div class="step-title">함체에 프레임 연결</div><p class="step-desc">고정된 함체에 TV를 거는 프레임을 결합합니다. 스틸 수직 프레임이 하중을 받습니다.</p></div>
-      <div class="step"><div class="step-n">3</div><div class="step-title">프레임에 TV 브라켓 설치</div><p class="step-desc">프레임에 TV 전용 브라켓을 장착합니다. TV 크기와 무게에 맞게 선택합니다.</p></div>
-      <div class="step"><div class="step-n">4</div><div class="step-title">TV 거치 및 마무리</div><p class="step-desc">브라켓에 TV를 걸어 마무리합니다. 프레임과 패드가 벽면 4면에 밀착해 하중을 분산합니다.</p></div>
-    </div>
-    <div class="sol-specs">
-      <div class="spec"><div class="spec-v">50<span>~100인치</span></div><div class="spec-l">지원 시공 범위</div><div class="spec-n">표준 시공 기준</div></div>
-      <div class="spec"><div class="spec-v">100<span>인치</span></div><div class="spec-l">가벽 최대 지원</div><div class="spec-n">보강 가벽 기준</div></div>
-      <div class="spec"><div class="spec-v">당일<span>~2일</span></div><div class="spec-l">예약 후 시공 일정</div><div class="spec-n">지역별 상이</div></div>
-      <div class="spec"><div class="spec-v">1<span>~2시간</span></div><div class="spec-l">현장 시공 소요 시간</div><div class="spec-n">기기 추가 시 변동</div></div>
-    </div>
+    <div class="eyebrow" id="p-sol-eyebrow"></div>
+    <h2 class="sec-title" id="p-sol-title"></h2>
+    <p class="sec-sub" id="p-sol-sub"></p>
+    <div class="steps" id="p-sol-steps"></div>
+    <div class="sol-specs" id="p-sol-specs"></div>
   </div>
 </section>
 
@@ -406,31 +380,21 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 
 <section class="sec sec-cmp">
   <div class="wrap">
-    <div class="eyebrow">DIRECT SERVICE</div>
-    <h2 class="sec-title">설치보다 중요한 건,<br>끝까지 책임지는 회사입니다.</h2>
-    <p class="sec-sub">견적부터 시공, 보증과 A/S까지 한 채널이 책임집니다.</p>
+    <div class="eyebrow" id="p-cmp-eyebrow"></div>
+    <h2 class="sec-title" id="p-cmp-title"></h2>
+    <p class="sec-sub" id="p-cmp-sub"></p>
     <div class="cmp-grid">
       <div class="cmp gen">
         <div class="cmp-lbl">COMMON</div>
-        <div class="cmp-title">일반 외주 시공</div>
-        <ul class="cmp-list">
-          <li><span class="ci bad">✕</span>온라인 플랫폼에서 연결되는 다수 기사</li>
-          <li><span class="ci bad">✕</span>시공 기록 보관 없음, A/S 연락 불분명</li>
-          <li><span class="ci bad">✕</span>보험 미가입 또는 확인 어려움</li>
-          <li><span class="ci bad">✕</span>문제 발생 시 책임 소재 불분명</li>
-        </ul>
-        <div class="cmp-foot">시공은 끝났지만, 책임을 물을 곳이 없습니다.</div>
+        <div class="cmp-title" id="p-cmp-gen-title"></div>
+        <ul class="cmp-list" id="p-cmp-gen-items"></ul>
+        <div class="cmp-foot" id="p-cmp-gen-footer"></div>
       </div>
       <div class="cmp pro">
-        <div class="cmp-lbl" id="p-cmp-lbl"></div>
-        <div class="cmp-title" id="p-cmp-title"></div>
-        <ul class="cmp-list">
-          <li><span class="ci good">✓</span>전담 기사 1인 처음부터 끝까지 담당</li>
-          <li><span class="ci good">✓</span>시공 기록 본사 보관, A/S 연락 명확</li>
-          <li><span class="ci good">✓</span>배상책임보험 가입, 서류 요청 시 제공</li>
-          <li><span class="ci good">✓</span>이사 재설치·이전 설치 사후관리까지 책임</li>
-        </ul>
-        <div class="cmp-foot">견적, 시공, A/S까지 <strong id="p-cmp-nm"></strong>가 끝까지 책임집니다.</div>
+        <div class="cmp-lbl" id="p-cmp-pro-lbl"></div>
+        <div class="cmp-title" id="p-cmp-pro-title"></div>
+        <ul class="cmp-list" id="p-cmp-pro-items"></ul>
+        <div class="cmp-foot" id="p-cmp-pro-footer"></div>
       </div>
     </div>
   </div>
@@ -443,23 +407,18 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
     <p class="sec-sub">정확한 금액은 견적서를 작성해 주시면 바로 안내드립니다.</p>
     <div class="price-grid" id="p-prices"></div>
     <div class="price-inc">
-      <div class="price-inc-ttl">기본 포함 항목</div>
-      <div class="tags"><span class="tag">✓ 전용 자재</span><span class="tag">✓ 방문 시공</span><span class="tag">✓ 셋톱·공유기 선 정리</span><span class="tag">✓ 배상책임보험</span><span class="tag">✓ A/S 보증</span><span class="tag">✓ 전문 설치기사</span></div>
+      <div class="price-inc-ttl" id="p-inc-title"></div>
+      <div class="tags" id="p-inc-tags"></div>
     </div>
   </div>
 </section>
 
 <section class="sec sec-proc">
   <div class="wrap">
-    <div class="eyebrow">THE PROCESS</div>
-    <h2 class="sec-title">견적은 30초,<br>시공은 4단계로 진행합니다.</h2>
-    <p class="sec-sub">벽 환경과 추가 사양을 확인해 최종 견적을 안내드립니다.</p>
-    <div class="proc-steps">
-      <div class="proc-step"><div class="proc-n">01</div><div class="proc-title">무료 견적 신청</div><p class="proc-desc">TV 크기와 벽면 정보를 알려주시면 예상 견적을 바로 안내드립니다.</p><span class="proc-tag">30초 이내</span></div>
-      <div class="proc-step"><div class="proc-n">02</div><div class="proc-title">상담 및 일정 확정</div><p class="proc-desc">담당자가 통화 1회로 설치 방식, 자재, 일정을 확인하고 최종 견적을 안내합니다.</p><span class="proc-tag">영업 전화 없음</span></div>
-      <div class="proc-step"><div class="proc-n">03</div><div class="proc-title">전문 기사 방문 시공</div><p class="proc-desc">담당 기사가 방문해 무타공 브라켓 설치, 기기 거치, 선 정리까지 완료합니다.</p><span class="proc-tag">1~2시간 소요</span></div>
-      <div class="proc-step"><div class="proc-n">04</div><div class="proc-title">시공 확인 및 A/S 등록</div><p class="proc-desc">시공 완료 후 현장 확인, 기록 등록, A/S 연락처 안내까지 마무리합니다.</p><span class="proc-tag">사후관리 책임</span></div>
-    </div>
+    <div class="eyebrow" id="p-proc-eyebrow"></div>
+    <h2 class="sec-title" id="p-proc-title"></h2>
+    <p class="sec-sub" id="p-proc-sub"></p>
+    <div class="proc-steps" id="p-proc-steps"></div>
   </div>
 </section>
 
@@ -473,17 +432,10 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 
 <section class="sec-cta">
   <div class="wrap">
-    <div class="cta-flow">
-      <div class="cta-step"><span>📋</span> 정보 입력</div>
-      <div class="cta-arr">→</div>
-      <div class="cta-step"><span>📞</span> 상담 연락</div>
-      <div class="cta-arr">→</div>
-      <div class="cta-step"><span>🔧</span> 방문 시공</div>
-    </div>
-    <h2 class="cta-title">지금 바로 무료 견적을<br>받아보세요.</h2>
-    <p class="cta-sub">TV 크기와 벽 정보만 알려주시면, 빠르게 안내드립니다.</p>
-    <a href="#" class="btn-wh">무료 견적 받기 →</a>
-    <p class="cta-note">영업 전화 없음 · 30초 이내 접수 완료</p>
+    <h2 class="cta-title" id="p-cta-title"></h2>
+    <p class="cta-sub" id="p-cta-sub"></p>
+    <a href="#" class="btn-wh" id="p-cta-btn"></a>
+    <p class="cta-note" id="p-cta-note"></p>
   </div>
 </section>
 
@@ -519,11 +471,10 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
     </div>
   </div>
 </footer>
+<div class="float"><a href="#" class="f-btn" id="p-float-btn"></a></div>
+</div>
 
-<div class="float"><a href="#" class="f-btn">무료 견적 →</a></div>
-</div><!-- /public-view -->
-
-<!-- ADMIN -->
+<!-- ADMIN PAGE -->
 <div id="admin-view">
   <div class="adm-login" id="adm-login">
     <div class="adm-login-box">
@@ -540,24 +491,32 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
       <span class="adm-topbar-badge">관리자</span>
       <div class="adm-topbar-right">
         <button class="adm-preview-btn" onclick="location.hash=''">🔍 홈페이지 보기</button>
-        <button class="adm-save-btn" id="adm-save-btn" onclick="saveAll()">💾 저장하기</button>
+        <button class="adm-save-btn" id="adm-save-btn" onclick="saveAll()">💾 전체 저장</button>
         <button class="adm-logout" onclick="doLogout()">로그아웃</button>
       </div>
     </div>
     <div class="adm-body">
       <div class="adm-sidebar">
-        <div class="adm-sidebar-ttl">메뉴</div>
+        <div class="adm-sidebar-ttl">기본</div>
         <button class="adm-nav-btn active" onclick="showSec('info',this)">🏢 기본 정보</button>
         <button class="adm-nav-btn" onclick="showSec('hero',this)">🎯 히어로</button>
+        <div class="adm-sidebar-ttl">섹션 내용</div>
+        <button class="adm-nav-btn" onclick="showSec('problem',this)">❗ 문제점</button>
+        <button class="adm-nav-btn" onclick="showSec('solution',this)">💡 솔루션</button>
         <button class="adm-nav-btn" onclick="showSec('cases',this)">🖼 시공 사례</button>
         <button class="adm-nav-btn" onclick="showSec('reviews',this)">⭐ 고객 후기</button>
-        <button class="adm-nav-btn" onclick="showSec('faq',this)">❓ FAQ</button>
+        <button class="adm-nav-btn" onclick="showSec('compare',this)">⚖️ 비교</button>
         <button class="adm-nav-btn" onclick="showSec('price',this)">💰 가격 안내</button>
+        <button class="adm-nav-btn" onclick="showSec('process',this)">🔄 프로세스</button>
+        <button class="adm-nav-btn" onclick="showSec('faq',this)">❓ FAQ</button>
+        <button class="adm-nav-btn" onclick="showSec('cta',this)">📣 CTA 배너</button>
       </div>
+
       <div class="adm-content">
+        <!-- 기본 정보 -->
         <div class="adm-section active" id="sec-info">
           <div class="adm-sec-title">기본 정보</div>
-          <div class="adm-sec-sub">회사 이름, 연락처, 사업자 정보를 설정합니다.</div>
+          <div class="adm-sec-sub">회사명, 연락처, 사업자 정보를 설정합니다.</div>
           <div class="adm-card">
             <div class="adm-row">
               <div class="adm-fld"><label>회사명</label><input id="i-company" type="text"></div>
@@ -575,52 +534,180 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
               <div class="adm-fld full"><label>주소</label><input id="i-address" type="text"></div>
             </div>
             <div class="adm-row">
-              <div class="adm-fld"><label>영업시간</label><input id="i-hours" type="text"></div>
+              <div class="adm-fld full"><label>영업시간</label><input id="i-hours" type="text"></div>
             </div>
             <div class="adm-row">
               <div class="adm-fld full"><label>회사 소개 (푸터)</label><textarea id="i-desc"></textarea></div>
             </div>
           </div>
-        </div>
-        <div class="adm-section" id="sec-hero">
-          <div class="adm-sec-title">히어로 섹션</div>
-          <div class="adm-sec-sub">메인 화면 상단에 표시되는 내용을 설정합니다.</div>
           <div class="adm-card">
-            <div class="adm-row"><div class="adm-fld full"><label>부제목 (eyebrow)</label><input id="h-eyebrow" type="text"></div></div>
-            <div class="adm-row"><div class="adm-fld full"><label>메인 타이틀 (줄바꿈: \n 입력)</label><textarea id="h-title"></textarea></div></div>
-            <div class="adm-row"><div class="adm-fld full"><label>서브 텍스트</label><textarea id="h-sub"></textarea></div></div>
+            <div class="adm-card-title">플로팅 버튼 (우측 하단)</div>
             <div class="adm-row">
-              <div class="adm-fld"><label>버튼1</label><input id="h-cta1" type="text"></div>
-              <div class="adm-fld"><label>버튼2</label><input id="h-cta2" type="text"></div>
+              <div class="adm-fld"><label>버튼 텍스트</label><input id="i-float-btn" type="text"></div>
             </div>
           </div>
-          <div class="adm-card"><div class="adm-card-title">통계 (3개)</div><div id="h-stats-fields"></div></div>
         </div>
+
+        <!-- 히어로 -->
+        <div class="adm-section" id="sec-hero">
+          <div class="adm-sec-title">히어로 섹션</div>
+          <div class="adm-sec-sub">메인 화면 상단 배너를 수정합니다.</div>
+          <div class="adm-card">
+            <div class="adm-row"><div class="adm-fld full"><label>소제목 (빨간 작은 글씨)</label><input id="h-eyebrow" type="text"></div></div>
+            <div class="adm-row"><div class="adm-fld full"><label>메인 타이틀 (줄바꿈: Enter)</label><textarea id="h-title" style="min-height:90px"></textarea></div></div>
+            <div class="adm-row"><div class="adm-fld full"><label>서브 텍스트</label><textarea id="h-sub"></textarea></div></div>
+            <div class="adm-row">
+              <div class="adm-fld"><label>버튼1 (빨간)</label><input id="h-cta1" type="text"></div>
+              <div class="adm-fld"><label>버튼2 (회색)</label><input id="h-cta2" type="text"></div>
+            </div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">하단 통계 수치</div>
+            <div id="h-stats-fields"></div>
+          </div>
+        </div>
+
+        <!-- 문제점 -->
+        <div class="adm-section" id="sec-problem">
+          <div class="adm-sec-title">문제점 섹션</div>
+          <div class="adm-sec-sub">4개 체크리스트 카드와 하단 설명 박스를 수정합니다.</div>
+          <div class="adm-card">
+            <div class="adm-row"><div class="adm-fld full"><label>소제목</label><input id="prob-eyebrow" type="text"></div></div>
+            <div class="adm-row"><div class="adm-fld full"><label>제목 (줄바꿈: Enter)</label><textarea id="prob-title" style="min-height:80px"></textarea></div></div>
+            <div class="adm-row"><div class="adm-fld full"><label>서브 텍스트</label><textarea id="prob-sub"></textarea></div></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">체크리스트 카드</div>
+            <div id="prob-cards-fields"></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">하단 강조 박스</div>
+            <div class="adm-row"><div class="adm-fld full"><label>내용 (<code style="background:#F5F5F5;padding:1px 5px;border-radius:3px">{company}</code> → 회사명으로 자동 변환)</label><textarea id="prob-footer"></textarea></div></div>
+          </div>
+        </div>
+
+        <!-- 솔루션 -->
+        <div class="adm-section" id="sec-solution">
+          <div class="adm-sec-title">솔루션 섹션</div>
+          <div class="adm-sec-sub">시공 방식 4단계와 수치 스펙을 수정합니다.</div>
+          <div class="adm-card">
+            <div class="adm-row"><div class="adm-fld full"><label>소제목</label><input id="sol-eyebrow" type="text"></div></div>
+            <div class="adm-row"><div class="adm-fld full"><label>제목</label><input id="sol-title" type="text"></div></div>
+            <div class="adm-row"><div class="adm-fld full"><label>서브 텍스트</label><textarea id="sol-sub"></textarea></div></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">시공 단계 (4단계)</div>
+            <div id="sol-steps-fields"></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">수치 스펙 (4개)</div>
+            <div id="sol-specs-fields"></div>
+          </div>
+        </div>
+
+        <!-- 시공 사례 -->
         <div class="adm-section" id="sec-cases">
           <div class="adm-sec-title">시공 사례</div>
-          <div class="adm-sec-sub">홈페이지에 표시할 시공 사례를 관리합니다.</div>
-          <div class="adm-card"><div class="adm-list" id="adm-cases-list"></div><button class="adm-add-btn" onclick="openModal('case',null)">+ 사례 추가</button></div>
+          <div class="adm-sec-sub">홈페이지에 표시할 시공 사례를 추가·편집·삭제합니다.</div>
+          <div class="adm-card">
+            <div class="adm-list" id="adm-cases-list"></div>
+            <button class="adm-add-btn" onclick="openModal('case',null)">+ 사례 추가</button>
+          </div>
         </div>
+
+        <!-- 고객 후기 -->
         <div class="adm-section" id="sec-reviews">
           <div class="adm-sec-title">고객 후기</div>
-          <div class="adm-sec-sub">홈페이지에 표시할 고객 후기를 관리합니다.</div>
-          <div class="adm-card"><div class="adm-list" id="adm-reviews-list"></div><button class="adm-add-btn" onclick="openModal('review',null)">+ 후기 추가</button></div>
+          <div class="adm-sec-sub">홈페이지에 표시할 후기를 추가·편집·삭제합니다.</div>
+          <div class="adm-card">
+            <div class="adm-list" id="adm-reviews-list"></div>
+            <button class="adm-add-btn" onclick="openModal('review',null)">+ 후기 추가</button>
+          </div>
         </div>
-        <div class="adm-section" id="sec-faq">
-          <div class="adm-sec-title">FAQ</div>
-          <div class="adm-sec-sub">자주 묻는 질문을 관리합니다.</div>
-          <div class="adm-card"><div class="adm-list" id="adm-faq-list"></div><button class="adm-add-btn" onclick="openModal('faq',null)">+ 질문 추가</button></div>
+
+        <!-- 비교 -->
+        <div class="adm-section" id="sec-compare">
+          <div class="adm-sec-title">비교 섹션</div>
+          <div class="adm-sec-sub">일반 업체 vs 자사 비교 내용을 수정합니다.</div>
+          <div class="adm-card">
+            <div class="adm-row"><div class="adm-fld full"><label>소제목</label><input id="cmp-eyebrow" type="text"></div></div>
+            <div class="adm-row"><div class="adm-fld full"><label>제목 (줄바꿈: Enter)</label><textarea id="cmp-title" style="min-height:80px"></textarea></div></div>
+            <div class="adm-row"><div class="adm-fld full"><label>서브 텍스트</label><textarea id="cmp-sub"></textarea></div></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">일반 외주 시공 (왼쪽 박스)</div>
+            <div class="adm-row"><div class="adm-fld full"><label>제목</label><input id="cmp-gen-title" type="text"></div></div>
+            <div id="cmp-gen-items-fields"></div>
+            <div class="adm-row"><div class="adm-fld full"><label>하단 문구</label><input id="cmp-gen-footer" type="text"></div></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">자사 서비스 (오른쪽 빨간 박스)</div>
+            <div id="cmp-pro-items-fields"></div>
+            <div class="adm-row"><div class="adm-fld full"><label>하단 문구 (<code style="background:#F5F5F5;padding:1px 5px;border-radius:3px">{company}</code> → 회사명)</label><input id="cmp-pro-footer" type="text"></div></div>
+          </div>
         </div>
+
+        <!-- 가격 -->
         <div class="adm-section" id="sec-price">
           <div class="adm-sec-title">가격 안내</div>
-          <div class="adm-sec-sub">인치별 가격 범위를 설정합니다.</div>
-          <div class="adm-card"><div id="price-fields"></div></div>
+          <div class="adm-sec-sub">인치별 가격 카드와 포함 항목을 설정합니다.</div>
+          <div class="adm-card">
+            <div class="adm-card-title">가격 카드</div>
+            <div class="adm-list" id="adm-prices-list"></div>
+            <button class="adm-add-btn" onclick="openModal('price',null)">+ 항목 추가</button>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">기본 포함 항목</div>
+            <div class="adm-row"><div class="adm-fld full"><label>제목</label><input id="inc-title" type="text"></div></div>
+            <div class="adm-row"><div class="adm-fld full"><label>항목 목록 (한 줄에 하나씩)</label><textarea id="inc-tags" style="min-height:140px"></textarea></div></div>
+            <div class="adm-hint">예시: 전용 자재<br>방문 시공<br>배상책임보험</div>
+          </div>
+        </div>
+
+        <!-- 프로세스 -->
+        <div class="adm-section" id="sec-process">
+          <div class="adm-sec-title">프로세스 섹션</div>
+          <div class="adm-sec-sub">예약~시공 4단계 절차를 수정합니다.</div>
+          <div class="adm-card">
+            <div class="adm-row"><div class="adm-fld full"><label>소제목</label><input id="proc-eyebrow" type="text"></div></div>
+            <div class="adm-row"><div class="adm-fld full"><label>제목 (줄바꿈: Enter)</label><textarea id="proc-title" style="min-height:80px"></textarea></div></div>
+            <div class="adm-row"><div class="adm-fld full"><label>서브 텍스트</label><textarea id="proc-sub"></textarea></div></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">단계별 내용 (4단계)</div>
+            <div id="proc-steps-fields"></div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="adm-section" id="sec-faq">
+          <div class="adm-sec-title">FAQ</div>
+          <div class="adm-sec-sub">자주 묻는 질문을 추가·편집·삭제합니다.</div>
+          <div class="adm-card">
+            <div class="adm-list" id="adm-faq-list"></div>
+            <button class="adm-add-btn" onclick="openModal('faq',null)">+ 질문 추가</button>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="adm-section" id="sec-cta">
+          <div class="adm-sec-title">CTA 배너</div>
+          <div class="adm-sec-sub">홈페이지 하단 행동 유도 배너를 수정합니다.</div>
+          <div class="adm-card">
+            <div class="adm-row"><div class="adm-fld full"><label>제목 (줄바꿈: Enter)</label><textarea id="cta-title" style="min-height:80px"></textarea></div></div>
+            <div class="adm-row"><div class="adm-fld full"><label>서브 텍스트</label><textarea id="cta-sub"></textarea></div></div>
+            <div class="adm-row">
+              <div class="adm-fld"><label>버튼 텍스트</label><input id="cta-btn" type="text"></div>
+              <div class="adm-fld"><label>버튼 아래 안내 문구</label><input id="cta-note" type="text"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Modal -->
 <div class="adm-modal-overlay" id="adm-modal" style="display:none" onclick="if(event.target===this)closeModal()">
   <div class="adm-modal">
     <div class="adm-modal-hdr"><div class="adm-modal-title" id="modal-title"></div><button class="adm-modal-close" onclick="closeModal()">✕</button></div>
@@ -631,16 +718,13 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 <div class="adm-toast" id="adm-toast"></div>
 
 <script>
-let SESSION_PW = '';
-let DATA = null;
-let currentModalType = null, currentModalIdx = null;
+let SESSION_PW = '', DATA = null, currentModalType = null, currentModalIdx = null;
 
-/* ─ ROUTING ─ */
 async function route() {
   if (location.hash === '#admin') {
     document.getElementById('public-view').style.display = 'none';
     document.getElementById('admin-view').style.display = 'block';
-    if (SESSION_PW) { showShell(); } else { showLogin(); }
+    if (SESSION_PW) showShell(); else showLogin();
   } else {
     document.getElementById('public-view').style.display = 'block';
     document.getElementById('admin-view').style.display = 'none';
@@ -651,298 +735,271 @@ async function route() {
 window.addEventListener('hashchange', route);
 route();
 
-/* ─ API ─ */
 async function fetchData() {
-  try {
-    const r = await fetch('/api/content');
-    DATA = await r.json();
-  } catch { DATA = {}; }
-  return DATA;
+  try { const r = await fetch('/api/content'); DATA = await r.json(); } catch { DATA = {}; }
 }
-
 async function apiAuth(pw) {
-  const r = await fetch('/api/auth', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ password: pw }) });
+  const r = await fetch('/api/auth', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pw}) });
   return r.ok;
 }
-
 async function apiSave(data) {
-  const r = await fetch('/api/content', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ password: SESSION_PW, data }) });
+  const r = await fetch('/api/content', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:SESSION_PW, data}) });
   return r.json();
 }
 
-/* ─ AUTH ─ */
-function showLogin() {
-  document.getElementById('adm-login').style.display = 'flex';
-  document.getElementById('adm-shell').classList.remove('active');
-}
-function showShell() {
-  document.getElementById('adm-login').style.display = 'none';
-  document.getElementById('adm-shell').classList.add('active');
-  loadAdminFields();
-}
+function showLogin() { document.getElementById('adm-login').style.display='flex'; document.getElementById('adm-shell').classList.remove('active'); }
+function showShell() { document.getElementById('adm-login').style.display='none'; document.getElementById('adm-shell').classList.add('active'); loadAdminFields(); }
 async function doLogin() {
   const pw = document.getElementById('adm-pw').value;
-  const ok = await apiAuth(pw);
-  if (ok) {
-    SESSION_PW = pw;
-    document.getElementById('adm-pw').value = '';
-    document.getElementById('adm-err').style.display = 'none';
-    if (!DATA) await fetchData();
-    showShell();
+  if (await apiAuth(pw)) {
+    SESSION_PW = pw; document.getElementById('adm-pw').value = ''; document.getElementById('adm-err').style.display='none';
+    if (!DATA) await fetchData(); showShell();
   } else {
-    document.getElementById('adm-err').textContent = '비밀번호가 올바르지 않습니다.';
-    document.getElementById('adm-err').style.display = 'block';
+    document.getElementById('adm-err').textContent='비밀번호가 올바르지 않습니다.'; document.getElementById('adm-err').style.display='block';
   }
 }
-function doLogout() { SESSION_PW = ''; showLogin(); }
+function doLogout() { SESSION_PW=''; showLogin(); }
 
-/* ─ PUBLIC RENDER ─ */
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function resc(s) { return String(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function setText(id,v) { const e=document.getElementById(id); if(e) e.textContent=v; }
+function setHTML(id,v) { const e=document.getElementById(id); if(e) e.innerHTML=v; }
+function setMulti(id,v) { const e=document.getElementById(id); if(e) e.innerHTML=String(v||'').split('\n').map(l=>esc(l)).join('<br>'); }
+function injectCompany(tpl, nm) { return tpl.replace(/\{company\}/g, `<strong>${esc(nm)}</strong>`); }
+
 function renderPublic(d) {
   if (!d) return;
   const nm = d.company || 'TV마스터365';
-  setText('p-logo', nm);
-  setText('p-eyebrow', d.hero?.eyebrow || '');
-  setText('p-sub', d.hero?.sub || '');
-  setText('p-cta1', d.hero?.cta1 || '무료 견적 받기 →');
-  setText('p-cta2', d.hero?.cta2 || '우리 집도 가능한가요?');
-  setText('p-prob-nm', nm);
-  setText('p-cmp-lbl', nm.toUpperCase());
-  setText('p-cmp-title', nm + ' 직영');
-  setText('p-cmp-nm', nm);
-  setText('p-ftr-logo', nm);
-  setText('p-ftr-desc', d.desc || '');
-  setText('p-ftr-hours', d.hours || '');
-  setText('p-ftr-copy', `© ${d.year || '2025'} ${nm}. All rights reserved.`);
-
-  const titleEl = document.getElementById('p-title');
-  if (titleEl) {
-    const lines = (d.hero?.title || '').split('\n');
-    titleEl.innerHTML = lines.map((l,i) => i===1 ? `<em>${l}</em>` : l).join('<br>');
-  }
-
+  // Logo
+  const logoEl = document.getElementById('p-logo-name');
+  if (logoEl) logoEl.innerHTML = esc(nm.slice(0,-3)) + `<span>${esc(nm.slice(-3))}</span>`;
+  setText('p-hdr-cta', d.hero?.cta1 || '무료 견적 →');
+  // Hero
+  setText('p-hero-eyebrow', d.hero?.eyebrow||'');
+  setText('p-hero-sub', d.hero?.sub||'');
+  setText('p-hero-cta1', d.hero?.cta1||'');
+  setText('p-hero-cta2', d.hero?.cta2||'');
+  const titleEl = document.getElementById('p-hero-title');
+  if (titleEl) { const lines=(d.hero?.title||'').split('\n'); titleEl.innerHTML=lines.map((l,i)=>i===1?`<em>${esc(l)}</em>`:esc(l)).join('<br>'); }
+  const statsEl = document.getElementById('p-hero-stats');
+  if (statsEl && d.hero?.stats) statsEl.innerHTML=d.hero.stats.map(s=>`<div><div class="hstat-n">${esc(s.num)}<span>${esc(s.unit)}</span></div><div class="hstat-l">${esc(s.label)}</div></div>`).join('');
+  // Problem
+  setText('p-prob-eyebrow', d.problem?.eyebrow||'');
+  setMulti('p-prob-title', d.problem?.title||'');
+  setText('p-prob-sub', d.problem?.sub||'');
+  if (d.problem?.cards) setHTML('p-prob-cards', d.problem.cards.map(c=>`<div class="prob-card"><div class="prob-no">${esc(c.no)}</div><p class="prob-txt">${esc(c.text)}</p></div>`).join(''));
+  setHTML('p-prob-footer', injectCompany(d.problem?.footer||'', nm));
+  // Solution
+  setText('p-sol-eyebrow', d.solution?.eyebrow||'');
+  setText('p-sol-title', d.solution?.title||'');
+  setText('p-sol-sub', d.solution?.sub||'');
+  if (d.solution?.steps) setHTML('p-sol-steps', d.solution.steps.map((s,i)=>`<div class="step"><div class="step-n">${i+1}</div><div class="step-title">${esc(s.title)}</div><p class="step-desc">${esc(s.desc)}</p></div>`).join(''));
+  if (d.solution?.specs) setHTML('p-sol-specs', d.solution.specs.map(s=>`<div class="spec"><div class="spec-v">${esc(s.num)}<span>${esc(s.unit)}</span></div><div class="spec-l">${esc(s.label)}</div><div class="spec-n">${esc(s.note)}</div></div>`).join(''));
+  // Cases
+  const bgs=['linear-gradient(135deg,#1a1b22,#141620)','linear-gradient(135deg,#1b1a22,#17161f)','linear-gradient(135deg,#181c1a,#151916)','linear-gradient(135deg,#1c1a18,#1a1815)','linear-gradient(135deg,#1a1b1c,#14161a)','linear-gradient(135deg,#191a1b,#141617)'];
+  if (d.cases) setHTML('p-cases', d.cases.map((c,i)=>`<div class="case"><div class="case-img" style="background:${bgs[i%bgs.length]}"><div class="case-tv"></div><div class="case-badge">${esc(c.badge||'무타공')}</div></div><div class="case-info"><div class="case-loc">${esc(c.loc)}</div><div class="case-det">${esc(c.det)}</div></div></div>`).join(''));
+  // Reviews
+  if (d.reviews) setHTML('p-reviews', d.reviews.map(r=>`<div class="rev"><div class="rev-stars">★★★★★</div><p class="rev-txt">${esc(r.text)}</p><div class="rev-auth"><div class="rev-av">${esc((r.name||'?')[0])}</div><div><div class="rev-name">${esc(r.name)}</div><div class="rev-apt">${esc(r.apt)}</div></div></div></div>`).join(''));
+  // Compare
+  setText('p-cmp-eyebrow', d.compare?.eyebrow||'');
+  setMulti('p-cmp-title', d.compare?.title||'');
+  setText('p-cmp-sub', d.compare?.sub||'');
+  setText('p-cmp-gen-title', d.compare?.generalTitle||'');
+  if (d.compare?.generalItems) setHTML('p-cmp-gen-items', d.compare.generalItems.map(t=>`<li><span class="ci bad">✕</span>${esc(t)}</li>`).join(''));
+  setText('p-cmp-gen-footer', d.compare?.generalFooter||'');
+  setText('p-cmp-pro-lbl', nm.toUpperCase());
+  setText('p-cmp-pro-title', nm + ' 직영');
+  if (d.compare?.proItems) setHTML('p-cmp-pro-items', d.compare.proItems.map(t=>`<li><span class="ci good">✓</span>${esc(t)}</li>`).join(''));
+  setHTML('p-cmp-pro-footer', injectCompany(d.compare?.proFooter||'', nm));
+  // Prices
+  if (d.prices) setHTML('p-prices', d.prices.map(p=>`<div class="price-card"><div class="price-size">${esc(p.size)}</div><div class="price-range">${esc(p.range||'문의')}</div><div class="price-note">${esc(p.note)}</div></div>`).join(''));
+  setText('p-inc-title', d.priceIncludes?.title||'기본 포함 항목');
+  if (d.priceIncludes?.tags) setHTML('p-inc-tags', d.priceIncludes.tags.map(t=>`<span class="tag">✓ ${esc(t)}</span>`).join(''));
+  // Process
+  setText('p-proc-eyebrow', d.process?.eyebrow||'');
+  setMulti('p-proc-title', d.process?.title||'');
+  setText('p-proc-sub', d.process?.sub||'');
+  if (d.process?.steps) setHTML('p-proc-steps', d.process.steps.map((s,i)=>`<div class="proc-step"><div class="proc-n">0${i+1}</div><div class="proc-title">${esc(s.title)}</div><p class="proc-desc">${esc(s.desc)}</p><span class="proc-tag">${esc(s.tag)}</span></div>`).join(''));
+  // FAQ
+  if (d.faq) setHTML('p-faq', d.faq.map(f=>`<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">${esc(f.q)}<span class="faq-icon">+</span></button><div class="faq-a">${esc(f.a)}</div></div>`).join(''));
+  // CTA
+  setMulti('p-cta-title', d.cta?.title||'');
+  setText('p-cta-sub', d.cta?.sub||'');
+  setText('p-cta-btn', d.cta?.btn||'무료 견적 받기 →');
+  setText('p-cta-note', d.cta?.note||'');
+  // Float
+  setText('p-float-btn', d.floatBtn||'무료 견적 →');
+  // Footer
+  const ftrLogo = document.getElementById('p-ftr-logo');
+  if (ftrLogo) ftrLogo.innerHTML = esc(nm.slice(0,-3)) + `<span>${esc(nm.slice(-3))}</span>`;
+  setText('p-ftr-desc', d.desc||'');
   const ph = document.getElementById('p-ftr-phone');
-  if (ph) { ph.textContent = d.phone || ''; ph.href = 'tel:' + (d.phone || ''); }
-
-  const bi = document.getElementById('p-ftr-bizinfo');
-  if (bi) {
-    const rows = [];
-    if (d.ceo) rows.push(`<span>대표 : ${d.ceo}</span>`);
-    if (d.address) rows.push(`<span>주소 : ${d.address}</span>`);
-    if (d.email) rows.push(`<span>메일 : ${d.email}</span>`);
-    bi.innerHTML = rows.join('');
-  }
-  const bn = document.getElementById('p-ftr-bizno');
-  if (bn) bn.textContent = d.bizno ? `사업자등록번호 : ${d.bizno}` : '';
-
-  const statsEl = document.getElementById('p-stats');
-  if (statsEl && d.hero?.stats) {
-    statsEl.innerHTML = d.hero.stats.map(s => `<div><div class="hstat-n">${s.num}<span>${s.unit}</span></div><div class="hstat-l">${s.label}</div></div>`).join('');
-  }
-
-  const bgs = ['linear-gradient(135deg,#1a1b22,#141620)','linear-gradient(135deg,#1b1a22,#17161f)','linear-gradient(135deg,#181c1a,#151916)','linear-gradient(135deg,#1c1a18,#1a1815)','linear-gradient(135deg,#1a1b1c,#16181a)','linear-gradient(135deg,#191a1b,#141617)'];
-  const casesEl = document.getElementById('p-cases');
-  if (casesEl && d.cases) {
-    casesEl.innerHTML = d.cases.map((c,i) => `<div class="case"><div class="case-img" style="background:${bgs[i%bgs.length]}"><div class="case-tv"></div><div class="case-badge">${c.badge||'무타공'}</div></div><div class="case-info"><div class="case-loc">${c.loc||''}</div><div class="case-det">${c.det||''}</div></div></div>`).join('');
-  }
-
-  const revEl = document.getElementById('p-reviews');
-  if (revEl && d.reviews) {
-    revEl.innerHTML = d.reviews.map(r => `<div class="rev"><div class="rev-stars">★★★★★</div><p class="rev-txt">${r.text||''}</p><div class="rev-auth"><div class="rev-av">${(r.name||'?')[0]}</div><div><div class="rev-name">${r.name||''}</div><div class="rev-apt">${r.apt||''}</div></div></div></div>`).join('');
-  }
-
-  const faqEl = document.getElementById('p-faq');
-  if (faqEl && d.faq) {
-    faqEl.innerHTML = d.faq.map(f => `<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">${f.q||''}<span class="faq-icon">+</span></button><div class="faq-a">${f.a||''}</div></div>`).join('');
-  }
-
-  const prEl = document.getElementById('p-prices');
-  if (prEl && d.prices) {
-    prEl.innerHTML = d.prices.map(p => `<div class="price-card"><div class="price-size">${p.size||''}</div><div class="price-range">${p.range||'문의'}</div><div class="price-note">${p.note||''}</div></div>`).join('');
-  }
+  if (ph) { ph.textContent=d.phone||''; ph.href='tel:'+(d.phone||''); }
+  setText('p-ftr-hours', d.hours||'');
+  setHTML('p-ftr-bizinfo', [d.ceo?`<span>대표 : ${esc(d.ceo)}</span>`:'', d.address?`<span>주소 : ${esc(d.address)}</span>`:'', d.email?`<span>메일 : ${esc(d.email)}</span>`:''].join(''));
+  setText('p-ftr-bizno', d.bizno?`사업자등록번호 : ${d.bizno}`:'');
+  setText('p-ftr-copy', `© ${d.year||'2025'} ${nm}. All rights reserved.`);
 }
 
-function setText(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
-
 function toggleFaq(btn) {
-  const item = btn.closest('.faq-item');
-  const open = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  const item = btn.closest('.faq-item'), open = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(e=>e.classList.remove('open'));
   if (!open) item.classList.add('open');
 }
 
-/* ─ ADMIN NAV ─ */
 function showSec(id, btn) {
-  document.querySelectorAll('.adm-section').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.adm-nav-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById('sec-' + id).classList.add('active');
-  btn.classList.add('active');
+  document.querySelectorAll('.adm-section').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.adm-nav-btn').forEach(e=>e.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active'); btn.classList.add('active');
 }
 
-/* ─ LOAD ADMIN FIELDS ─ */
-function loadAdminFields() {
-  const d = DATA || {};
-  setVal('i-company', d.company);
-  setVal('i-ceo', d.ceo);
-  setVal('i-phone', d.phone);
-  setVal('i-email', d.email);
-  setVal('i-bizno', d.bizno);
-  setVal('i-address', d.address);
-  setVal('i-hours', d.hours);
-  setVal('i-year', d.year || '2025');
-  setVal('i-desc', d.desc);
-  setVal('h-eyebrow', d.hero?.eyebrow);
-  setVal('h-title', d.hero?.title);
-  setVal('h-sub', d.hero?.sub);
-  setVal('h-cta1', d.hero?.cta1);
-  setVal('h-cta2', d.hero?.cta2);
-
-  const sf = document.getElementById('h-stats-fields');
-  if (sf) sf.innerHTML = (d.hero?.stats || []).map((s,i) => `
-    <div class="adm-row" style="margin-bottom:10px">
-      <div class="adm-fld"><label>숫자 ${i+1}</label><input class="h-sn" data-i="${i}" type="text" value="${s.num||''}"></div>
-      <div class="adm-fld"><label>단위</label><input class="h-su" data-i="${i}" type="text" value="${s.unit||''}"></div>
-      <div class="adm-fld"><label>설명</label><input class="h-sl" data-i="${i}" type="text" value="${s.label||''}"></div>
-    </div>`).join('');
-
-  renderAdmList('cases', d.cases||[], c => ({ title: c.loc, sub: c.det }));
-  renderAdmList('reviews', d.reviews||[], r => ({ title: r.name, sub: r.apt }));
-  renderAdmList('faq', d.faq||[], f => ({ title: f.q, sub: '' }));
-
-  const pf = document.getElementById('price-fields');
-  if (pf) pf.innerHTML = (d.prices||[]).map((p,i) => `
-    <div class="adm-row" style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #F0F0F0">
-      <div class="adm-fld"><label>인치 범위</label><input class="pf-s" data-i="${i}" type="text" value="${p.size||''}"></div>
-      <div class="adm-fld"><label>가격</label><input class="pf-r" data-i="${i}" type="text" value="${p.range||''}"></div>
-      <div class="adm-fld full"><label>설명</label><input class="pf-n" data-i="${i}" type="text" value="${p.note||''}"></div>
-    </div>`).join('');
-}
-
-function setVal(id, val) { const el = document.getElementById(id); if (el) el.value = val || ''; }
+function setVal(id, v) { const e=document.getElementById(id); if(e) e.value=v||''; }
 
 function renderAdmList(type, arr, labelFn) {
   const el = document.getElementById(`adm-${type}-list`);
   if (!el) return;
-  el.innerHTML = arr.length === 0
-    ? '<div style="color:#AAA;font-size:13px;padding:8px 0">항목이 없습니다. 추가 버튼을 눌러주세요.</div>'
-    : arr.map((item, i) => {
-        const { title, sub } = labelFn(item);
-        return `<div class="adm-list-item"><div class="adm-list-item-body"><div class="adm-list-item-title">${title||''}</div><div class="adm-list-item-sub">${sub||''}</div></div><div class="adm-list-actions"><button class="adm-btn-edit" onclick="openModal('${type}',${i})">편집</button><button class="adm-btn-del" onclick="deleteItem('${type}',${i})">삭제</button></div></div>`;
-      }).join('');
+  el.innerHTML = arr.length===0 ? '<div style="color:#AAA;font-size:13px;padding:8px 0">항목이 없습니다.</div>'
+    : arr.map((item,i)=>{ const {title,sub}=labelFn(item); return `<div class="adm-list-item"><div class="adm-list-item-body"><div class="adm-list-item-title">${esc(title||'')}</div><div class="adm-list-item-sub">${esc(sub||'')}</div></div><div class="adm-list-actions"><button class="adm-btn-edit" onclick="openModal('${type}',${i})">편집</button><button class="adm-btn-del" onclick="deleteItem('${type}',${i})">삭제</button></div></div>`; }).join('');
 }
 
-/* ─ SAVE ALL ─ */
+function loadAdminFields() {
+  const d = DATA||{};
+  // 기본
+  setVal('i-company',d.company); setVal('i-ceo',d.ceo); setVal('i-phone',d.phone); setVal('i-email',d.email);
+  setVal('i-bizno',d.bizno); setVal('i-address',d.address); setVal('i-hours',d.hours); setVal('i-year',d.year||'2025');
+  setVal('i-desc',d.desc); setVal('i-float-btn',d.floatBtn||'무료 견적 →');
+  // 히어로
+  setVal('h-eyebrow',d.hero?.eyebrow); setVal('h-title',d.hero?.title); setVal('h-sub',d.hero?.sub);
+  setVal('h-cta1',d.hero?.cta1); setVal('h-cta2',d.hero?.cta2);
+  setHTML('h-stats-fields', (d.hero?.stats||[]).map((s,i)=>`<div class="adm-row" style="margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid #F5F5F5"><div class="adm-fld"><label>숫자 ${i+1}</label><input class="h-sn" data-i="${i}" type="text" value="${resc(s.num)}"></div><div class="adm-fld"><label>단위</label><input class="h-su" data-i="${i}" type="text" value="${resc(s.unit)}"></div><div class="adm-fld"><label>설명</label><input class="h-sl" data-i="${i}" type="text" value="${resc(s.label)}"></div></div>`).join(''));
+  // 문제점
+  setVal('prob-eyebrow',d.problem?.eyebrow); setVal('prob-title',d.problem?.title); setVal('prob-sub',d.problem?.sub); setVal('prob-footer',d.problem?.footer);
+  setHTML('prob-cards-fields', (d.problem?.cards||[]).map((c,i)=>`<div class="adm-row" style="margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid #F5F5F5"><div class="adm-fld"><label>번호 ${i+1}</label><input class="prob-no-i" data-i="${i}" type="text" value="${resc(c.no)}"></div><div class="adm-fld full"><label>내용</label><textarea class="prob-txt-i" data-i="${i}">${resc(c.text)}</textarea></div></div>`).join(''));
+  // 솔루션
+  setVal('sol-eyebrow',d.solution?.eyebrow); setVal('sol-title',d.solution?.title); setVal('sol-sub',d.solution?.sub);
+  setHTML('sol-steps-fields', (d.solution?.steps||[]).map((s,i)=>`<div class="adm-row" style="margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid #F5F5F5"><div class="adm-fld"><label>단계 ${i+1} 제목</label><input class="sol-st" data-i="${i}" type="text" value="${resc(s.title)}"></div><div class="adm-fld full"><label>설명</label><textarea class="sol-sd" data-i="${i}">${resc(s.desc)}</textarea></div></div>`).join(''));
+  setHTML('sol-specs-fields', (d.solution?.specs||[]).map((s,i)=>`<div class="adm-row" style="margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid #F5F5F5"><div class="adm-fld"><label>수치 ${i+1}</label><input class="sol-spn" data-i="${i}" type="text" value="${resc(s.num)}"></div><div class="adm-fld"><label>단위</label><input class="sol-spu" data-i="${i}" type="text" value="${resc(s.unit)}"></div><div class="adm-fld"><label>설명</label><input class="sol-spl" data-i="${i}" type="text" value="${resc(s.label)}"></div><div class="adm-fld"><label>부연</label><input class="sol-spno" data-i="${i}" type="text" value="${resc(s.note)}"></div></div>`).join(''));
+  // 시공 사례 / 후기 / 가격 / FAQ
+  renderAdmList('cases',d.cases||[],c=>({title:c.loc,sub:c.det}));
+  renderAdmList('reviews',d.reviews||[],r=>({title:r.name,sub:r.apt}));
+  renderAdmList('prices',d.prices||[],p=>({title:p.size,sub:p.range+(p.note?' · '+p.note:'')}));
+  renderAdmList('faq',d.faq||[],f=>({title:f.q,sub:''}));
+  // 비교
+  setVal('cmp-eyebrow',d.compare?.eyebrow); setVal('cmp-title',d.compare?.title); setVal('cmp-sub',d.compare?.sub);
+  setVal('cmp-gen-title',d.compare?.generalTitle); setVal('cmp-gen-footer',d.compare?.generalFooter); setVal('cmp-pro-footer',d.compare?.proFooter);
+  setHTML('cmp-gen-items-fields', (d.compare?.generalItems||[]).map((t,i)=>`<div class="adm-row" style="margin-bottom:8px"><div class="adm-fld full"><label>항목 ${i+1}</label><input class="cmp-gi" data-i="${i}" type="text" value="${resc(t)}"></div></div>`).join(''));
+  setHTML('cmp-pro-items-fields', (d.compare?.proItems||[]).map((t,i)=>`<div class="adm-row" style="margin-bottom:8px"><div class="adm-fld full"><label>항목 ${i+1}</label><input class="cmp-pi" data-i="${i}" type="text" value="${resc(t)}"></div></div>`).join(''));
+  // 가격 포함
+  setVal('inc-title',d.priceIncludes?.title||'기본 포함 항목');
+  setVal('inc-tags',(d.priceIncludes?.tags||[]).join('\n'));
+  // 프로세스
+  setVal('proc-eyebrow',d.process?.eyebrow); setVal('proc-title',d.process?.title); setVal('proc-sub',d.process?.sub);
+  setHTML('proc-steps-fields', (d.process?.steps||[]).map((s,i)=>`<div class="adm-row" style="margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid #F5F5F5"><div class="adm-fld"><label>단계 ${i+1} 제목</label><input class="proc-st" data-i="${i}" type="text" value="${resc(s.title)}"></div><div class="adm-fld"><label>배지</label><input class="proc-stag" data-i="${i}" type="text" value="${resc(s.tag)}"></div><div class="adm-fld full"><label>설명</label><textarea class="proc-sd" data-i="${i}">${resc(s.desc)}</textarea></div></div>`).join(''));
+  // CTA
+  setVal('cta-title',d.cta?.title); setVal('cta-sub',d.cta?.sub); setVal('cta-btn',d.cta?.btn); setVal('cta-note',d.cta?.note);
+}
+
+function gv(id) { const e=document.getElementById(id); return e?e.value.trim():''; }
+
 async function saveAll() {
   const btn = document.getElementById('adm-save-btn');
-  btn.disabled = true; btn.textContent = '저장 중...';
-  const d = JSON.parse(JSON.stringify(DATA || {}));
-  d.company = gv('i-company') || 'TV마스터365';
-  d.ceo = gv('i-ceo'); d.phone = gv('i-phone'); d.email = gv('i-email');
-  d.bizno = gv('i-bizno'); d.address = gv('i-address');
-  d.hours = gv('i-hours'); d.year = gv('i-year') || '2025'; d.desc = gv('i-desc');
-  if (!d.hero) d.hero = {};
-  d.hero.eyebrow = gv('h-eyebrow'); d.hero.title = gv('h-title');
-  d.hero.sub = gv('h-sub'); d.hero.cta1 = gv('h-cta1'); d.hero.cta2 = gv('h-cta2');
-  const sn = [...document.querySelectorAll('.h-sn')];
-  const su = [...document.querySelectorAll('.h-su')];
-  const sl = [...document.querySelectorAll('.h-sl')];
-  d.hero.stats = sn.map((_,i) => ({ num: sn[i].value, unit: su[i].value, label: sl[i].value }));
-  const pfs = [...document.querySelectorAll('.pf-s')];
-  const pfr = [...document.querySelectorAll('.pf-r')];
-  const pfn = [...document.querySelectorAll('.pf-n')];
-  d.prices = pfs.map((_,i) => ({ size: pfs[i].value, range: pfr[i].value||'문의', note: pfn[i].value }));
-
-  const res = await apiSave(d);
-  btn.disabled = false; btn.textContent = '💾 저장하기';
-  if (res.ok) {
-    DATA = d;
-    showToast('✓ 저장됐습니다');
-  } else {
-    showToast('저장 실패: ' + (res.error || ''), true);
-  }
+  btn.disabled=true; btn.textContent='저장 중...';
+  const d = JSON.parse(JSON.stringify(DATA||{}));
+  d.company=gv('i-company')||'TV마스터365'; d.ceo=gv('i-ceo'); d.phone=gv('i-phone'); d.email=gv('i-email');
+  d.bizno=gv('i-bizno'); d.address=gv('i-address'); d.hours=gv('i-hours'); d.year=gv('i-year')||'2025';
+  d.desc=gv('i-desc'); d.floatBtn=gv('i-float-btn')||'무료 견적 →';
+  if(!d.hero) d.hero={};
+  d.hero.eyebrow=gv('h-eyebrow'); d.hero.title=gv('h-title'); d.hero.sub=gv('h-sub'); d.hero.cta1=gv('h-cta1'); d.hero.cta2=gv('h-cta2');
+  const sn=[...document.querySelectorAll('.h-sn')],su=[...document.querySelectorAll('.h-su')],sl=[...document.querySelectorAll('.h-sl')];
+  d.hero.stats=sn.map((_,i)=>({num:sn[i].value,unit:su[i].value,label:sl[i].value}));
+  if(!d.problem) d.problem={};
+  d.problem.eyebrow=gv('prob-eyebrow'); d.problem.title=gv('prob-title'); d.problem.sub=gv('prob-sub'); d.problem.footer=gv('prob-footer');
+  const pno=[...document.querySelectorAll('.prob-no-i')],ptx=[...document.querySelectorAll('.prob-txt-i')];
+  d.problem.cards=pno.map((_,i)=>({no:pno[i].value,text:ptx[i].value}));
+  if(!d.solution) d.solution={};
+  d.solution.eyebrow=gv('sol-eyebrow'); d.solution.title=gv('sol-title'); d.solution.sub=gv('sol-sub');
+  const sst=[...document.querySelectorAll('.sol-st')],ssd=[...document.querySelectorAll('.sol-sd')];
+  d.solution.steps=sst.map((_,i)=>({title:sst[i].value,desc:ssd[i].value}));
+  const spn=[...document.querySelectorAll('.sol-spn')],spu=[...document.querySelectorAll('.sol-spu')],spl=[...document.querySelectorAll('.sol-spl')],spno=[...document.querySelectorAll('.sol-spno')];
+  d.solution.specs=spn.map((_,i)=>({num:spn[i].value,unit:spu[i].value,label:spl[i].value,note:spno[i].value}));
+  if(!d.compare) d.compare={};
+  d.compare.eyebrow=gv('cmp-eyebrow'); d.compare.title=gv('cmp-title'); d.compare.sub=gv('cmp-sub');
+  d.compare.generalTitle=gv('cmp-gen-title'); d.compare.generalFooter=gv('cmp-gen-footer'); d.compare.proFooter=gv('cmp-pro-footer');
+  d.compare.generalItems=[...document.querySelectorAll('.cmp-gi')].map(e=>e.value);
+  d.compare.proItems=[...document.querySelectorAll('.cmp-pi')].map(e=>e.value);
+  if(!d.priceIncludes) d.priceIncludes={};
+  d.priceIncludes.title=gv('inc-title')||'기본 포함 항목';
+  d.priceIncludes.tags=gv('inc-tags').split('\n').map(t=>t.trim()).filter(Boolean);
+  if(!d.process) d.process={};
+  d.process.eyebrow=gv('proc-eyebrow'); d.process.title=gv('proc-title'); d.process.sub=gv('proc-sub');
+  const pst=[...document.querySelectorAll('.proc-st')],psd=[...document.querySelectorAll('.proc-sd')],pstag=[...document.querySelectorAll('.proc-stag')];
+  d.process.steps=pst.map((_,i)=>({title:pst[i].value,desc:psd[i].value,tag:pstag[i].value}));
+  if(!d.cta) d.cta={};
+  d.cta.title=gv('cta-title'); d.cta.sub=gv('cta-sub'); d.cta.btn=gv('cta-btn')||'무료 견적 받기 →'; d.cta.note=gv('cta-note');
+  const res=await apiSave(d);
+  btn.disabled=false; btn.textContent='💾 전체 저장';
+  if(res.ok){DATA=d; showToast('✓ 전체 저장됐습니다');}
+  else showToast('저장 실패: '+(res.error||''), true);
 }
 
-/* ─ MODAL ─ */
 function openModal(type, idx) {
-  currentModalType = type; currentModalIdx = idx;
-  const labels = { case: '시공 사례', review: '고객 후기', faq: 'FAQ 질문' };
-  document.getElementById('modal-title').textContent = (idx !== null ? '편집: ' : '') + labels[type];
-  const d = DATA || {};
-  let html = '';
-  if (type === 'case') {
-    const it = idx !== null ? (d.cases||[])[idx] : {};
-    html = `<div class="adm-fld"><label>아파트/단지명</label><input id="m-loc" type="text" value="${esc(it?.loc||'')}"></div>
-      <div class="adm-fld"><label>인치 · 벽 종류 · 시공 방식</label><input id="m-det" type="text" value="${esc(it?.det||'')}"></div>
-      <div class="adm-fld"><label>배지</label><input id="m-badge" type="text" value="${esc(it?.badge||'무타공')}"></div>`;
-  } else if (type === 'review') {
-    const it = idx !== null ? (d.reviews||[])[idx] : {};
-    html = `<div class="adm-fld"><label>후기 내용</label><textarea id="m-text">${esc(it?.text||'')}</textarea></div>
-      <div class="adm-fld"><label>고객명</label><input id="m-name" type="text" value="${esc(it?.name||'')}"></div>
-      <div class="adm-fld"><label>아파트/지역</label><input id="m-apt" type="text" value="${esc(it?.apt||'')}"></div>`;
-  } else if (type === 'faq') {
-    const it = idx !== null ? (d.faq||[])[idx] : {};
-    html = `<div class="adm-fld"><label>질문</label><input id="m-q" type="text" value="${esc(it?.q||'')}"></div>
-      <div class="adm-fld"><label>답변</label><textarea id="m-a" style="min-height:120px">${esc(it?.a||'')}</textarea></div>`;
-  }
-  document.getElementById('modal-body').innerHTML = html;
-  document.getElementById('adm-modal').style.display = 'flex';
-  setTimeout(() => { const f = document.querySelector('#modal-body input,#modal-body textarea'); if(f) f.focus(); }, 60);
+  currentModalType=type; currentModalIdx=idx;
+  const labels={case:'시공 사례',review:'고객 후기',faq:'FAQ',price:'가격 항목'};
+  document.getElementById('modal-title').textContent=(idx!==null?'편집: ':'')+labels[type];
+  const d=DATA||{}; let html='';
+  if(type==='case'){ const it=(d.cases||[])[idx]||{};
+    html=`<div class="adm-fld"><label>아파트/단지명</label><input id="m-loc" type="text" value="${resc(it.loc||'')}"></div><div class="adm-fld"><label>인치·벽 종류·시공 방식</label><input id="m-det" type="text" value="${resc(it.det||'')}"></div><div class="adm-fld"><label>배지</label><input id="m-badge" type="text" value="${resc(it.badge||'무타공')}"></div>`;}
+  else if(type==='review'){ const it=(d.reviews||[])[idx]||{};
+    html=`<div class="adm-fld"><label>후기 내용</label><textarea id="m-text" style="min-height:120px">${resc(it.text||'')}</textarea></div><div class="adm-fld"><label>고객명</label><input id="m-name" type="text" value="${resc(it.name||'')}"></div><div class="adm-fld"><label>아파트/지역</label><input id="m-apt" type="text" value="${resc(it.apt||'')}"></div>`;}
+  else if(type==='faq'){ const it=(d.faq||[])[idx]||{};
+    html=`<div class="adm-fld"><label>질문</label><input id="m-q" type="text" value="${resc(it.q||'')}"></div><div class="adm-fld"><label>답변</label><textarea id="m-a" style="min-height:130px">${resc(it.a||'')}</textarea></div>`;}
+  else if(type==='price'){ const it=(d.prices||[])[idx]||{};
+    html=`<div class="adm-fld"><label>인치 범위</label><input id="m-size" type="text" value="${resc(it.size||'')}"></div><div class="adm-fld"><label>가격</label><input id="m-range" type="text" value="${resc(it.range||'문의')}"></div><div class="adm-fld"><label>설명</label><textarea id="m-note">${resc(it.note||'')}</textarea></div>`;}
+  document.getElementById('modal-body').innerHTML=html;
+  document.getElementById('adm-modal').style.display='flex';
+  setTimeout(()=>{ const f=document.querySelector('#modal-body input,#modal-body textarea'); if(f) f.focus(); },60);
 }
-function closeModal() { document.getElementById('adm-modal').style.display = 'none'; currentModalType = null; currentModalIdx = null; }
+function closeModal() { document.getElementById('adm-modal').style.display='none'; currentModalType=null; currentModalIdx=null; }
 
 async function saveModal() {
-  const type = currentModalType, idx = currentModalIdx;
-  const d = JSON.parse(JSON.stringify(DATA || {}));
-  let item = {};
-  if (type === 'case') {
-    item = { loc: gv('m-loc'), det: gv('m-det'), badge: gv('m-badge') || '무타공' };
-    if (!item.loc) { showToast('단지명을 입력해주세요.', true); return; }
-    if (!d.cases) d.cases = [];
-    if (idx !== null) d.cases[idx] = item; else d.cases.push(item);
-    renderAdmList('cases', d.cases, c => ({ title: c.loc, sub: c.det }));
-  } else if (type === 'review') {
-    item = { text: gv('m-text'), name: gv('m-name'), apt: gv('m-apt') };
-    if (!item.text) { showToast('후기 내용을 입력해주세요.', true); return; }
-    if (!d.reviews) d.reviews = [];
-    if (idx !== null) d.reviews[idx] = item; else d.reviews.push(item);
-    renderAdmList('reviews', d.reviews, r => ({ title: r.name, sub: r.apt }));
-  } else if (type === 'faq') {
-    item = { q: gv('m-q'), a: gv('m-a') };
-    if (!item.q) { showToast('질문을 입력해주세요.', true); return; }
-    if (!d.faq) d.faq = [];
-    if (idx !== null) d.faq[idx] = item; else d.faq.push(item);
-    renderAdmList('faq', d.faq, f => ({ title: f.q, sub: '' }));
-  }
-  const res = await apiSave(d);
-  if (res.ok) { DATA = d; closeModal(); showToast('✓ 저장됐습니다'); }
-  else { showToast('저장 실패', true); }
+  const type=currentModalType, idx=currentModalIdx;
+  const d=JSON.parse(JSON.stringify(DATA||{}));
+  let listKey='', item={}, labelFn;
+  if(type==='case'){ item={loc:gv('m-loc'),det:gv('m-det'),badge:gv('m-badge')||'무타공'};
+    if(!item.loc){showToast('단지명을 입력해주세요.',true);return;}
+    if(!d.cases)d.cases=[]; if(idx!==null)d.cases[idx]=item;else d.cases.push(item);
+    listKey='cases'; labelFn=c=>({title:c.loc,sub:c.det}); }
+  else if(type==='review'){ item={text:gv('m-text'),name:gv('m-name'),apt:gv('m-apt')};
+    if(!item.text){showToast('후기 내용을 입력해주세요.',true);return;}
+    if(!d.reviews)d.reviews=[]; if(idx!==null)d.reviews[idx]=item;else d.reviews.push(item);
+    listKey='reviews'; labelFn=r=>({title:r.name,sub:r.apt}); }
+  else if(type==='faq'){ item={q:gv('m-q'),a:gv('m-a')};
+    if(!item.q){showToast('질문을 입력해주세요.',true);return;}
+    if(!d.faq)d.faq=[]; if(idx!==null)d.faq[idx]=item;else d.faq.push(item);
+    listKey='faq'; labelFn=f=>({title:f.q,sub:''}); }
+  else if(type==='price'){ item={size:gv('m-size'),range:gv('m-range')||'문의',note:gv('m-note')};
+    if(!item.size){showToast('인치 범위를 입력해주세요.',true);return;}
+    if(!d.prices)d.prices=[]; if(idx!==null)d.prices[idx]=item;else d.prices.push(item);
+    listKey='prices'; labelFn=p=>({title:p.size,sub:p.range+(p.note?' · '+p.note:'')}); }
+  const res=await apiSave(d);
+  if(res.ok){DATA=d; renderAdmList(listKey,d[listKey],labelFn); closeModal(); showToast('✓ 저장됐습니다');}
+  else showToast('저장 실패',true);
 }
 
 async function deleteItem(type, idx) {
-  if (!confirm('삭제하시겠습니까?')) return;
-  const d = JSON.parse(JSON.stringify(DATA || {}));
-  if (type === 'cases' && d.cases) d.cases.splice(idx, 1);
-  if (type === 'reviews' && d.reviews) d.reviews.splice(idx, 1);
-  if (type === 'faq' && d.faq) d.faq.splice(idx, 1);
-  const res = await apiSave(d);
-  if (res.ok) {
-    DATA = d;
-    if (type === 'cases') renderAdmList('cases', d.cases||[], c => ({ title: c.loc, sub: c.det }));
-    if (type === 'reviews') renderAdmList('reviews', d.reviews||[], r => ({ title: r.name, sub: r.apt }));
-    if (type === 'faq') renderAdmList('faq', d.faq||[], f => ({ title: f.q, sub: '' }));
-    showToast('✓ 삭제됐습니다');
-  }
+  if(!confirm('삭제하시겠습니까?')) return;
+  const d=JSON.parse(JSON.stringify(DATA||{}));
+  const maps={cases:c=>({title:c.loc,sub:c.det}),reviews:r=>({title:r.name,sub:r.apt}),faq:f=>({title:f.q,sub:''}),prices:p=>({title:p.size,sub:p.range})};
+  if(d[type]) d[type].splice(idx,1);
+  const res=await apiSave(d);
+  if(res.ok){DATA=d; renderAdmList(type,d[type]||[],maps[type]); showToast('✓ 삭제됐습니다');}
 }
 
-/* ─ HELPERS ─ */
-function gv(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
 let toastTimer;
-function showToast(msg, isErr) {
-  const t = document.getElementById('adm-toast');
-  t.textContent = msg;
-  t.className = 'adm-toast show' + (isErr ? ' error' : '');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+function showToast(msg,isErr) {
+  const t=document.getElementById('adm-toast');
+  t.textContent=msg; t.className='adm-toast show'+(isErr?' error':'');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2800);
 }
 </script>
 </body>
