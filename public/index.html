@@ -47,6 +47,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .hero{background:var(--dark);position:relative;overflow:hidden;padding-block:90px 100px;display:flex;align-items:center;min-height:560px}
 .hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 55% 70% at 72% 50%,rgba(180,30,30,.13) 0%,transparent 70%)}
 .hero-art{position:absolute;right:max(4%,calc(50% - 570px + 24px));top:50%;transform:translateY(-50%);width:40%;max-width:480px}
+.hero-art-img{width:100%;aspect-ratio:16/9.5;border-radius:6px;object-fit:cover;box-shadow:0 2px 60px rgba(0,0,0,.7)}
 .hero-wall-plate{width:100%;aspect-ratio:16/9.5;background:linear-gradient(160deg,#1a1b1f,#131416);border-radius:6px;border:1.5px solid rgba(255,255,255,.07);box-shadow:0 2px 60px rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;position:relative}
 .hero-tv{width:88%;aspect-ratio:16/9;background:#0a0b0d;border-radius:3px;border:1.5px solid rgba(255,255,255,.1)}
 .hero-tv-inner{width:100%;height:100%;background:linear-gradient(140deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);border-radius:2px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.1);font-size:11px;letter-spacing:.12em}
@@ -330,7 +331,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 
 <section class="hero">
   <div class="hero-glow"></div>
-  <div class="hero-art"><div class="hero-wall-plate"><div class="hero-tv"><div class="hero-tv-inner">SMART TV</div></div></div></div>
+  <div class="hero-art" id="p-hero-art"><div class="hero-wall-plate"><div class="hero-tv"><div class="hero-tv-inner">SMART TV</div></div></div></div>
   <div class="wrap">
     <div class="hero-content">
       <div class="eyebrow" id="p-hero-eyebrow"></div>
@@ -338,7 +339,6 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
       <p class="hero-sub" id="p-hero-sub"></p>
       <div class="hero-cta">
         <a href="#" class="btn-primary" id="p-hero-cta1"></a>
-        <a href="#" class="btn-ghost" id="p-hero-cta2"></a>
       </div>
       <div class="hero-stats" id="p-hero-stats"></div>
     </div>
@@ -563,9 +563,12 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
             <div class="adm-row"><div class="adm-fld full"><label>메인 타이틀 (줄바꿈: Enter)</label><textarea id="h-title" style="min-height:90px"></textarea></div></div>
             <div class="adm-row"><div class="adm-fld full"><label>서브 텍스트</label><textarea id="h-sub"></textarea></div></div>
             <div class="adm-row">
-              <div class="adm-fld"><label>버튼1 (빨간)</label><input id="h-cta1" type="text"></div>
-              <div class="adm-fld"><label>버튼2 (회색)</label><input id="h-cta2" type="text"></div>
+              <div class="adm-fld full"><label>버튼 텍스트 (빨간 · 클릭 시 전화연결)</label><input id="h-cta1" type="text"></div>
             </div>
+            <div class="adm-row">
+              <div class="adm-fld full"><label>히어로 오른쪽 이미지 URL</label><input id="h-img" type="url" placeholder="https://... (비워두면 기본 TV 그림 표시)"></div>
+            </div>
+            <div id="h-img-preview" style="margin-top:6px"></div>
           </div>
           <div class="adm-card">
             <div class="adm-card-title">하단 통계 수치</div>
@@ -784,7 +787,12 @@ function renderPublic(d) {
   setText('p-hero-eyebrow', d.hero?.eyebrow||'');
   setText('p-hero-sub', d.hero?.sub||'');
   setText('p-hero-cta1', d.hero?.cta1||'');
-  setText('p-hero-cta2', d.hero?.cta2||'');
+  const cta1El = document.getElementById('p-hero-cta1');
+  if (cta1El) { const ph=(d.phone||'').replace(/[^0-9]/g,''); cta1El.href = ph ? 'tel:'+ph : '#'; }
+  // Hero art image
+  const artEl = document.getElementById('p-hero-art');
+  if (artEl && d.hero?.img) artEl.innerHTML=`<img class="hero-art-img" src="${esc(d.hero.img)}" alt="TV 벽걸이 시공" loading="lazy">`;
+  else if (artEl && !d.hero?.img) artEl.innerHTML='<div class="hero-wall-plate"><div class="hero-tv"><div class="hero-tv-inner">SMART TV</div></div></div>';
   const titleEl = document.getElementById('p-hero-title');
   if (titleEl) { const lines=(d.hero?.title||'').split('\n'); titleEl.innerHTML=lines.map((l,i)=>i===1?`<em>${esc(l)}</em>`:esc(l)).join('<br>'); }
   const statsEl = document.getElementById('p-hero-stats');
@@ -889,7 +897,9 @@ function loadAdminFields() {
   setVal('i-desc',d.desc); setVal('i-float-btn',d.floatBtn||'무료 견적 →');
   // 히어로
   setVal('h-eyebrow',d.hero?.eyebrow); setVal('h-title',d.hero?.title); setVal('h-sub',d.hero?.sub);
-  setVal('h-cta1',d.hero?.cta1); setVal('h-cta2',d.hero?.cta2);
+  setVal('h-cta1',d.hero?.cta1); setVal('h-img',d.hero?.img||'');
+  const hImgPrev=document.getElementById('h-img-preview');
+  if(hImgPrev) hImgPrev.innerHTML=d.hero?.img?`<img src="${resc(d.hero.img)}" style="max-width:100%;max-height:180px;border-radius:6px;object-fit:cover">`:'';
   setHTML('h-stats-fields', (d.hero?.stats||[]).map((s,i)=>`<div class="adm-row" style="margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid #F5F5F5"><div class="adm-fld"><label>숫자 ${i+1}</label><input class="h-sn" data-i="${i}" type="text" value="${resc(s.num)}"></div><div class="adm-fld"><label>단위</label><input class="h-su" data-i="${i}" type="text" value="${resc(s.unit)}"></div><div class="adm-fld"><label>설명</label><input class="h-sl" data-i="${i}" type="text" value="${resc(s.label)}"></div></div>`).join(''));
   // 문제점
   setVal('prob-eyebrow',d.problem?.eyebrow); setVal('prob-title',d.problem?.title); setVal('prob-sub',d.problem?.sub); setVal('prob-footer',d.problem?.footer);
@@ -898,6 +908,12 @@ function loadAdminFields() {
   setVal('sol-eyebrow',d.solution?.eyebrow); setVal('sol-title',d.solution?.title); setVal('sol-sub',d.solution?.sub);
   setHTML('sol-steps-fields', (d.solution?.steps||[]).map((s,i)=>`<div class="adm-row" style="margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid #F5F5F5"><div class="adm-fld"><label>단계 ${i+1} 제목</label><input class="sol-st" data-i="${i}" type="text" value="${resc(s.title)}"></div><div class="adm-fld full"><label>설명</label><textarea class="sol-sd" data-i="${i}">${resc(s.desc)}</textarea></div></div>`).join(''));
   setHTML('sol-specs-fields', (d.solution?.specs||[]).map((s,i)=>`<div class="adm-row" style="margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid #F5F5F5"><div class="adm-fld"><label>수치 ${i+1}</label><input class="sol-spn" data-i="${i}" type="text" value="${resc(s.num)}"></div><div class="adm-fld"><label>단위</label><input class="sol-spu" data-i="${i}" type="text" value="${resc(s.unit)}"></div><div class="adm-fld"><label>설명</label><input class="sol-spl" data-i="${i}" type="text" value="${resc(s.label)}"></div><div class="adm-fld"><label>부연</label><input class="sol-spno" data-i="${i}" type="text" value="${resc(s.note)}"></div></div>`).join(''));
+  // h-img 실시간 미리보기
+  const hImgInput=document.getElementById('h-img');
+  if(hImgInput){ hImgInput.addEventListener('input',()=>{
+    const prev=document.getElementById('h-img-preview');
+    if(prev) prev.innerHTML=hImgInput.value?`<img src="${hImgInput.value}" style="max-width:100%;max-height:180px;border-radius:6px;object-fit:cover" onerror="this.style.display='none'">`:'';
+  }); }
   // 시공 사례 / 후기 / 가격 / FAQ
   renderAdmList('cases',d.cases||[],c=>({title:c.loc,sub:c.det}));
   renderAdmList('reviews',d.reviews||[],r=>({title:r.apt||'후기',sub:r.text?.slice(0,40)+(r.text?.length>40?'…':'')||''}));
@@ -928,7 +944,7 @@ async function saveAll() {
   d.bizno=gv('i-bizno'); d.address=gv('i-address'); d.hours=gv('i-hours'); d.year=gv('i-year')||'2025';
   d.desc=gv('i-desc'); d.floatBtn=gv('i-float-btn')||'무료 견적 →';
   if(!d.hero) d.hero={};
-  d.hero.eyebrow=gv('h-eyebrow'); d.hero.title=gv('h-title'); d.hero.sub=gv('h-sub'); d.hero.cta1=gv('h-cta1'); d.hero.cta2=gv('h-cta2');
+  d.hero.eyebrow=gv('h-eyebrow'); d.hero.title=gv('h-title'); d.hero.sub=gv('h-sub'); d.hero.cta1=gv('h-cta1'); d.hero.img=gv('h-img');
   const sn=[...document.querySelectorAll('.h-sn')],su=[...document.querySelectorAll('.h-su')],sl=[...document.querySelectorAll('.h-sl')];
   d.hero.stats=sn.map((_,i)=>({num:sn[i].value,unit:su[i].value,label:sl[i].value}));
   if(!d.problem) d.problem={};
