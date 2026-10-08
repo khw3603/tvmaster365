@@ -14,6 +14,7 @@
   --radius:12px;--radius-s:8px;--nav-h:64px;--max:1160px;
   --font:'Noto Sans KR',-apple-system,sans-serif;
 }
+html{scroll-behavior:smooth}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);background:var(--bg);color:var(--fg);line-height:1.7;overflow-x:hidden}
 img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{font-family:var(--font)}
@@ -30,14 +31,9 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .logo-mark{width:34px;height:34px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:900}
 .logo-name{color:#fff;font-size:17px;font-weight:800;letter-spacing:-.025em}
 .logo-name span{color:var(--accent-lit)}
-.nav{display:flex;align-items:center;gap:2px;flex:1}
-.nav-item{position:relative}
-.nav-btn{background:none;border:none;color:rgba(255,255,255,.72);font-size:14px;font-weight:500;padding:8px 13px;cursor:pointer;border-radius:6px;transition:background .14s,color .14s;white-space:nowrap}
-.nav-btn:hover{background:rgba(255,255,255,.07);color:#fff}
-.nav-drop{position:absolute;top:calc(100% + 6px);left:0;background:#1e2024;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:7px;min-width:175px;display:none;box-shadow:0 16px 40px rgba(0,0,0,.4);z-index:10}
-.nav-item:hover .nav-drop{display:block}
-.nav-drop a{display:block;padding:8px 11px;color:rgba(255,255,255,.7);font-size:13.5px;border-radius:5px;transition:background .11s,color .11s}
-.nav-drop a:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav{display:flex;align-items:center;gap:4px;flex:1}
+.nav-link{color:rgba(255,255,255,.72);font-size:14px;font-weight:500;padding:8px 13px;border-radius:6px;transition:background .14s,color .14s;white-space:nowrap;text-decoration:none}
+.nav-link:hover{background:rgba(255,255,255,.07);color:#fff}
 .hdr-cta{margin-left:auto;flex-shrink:0}
 .btn-qt{display:flex;align-items:center;gap:6px;padding:8px 17px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;border-radius:7px;transition:background .14s}
 .btn-qt:hover{background:var(--accent-h)}
@@ -182,8 +178,12 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .cta-note{margin-top:22px;font-size:13px;color:rgba(255,255,255,.6)}
 
 /* FOOTER */
-.ftr{background:#0D0E10;color:rgba(255,255,255,.65);padding-block:60px 36px}
-.ftr-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.ftr{background:#0D0E10;color:rgba(255,255,255,.65);padding-block:52px 36px}
+.ftr-simple{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;margin-bottom:40px;flex-wrap:wrap}
+.ftr-simple-info{flex:1;min-width:0}
+.ftr-nav{display:flex;flex-direction:column;gap:10px;flex-shrink:0}
+.ftr-nav-link{font-size:13.5px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .12s}
+.ftr-nav-link:hover{color:#fff}
 .ftr-logo{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.025em;margin-bottom:10px}
 .ftr-logo span{color:var(--accent-lit)}
 .ftr-desc{font-size:13px;color:rgba(255,255,255,.4);line-height:1.7;margin-bottom:16px}
@@ -288,12 +288,12 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
   .proc-steps{grid-template-columns:1fr 1fr}
   .proc-step{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
   .proc-step:nth-child(2n){border-left:1px solid rgba(255,255,255,.06)}
-  .ftr-grid{grid-template-columns:1fr 1fr}
+  .ftr-simple{flex-direction:column;gap:24px}
   .sec{padding-block:56px}
   .adm-sidebar{width:180px}
 }
 @media(max-width:480px){
-  .price-grid,.proc-steps,.ftr-grid{grid-template-columns:1fr}
+  .price-grid,.proc-steps{grid-template-columns:1fr}
   .proc-step{border-left:none!important}
   .hero-cta{flex-direction:column}
   .adm-sidebar{display:none}
@@ -311,18 +311,11 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
       <span class="logo-name" id="p-logo-name"></span>
     </a>
     <nav class="nav">
-      <div class="nav-item"><button class="nav-btn">서비스 안내 ▾</button>
-        <div class="nav-drop"><a href="#">무타공 TV 설치</a><a href="#">타공 TV 설치</a><a href="#">선 매립 시공</a><a href="#">기기 설치</a></div>
-      </div>
-      <div class="nav-item"><button class="nav-btn">가격·예약 ▾</button>
-        <div class="nav-drop"><a href="#">가격 안내</a><a href="#">무료 견적 받기</a><a href="#">시공 지역 확인</a></div>
-      </div>
-      <div class="nav-item"><button class="nav-btn">시공 사례 ▾</button>
-        <div class="nav-drop"><a href="#">전체 사례</a><a href="#">아파트 시공</a><a href="#">가벽·특수 시공</a></div>
-      </div>
-      <div class="nav-item"><button class="nav-btn">회사소개 ▾</button>
-        <div class="nav-drop"><a href="#">회사 소개</a><a href="#">시공 기사 소개</a><a href="#">오시는 길</a></div>
-      </div>
+      <a class="nav-link" href="#sec-sol">서비스 소개</a>
+      <a class="nav-link" href="#sec-cases">시공 사례</a>
+      <a class="nav-link" href="#sec-rev">고객 후기</a>
+      <a class="nav-link" href="#sec-price">가격 안내</a>
+      <a class="nav-link" href="#sec-faq">FAQ</a>
     </nav>
     <div class="hdr-cta"><a href="#" class="btn-qt" id="p-hdr-cta">무료 견적 →</a></div>
     <button class="mob-menu">☰</button>
@@ -345,7 +338,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
   </div>
 </section>
 
-<section class="sec sec-problem">
+<section class="sec sec-problem" id="sec-problem">
   <div class="wrap">
     <div class="eyebrow" id="p-prob-eyebrow"></div>
     <h2 class="sec-title" id="p-prob-title"></h2>
@@ -355,7 +348,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
   </div>
 </section>
 
-<section class="sec sec-sol">
+<section class="sec sec-sol" id="sec-sol">
   <div class="wrap">
     <div class="eyebrow" id="p-sol-eyebrow"></div>
     <h2 class="sec-title" id="p-sol-title"></h2>
@@ -365,7 +358,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
   </div>
 </section>
 
-<section class="sec sec-cases">
+<section class="sec sec-cases" id="sec-cases">
   <div class="wrap">
     <div class="eyebrow">CASE STUDIES</div>
     <h2 class="sec-title">실제 시공 사례로 확인하세요.</h2>
@@ -375,7 +368,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
   </div>
 </section>
 
-<section class="sec sec-rev">
+<section class="sec sec-rev" id="sec-rev">
   <div class="wrap">
     <div class="eyebrow">REAL TALK</div>
     <h2 class="sec-title">실제 시공을 받은 분들이<br>이렇게 말합니다.</h2>
@@ -406,7 +399,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
   </div>
 </section>
 
-<section class="sec sec-price">
+<section class="sec sec-price" id="sec-price">
   <div class="wrap">
     <div class="eyebrow">PRICE</div>
     <h2 class="sec-title">가격 범위 안내</h2>
@@ -428,7 +421,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
   </div>
 </section>
 
-<section class="sec sec-faq">
+<section class="sec sec-faq" id="sec-faq">
   <div class="wrap">
     <div class="eyebrow">FAQ</div>
     <h2 class="sec-title">우리 집도 될까? 가장 많이 받는 질문.</h2>
@@ -447,26 +440,21 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 
 <footer class="ftr">
   <div class="wrap">
-    <div class="ftr-grid">
-      <div>
+    <div class="ftr-simple">
+      <div class="ftr-simple-info">
         <div class="ftr-logo" id="p-ftr-logo"></div>
         <p class="ftr-desc" id="p-ftr-desc"></p>
         <a class="ftr-phone" id="p-ftr-phone"></a>
         <div class="ftr-hours" id="p-ftr-hours"></div>
         <div class="ftr-bizinfo" id="p-ftr-bizinfo"></div>
       </div>
-      <div>
-        <div class="ftr-col-ttl">서비스</div>
-        <ul class="ftr-links"><li><a href="#">무타공 TV 설치</a></li><li><a href="#">타공 TV 설치</a></li><li><a href="#">선 매립 시공</a></li><li><a href="#">가격 안내</a></li><li><a href="#">무료 견적</a></li></ul>
-      </div>
-      <div>
-        <div class="ftr-col-ttl">시공 사례</div>
-        <ul class="ftr-links"><li><a href="#">전체 사례</a></li><li><a href="#">아파트 시공</a></li><li><a href="#">가벽 시공</a></li><li><a href="#">대형 TV 시공</a></li></ul>
-      </div>
-      <div>
-        <div class="ftr-col-ttl">회사</div>
-        <ul class="ftr-links"><li><a href="#">회사소개</a></li><li><a href="#">시공 기사 소개</a></li><li><a href="#">FAQ</a></li><li><a href="#">오시는 길</a></li></ul>
-      </div>
+      <nav class="ftr-nav">
+        <a class="ftr-nav-link" href="#sec-sol">서비스 소개</a>
+        <a class="ftr-nav-link" href="#sec-cases">시공 사례</a>
+        <a class="ftr-nav-link" href="#sec-rev">고객 후기</a>
+        <a class="ftr-nav-link" href="#sec-price">가격 안내</a>
+        <a class="ftr-nav-link" href="#sec-faq">FAQ</a>
+      </nav>
     </div>
     <div class="ftr-bot">
       <div>
@@ -783,6 +771,8 @@ function renderPublic(d) {
   const logoEl = document.getElementById('p-logo-name');
   if (logoEl) logoEl.innerHTML = esc(nm.slice(0,-3)) + `<span>${esc(nm.slice(-3))}</span>`;
   setText('p-hdr-cta', d.hero?.cta1 || '무료 견적 →');
+  const hdrCtaEl = document.getElementById('p-hdr-cta');
+  if (hdrCtaEl) { const ph=(d.phone||'').replace(/[^0-9]/g,''); hdrCtaEl.href = ph ? 'tel:'+ph : '#'; }
   // Hero
   setText('p-hero-eyebrow', d.hero?.eyebrow||'');
   setText('p-hero-sub', d.hero?.sub||'');
