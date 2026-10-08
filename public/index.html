@@ -118,6 +118,9 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .rev-av{width:36px;height:36px;background:var(--dark3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:rgba(255,255,255,.45);flex-shrink:0}
 .rev-name{font-size:13px;font-weight:600;color:rgba(255,255,255,.82)}
 .rev-apt{font-size:12px;color:rgba(255,255,255,.38)}
+.rev-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;margin-bottom:14px;display:block}
+.rev-link-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--accent-lit);background:rgba(212,43,43,.18);border-radius:20px;padding:3px 10px;text-decoration:none;margin-top:6px}
+.rev-link-badge:hover{background:rgba(212,43,43,.32)}
 
 /* COMPARE */
 .sec-cmp{background:var(--bg)}
@@ -811,7 +814,11 @@ function renderPublic(d) {
       : `<div class="case">${card}</div>`;
   }).join(''));
   // Reviews
-  if (d.reviews) setHTML('p-reviews', d.reviews.map(r=>`<div class="rev"><div class="rev-stars">★★★★★</div><p class="rev-txt">${esc(r.text)}</p><div class="rev-auth"><div class="rev-av">${esc((r.name||'?')[0])}</div><div><div class="rev-name">${esc(r.name)}</div><div class="rev-apt">${esc(r.apt)}</div></div></div></div>`).join(''));
+  if (d.reviews) setHTML('p-reviews', d.reviews.map(r=>{
+    const thumb = r.img ? `<img class="rev-thumb" src="${esc(r.img)}" alt="시공 후기" loading="lazy">` : '';
+    const badge = r.link ? `<a class="rev-link-badge" href="${esc(r.link)}" target="_blank" rel="noopener noreferrer">블로그 자세히 보기 ↗</a>` : '';
+    return `<div class="rev">${thumb}<div class="rev-stars">★★★★★</div><p class="rev-txt">${esc(r.text)}</p><div class="rev-apt">${esc(r.apt)}</div>${badge}</div>`;
+  }).join(''));
   // Compare
   setText('p-cmp-eyebrow', d.compare?.eyebrow||'');
   setMulti('p-cmp-title', d.compare?.title||'');
@@ -893,7 +900,7 @@ function loadAdminFields() {
   setHTML('sol-specs-fields', (d.solution?.specs||[]).map((s,i)=>`<div class="adm-row" style="margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid #F5F5F5"><div class="adm-fld"><label>수치 ${i+1}</label><input class="sol-spn" data-i="${i}" type="text" value="${resc(s.num)}"></div><div class="adm-fld"><label>단위</label><input class="sol-spu" data-i="${i}" type="text" value="${resc(s.unit)}"></div><div class="adm-fld"><label>설명</label><input class="sol-spl" data-i="${i}" type="text" value="${resc(s.label)}"></div><div class="adm-fld"><label>부연</label><input class="sol-spno" data-i="${i}" type="text" value="${resc(s.note)}"></div></div>`).join(''));
   // 시공 사례 / 후기 / 가격 / FAQ
   renderAdmList('cases',d.cases||[],c=>({title:c.loc,sub:c.det}));
-  renderAdmList('reviews',d.reviews||[],r=>({title:r.name,sub:r.apt}));
+  renderAdmList('reviews',d.reviews||[],r=>({title:r.apt||'후기',sub:r.text?.slice(0,40)+(r.text?.length>40?'…':'')||''}));
   renderAdmList('prices',d.prices||[],p=>({title:p.size,sub:p.range+(p.note?' · '+p.note:'')}));
   renderAdmList('faq',d.faq||[],f=>({title:f.q,sub:''}));
   // 비교
@@ -962,14 +969,21 @@ function openModal(type, idx) {
   if(type==='case'){ const it=(d.cases||[])[idx]||{};
     html=`<div class="adm-fld"><label>아파트/단지명</label><input id="m-loc" type="text" value="${resc(it.loc||'')}"></div><div class="adm-fld"><label>인치·벽 종류·시공 방식</label><input id="m-det" type="text" value="${resc(it.det||'')}"></div><div class="adm-fld"><label>배지</label><input id="m-badge" type="text" value="${resc(it.badge||'무타공')}"></div><div class="adm-fld"><label>썸네일 이미지 URL</label><input id="m-img" type="url" placeholder="https://..." value="${resc(it.img||'')}"><div style="margin-top:8px;font-size:12px;color:#888">이미지 URL을 붙여넣으세요 (네이버 블로그 사진 등)</div>${it.img?`<div style="margin-top:8px"><img src="${resc(it.img)}" style="max-height:120px;border-radius:6px;border:1px solid #eee" onerror="this.style.display='none'"></div>`:''}</div><div class="adm-fld"><label>외부 링크 (네이버 블로그 등)</label><input id="m-link" type="url" placeholder="https://blog.naver.com/..." value="${resc(it.link||'')}"><div style="margin-top:6px;font-size:12px;color:#888">링크 입력 시 카드 클릭 시 새 탭으로 이동</div></div>`;}
   else if(type==='review'){ const it=(d.reviews||[])[idx]||{};
-    html=`<div class="adm-fld"><label>후기 내용</label><textarea id="m-text" style="min-height:120px">${resc(it.text||'')}</textarea></div><div class="adm-fld"><label>고객명</label><input id="m-name" type="text" value="${resc(it.name||'')}"></div><div class="adm-fld"><label>아파트/지역</label><input id="m-apt" type="text" value="${resc(it.apt||'')}"></div>`;}
+    html=`<div class="adm-fld"><label>후기 내용</label><textarea id="m-text" style="min-height:120px">${resc(it.text||'')}</textarea></div><div class="adm-fld"><label>아파트/지역</label><input id="m-apt" type="text" value="${resc(it.apt||'')}"></div><div class="adm-fld"><label>썸네일 이미지 URL</label><input id="m-img" type="url" placeholder="https://..." value="${resc(it.img||'')}"><div id="m-img-preview" style="margin-top:8px">${it.img?`<img src="${resc(it.img)}" style="max-width:100%;max-height:160px;border-radius:6px;object-fit:cover">`:''}</div></div><div class="adm-fld"><label>외부 링크 (네이버 블로그 등)</label><input id="m-link" type="url" placeholder="https://blog.naver.com/..." value="${resc(it.link||'')}"></div>`;}
   else if(type==='faq'){ const it=(d.faq||[])[idx]||{};
     html=`<div class="adm-fld"><label>질문</label><input id="m-q" type="text" value="${resc(it.q||'')}"></div><div class="adm-fld"><label>답변</label><textarea id="m-a" style="min-height:130px">${resc(it.a||'')}</textarea></div>`;}
   else if(type==='price'){ const it=(d.prices||[])[idx]||{};
     html=`<div class="adm-fld"><label>인치 범위</label><input id="m-size" type="text" value="${resc(it.size||'')}"></div><div class="adm-fld"><label>가격</label><input id="m-range" type="text" value="${resc(it.range||'문의')}"></div><div class="adm-fld"><label>설명</label><textarea id="m-note">${resc(it.note||'')}</textarea></div>`;}
   document.getElementById('modal-body').innerHTML=html;
   document.getElementById('adm-modal').style.display='flex';
-  setTimeout(()=>{ const f=document.querySelector('#modal-body input,#modal-body textarea'); if(f) f.focus(); },60);
+  setTimeout(()=>{
+    const f=document.querySelector('#modal-body input,#modal-body textarea'); if(f) f.focus();
+    const imgInput=document.getElementById('m-img');
+    if(imgInput){ imgInput.addEventListener('input',()=>{
+      const prev=document.getElementById('m-img-preview');
+      if(prev) prev.innerHTML=imgInput.value?`<img src="${imgInput.value}" style="max-width:100%;max-height:160px;border-radius:6px;object-fit:cover" onerror="this.style.display='none'">`:'';
+    }); }
+  },60);
 }
 function closeModal() { document.getElementById('adm-modal').style.display='none'; currentModalType=null; currentModalIdx=null; }
 
@@ -981,10 +995,10 @@ async function saveModal() {
     if(!item.loc){showToast('단지명을 입력해주세요.',true);return;}
     if(!d.cases)d.cases=[]; if(idx!==null)d.cases[idx]=item;else d.cases.push(item);
     listKey='cases'; labelFn=c=>({title:c.loc,sub:c.det}); }
-  else if(type==='review'){ item={text:gv('m-text'),name:gv('m-name'),apt:gv('m-apt')};
+  else if(type==='review'){ item={text:gv('m-text'),apt:gv('m-apt'),img:gv('m-img'),link:gv('m-link')};
     if(!item.text){showToast('후기 내용을 입력해주세요.',true);return;}
     if(!d.reviews)d.reviews=[]; if(idx!==null)d.reviews[idx]=item;else d.reviews.push(item);
-    listKey='reviews'; labelFn=r=>({title:r.name,sub:r.apt}); }
+    listKey='reviews'; labelFn=r=>({title:r.apt||'후기',sub:r.text.slice(0,40)+(r.text.length>40?'…':'')}); }
   else if(type==='faq'){ item={q:gv('m-q'),a:gv('m-a')};
     if(!item.q){showToast('질문을 입력해주세요.',true);return;}
     if(!d.faq)d.faq=[]; if(idx!==null)d.faq[idx]=item;else d.faq.push(item);
