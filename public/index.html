@@ -94,9 +94,12 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .cases-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin-top:44px}
 .case{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform .18s,box-shadow .18s}
 .case:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.11)}
-.case-img{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative}
+.case-link{display:block;text-decoration:none;color:inherit}
+.case-img{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.case-thumb{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
 .case-tv{width:62%;aspect-ratio:16/9;background:#080910;border:1.5px solid rgba(255,255,255,.12);border-radius:3px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
-.case-badge{position:absolute;top:11px;left:11px;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);color:#fff;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.04em}
+.case-badge{position:absolute;top:11px;left:11px;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);color:#fff;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.04em;z-index:1}
+.case-ext{position:absolute;top:11px;right:11px;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;z-index:1;display:flex;align-items:center;gap:4px}
 .case-info{padding:18px 20px}
 .case-loc{font-size:15.5px;font-weight:700;margin-bottom:5px}
 .case-det{font-size:13px;color:var(--fg2)}
@@ -797,7 +800,16 @@ function renderPublic(d) {
   if (d.solution?.specs) setHTML('p-sol-specs', d.solution.specs.map(s=>`<div class="spec"><div class="spec-v">${esc(s.num)}<span>${esc(s.unit)}</span></div><div class="spec-l">${esc(s.label)}</div><div class="spec-n">${esc(s.note)}</div></div>`).join(''));
   // Cases
   const bgs=['linear-gradient(135deg,#1a1b22,#141620)','linear-gradient(135deg,#1b1a22,#17161f)','linear-gradient(135deg,#181c1a,#151916)','linear-gradient(135deg,#1c1a18,#1a1815)','linear-gradient(135deg,#1a1b1c,#14161a)','linear-gradient(135deg,#191a1b,#141617)'];
-  if (d.cases) setHTML('p-cases', d.cases.map((c,i)=>`<div class="case"><div class="case-img" style="background:${bgs[i%bgs.length]}"><div class="case-tv"></div><div class="case-badge">${esc(c.badge||'무타공')}</div></div><div class="case-info"><div class="case-loc">${esc(c.loc)}</div><div class="case-det">${esc(c.det)}</div></div></div>`).join(''));
+  if (d.cases) setHTML('p-cases', d.cases.map((c,i)=>{
+    const inner = c.img
+      ? `<img class="case-thumb" src="${esc(c.img)}" alt="${esc(c.loc)}" loading="lazy"><div class="case-badge">${esc(c.badge||'무타공')}</div>${c.link?`<div class="case-ext">블로그 ↗</div>`:''}`
+      : `<div class="case-img" style="background:${bgs[i%bgs.length]}"><div class="case-tv"></div><div class="case-badge">${esc(c.badge||'무타공')}</div>${c.link?`<div class="case-ext">블로그 ↗</div>`:''}</div>`;
+    const imgDiv = c.img ? `<div class="case-img" style="background:#111">${inner}</div>` : inner;
+    const card = `${imgDiv}<div class="case-info"><div class="case-loc">${esc(c.loc)}</div><div class="case-det">${esc(c.det)}</div></div>`;
+    return c.link
+      ? `<a class="case case-link" href="${esc(c.link)}" target="_blank" rel="noopener noreferrer">${card}</a>`
+      : `<div class="case">${card}</div>`;
+  }).join(''));
   // Reviews
   if (d.reviews) setHTML('p-reviews', d.reviews.map(r=>`<div class="rev"><div class="rev-stars">★★★★★</div><p class="rev-txt">${esc(r.text)}</p><div class="rev-auth"><div class="rev-av">${esc((r.name||'?')[0])}</div><div><div class="rev-name">${esc(r.name)}</div><div class="rev-apt">${esc(r.apt)}</div></div></div></div>`).join(''));
   // Compare
@@ -948,7 +960,7 @@ function openModal(type, idx) {
   document.getElementById('modal-title').textContent=(idx!==null?'편집: ':'')+labels[type];
   const d=DATA||{}; let html='';
   if(type==='case'){ const it=(d.cases||[])[idx]||{};
-    html=`<div class="adm-fld"><label>아파트/단지명</label><input id="m-loc" type="text" value="${resc(it.loc||'')}"></div><div class="adm-fld"><label>인치·벽 종류·시공 방식</label><input id="m-det" type="text" value="${resc(it.det||'')}"></div><div class="adm-fld"><label>배지</label><input id="m-badge" type="text" value="${resc(it.badge||'무타공')}"></div>`;}
+    html=`<div class="adm-fld"><label>아파트/단지명</label><input id="m-loc" type="text" value="${resc(it.loc||'')}"></div><div class="adm-fld"><label>인치·벽 종류·시공 방식</label><input id="m-det" type="text" value="${resc(it.det||'')}"></div><div class="adm-fld"><label>배지</label><input id="m-badge" type="text" value="${resc(it.badge||'무타공')}"></div><div class="adm-fld"><label>썸네일 이미지 URL</label><input id="m-img" type="url" placeholder="https://..." value="${resc(it.img||'')}"><div style="margin-top:8px;font-size:12px;color:#888">이미지 URL을 붙여넣으세요 (네이버 블로그 사진 등)</div>${it.img?`<div style="margin-top:8px"><img src="${resc(it.img)}" style="max-height:120px;border-radius:6px;border:1px solid #eee" onerror="this.style.display='none'"></div>`:''}</div><div class="adm-fld"><label>외부 링크 (네이버 블로그 등)</label><input id="m-link" type="url" placeholder="https://blog.naver.com/..." value="${resc(it.link||'')}"><div style="margin-top:6px;font-size:12px;color:#888">링크 입력 시 카드 클릭 시 새 탭으로 이동</div></div>`;}
   else if(type==='review'){ const it=(d.reviews||[])[idx]||{};
     html=`<div class="adm-fld"><label>후기 내용</label><textarea id="m-text" style="min-height:120px">${resc(it.text||'')}</textarea></div><div class="adm-fld"><label>고객명</label><input id="m-name" type="text" value="${resc(it.name||'')}"></div><div class="adm-fld"><label>아파트/지역</label><input id="m-apt" type="text" value="${resc(it.apt||'')}"></div>`;}
   else if(type==='faq'){ const it=(d.faq||[])[idx]||{};
@@ -965,7 +977,7 @@ async function saveModal() {
   const type=currentModalType, idx=currentModalIdx;
   const d=JSON.parse(JSON.stringify(DATA||{}));
   let listKey='', item={}, labelFn;
-  if(type==='case'){ item={loc:gv('m-loc'),det:gv('m-det'),badge:gv('m-badge')||'무타공'};
+  if(type==='case'){ item={loc:gv('m-loc'),det:gv('m-det'),badge:gv('m-badge')||'무타공',img:gv('m-img'),link:gv('m-link')};
     if(!item.loc){showToast('단지명을 입력해주세요.',true);return;}
     if(!d.cases)d.cases=[]; if(idx!==null)d.cases[idx]=item;else d.cases.push(item);
     listKey='cases'; labelFn=c=>({title:c.loc,sub:c.det}); }
