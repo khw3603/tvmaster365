@@ -339,6 +339,42 @@ ${[...staticUrls, ...postUrls].join('\n')}
   res.send(xml);
 });
 
+// RSS 2.0 피드 — 블로그 포스트 자동 포함
+app.get('/rss.xml', (req, res) => {
+  const posts = loadPosts();
+  const escXml = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+  const items = posts.slice(0, 50).map(p => {
+    const pubDate = new Date(p.created_at).toUTCString();
+    const thumbnail = p.thumbnail_url
+      ? `<enclosure url="${SITE_URL}${escXml(p.thumbnail_url)}" type="image/jpeg" length="0"/>`
+      : '';
+    return `  <item>
+    <title>${escXml(p.title)}</title>
+    <link>${SITE_URL}/blog/${escXml(p.slug)}</link>
+    <guid isPermaLink="true">${SITE_URL}/blog/${escXml(p.slug)}</guid>
+    <pubDate>${pubDate}</pubDate>
+    <description>${escXml(p.meta_description || p.title)}</description>
+    ${thumbnail}
+  </item>`;
+  }).join('\n');
+
+  const rss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TV마스터365 — TV 벽걸이 설치 전문</title>
+    <link>${SITE_URL}/</link>
+    <description>서울·경기·인천 TV 벽걸이 설치 전문 TV마스터365 블로그</description>
+    <language>ko</language>
+    <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
+${items}
+  </channel>
+</rss>`;
+
+  res.set('Content-Type', 'application/rss+xml; charset=utf-8');
+  res.send(rss);
+});
+
 // 네이버 서치 어드바이저 HTML 인증 파일 (NAVER_HTML_FILE 환경변수로 파일명, NAVER_HTML_CONTENT로 내용 지정)
 const NAVER_HTML_FILE = process.env.NAVER_HTML_FILE || '';
 const NAVER_HTML_CONTENT = process.env.NAVER_HTML_CONTENT || '';

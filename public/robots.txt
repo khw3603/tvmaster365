@@ -4,3 +4,4 @@ Disallow: /api/
 Disallow: /admin
 
 Sitemap: https://tvmaster365-production.up.railway.app/sitemap.xml
+Sitemap: https://tvmaster365-production.up.railway.app/rss.xml
