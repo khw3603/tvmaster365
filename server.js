@@ -223,6 +223,12 @@ function savePosts(posts) {
 
 app.use('/data/uploads', express.static(UPLOADS_DIR));
 
+// 범용 이미지 업로드 (히어로 이미지 등)
+app.post('/api/upload', upload.single('file'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: '파일 없음' });
+  res.json({ ok: true, url: `/data/uploads/${req.file.filename}` });
+});
+
 // 포스트 목록
 app.get('/api/posts', (req, res) => {
   const posts = loadPosts();

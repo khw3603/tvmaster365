@@ -265,6 +265,8 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .adm-btn-del{background:rgba(212,43,43,.09);color:var(--accent)}.adm-btn-del:hover{background:rgba(212,43,43,.16)}
 .adm-add-btn{display:flex;align-items:center;gap:7px;padding:9px 16px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer}
 .adm-add-btn:hover{background:var(--accent-h)}
+.adm-upload-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#F0F1F3;color:#444;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:background .13s}
+.adm-upload-btn:hover{background:#E4E5E7}
 .adm-hint{font-size:11.5px;color:#BBB;margin-top:5px;line-height:1.55}
 .adm-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
 .adm-modal{background:#fff;border-radius:14px;width:100%;max-width:540px;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
@@ -553,7 +555,16 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
               <div class="adm-fld full"><label>버튼 텍스트 (빨간 · 클릭 시 전화연결)</label><input id="h-cta1" type="text"></div>
             </div>
             <div class="adm-row">
-              <div class="adm-fld full"><label>히어로 오른쪽 이미지 URL</label><input id="h-img" type="url" placeholder="https://... (비워두면 기본 TV 그림 표시)"></div>
+              <div class="adm-fld full">
+                <label>히어로 오른쪽 이미지</label>
+                <input id="h-img" type="url" placeholder="https://... (URL 직접 입력)" style="margin-bottom:8px">
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                  <label class="adm-upload-btn" for="h-img-file">📁 파일 업로드</label>
+                  <input id="h-img-file" type="file" accept="image/*" style="display:none" onchange="uploadHeroImg(this)">
+                  <span id="h-img-upload-status" style="font-size:12px;color:#888"></span>
+                </div>
+                <div style="font-size:11.5px;color:#aaa;margin-top:5px">비워두면 기본 TV 일러스트 표시</div>
+              </div>
             </div>
             <div id="h-img-preview" style="margin-top:6px"></div>
           </div>
@@ -922,6 +933,12 @@ function loadAdminFields() {
     const prev=document.getElementById('h-img-preview');
     if(prev) prev.innerHTML=hImgInput.value?`<img src="${hImgInput.value}" style="max-width:100%;max-height:180px;border-radius:6px;object-fit:cover" onerror="this.style.display='none'">`:'';
   }); }
+
+  // 이미 저장된 h-img 값으로 미리보기
+  if(hImgInput && hImgInput.value){
+    const prev=document.getElementById('h-img-preview');
+    if(prev) prev.innerHTML=`<img src="${hImgInput.value}" style="max-width:100%;max-height:180px;border-radius:6px;object-fit:cover" onerror="this.style.display='none'">`;
+  }
   // 시공 사례 / 후기 / 가격 / FAQ
   renderAdmList('cases',d.cases||[],c=>({title:c.loc,sub:c.det}));
   renderAdmList('reviews',d.reviews||[],r=>({title:r.apt||'후기',sub:r.text?.slice(0,40)+(r.text?.length>40?'…':'')||''}));
@@ -1012,6 +1029,32 @@ function openModal(type, idx) {
   },60);
 }
 function closeModal() { document.getElementById('adm-modal').style.display='none'; currentModalType=null; currentModalIdx=null; }
+
+async function uploadHeroImg(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const status = document.getElementById('h-img-upload-status');
+  if (status) { status.textContent = '업로드 중...'; status.style.color = '#888'; }
+  const fd = new FormData();
+  fd.append('file', file);
+  try {
+    const r = await fetch('/api/upload', { method: 'POST', body: fd });
+    const data = await r.json();
+    if (data.url) {
+      const inp = document.getElementById('h-img');
+      if (inp) {
+        inp.value = data.url;
+        inp.dispatchEvent(new Event('input'));
+      }
+      if (status) { status.textContent = '✓ 업로드 완료'; status.style.color = '#2a9d5c'; }
+    } else {
+      if (status) { status.textContent = '업로드 실패'; status.style.color = '#c00'; }
+    }
+  } catch {
+    if (status) { status.textContent = '업로드 오류'; status.style.color = '#c00'; }
+  }
+  input.value = '';
+}
 
 function toggleMoreCases(btn) {
   const extras = document.querySelectorAll('.case-extra');
