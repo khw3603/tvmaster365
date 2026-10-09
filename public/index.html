@@ -93,7 +93,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .case:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.11)}
 .case-link{display:block;text-decoration:none;color:inherit}
 .case-img{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.case-thumb{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
+.case-thumb{width:100%;height:100%;object-fit:contain;display:block;position:absolute;inset:0}
 .case-tv{width:62%;aspect-ratio:16/9;background:#080910;border:1.5px solid rgba(255,255,255,.12);border-radius:3px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
 .case-badge{position:absolute;top:11px;left:11px;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);color:#fff;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.04em;z-index:1}
 .case-ext{position:absolute;top:11px;right:11px;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;z-index:1;display:flex;align-items:center;gap:4px}
@@ -894,7 +894,7 @@ function renderAdmList(type, arr, labelFn) {
   const el = document.getElementById(`adm-${type}-list`);
   if (!el) return;
   el.innerHTML = arr.length===0 ? '<div style="color:#AAA;font-size:13px;padding:8px 0">항목이 없습니다.</div>'
-    : arr.map((item,i)=>{ const {title,sub}=labelFn(item); return `<div class="adm-list-item"><div class="adm-list-item-body"><div class="adm-list-item-title">${esc(title||'')}</div><div class="adm-list-item-sub">${esc(sub||'')}</div></div><div class="adm-list-actions"><button class="adm-btn-edit" onclick="openModal('${type}',${i})">편집</button><button class="adm-btn-del" onclick="deleteItem('${type}',${i})">삭제</button></div></div>`; }).join('');
+    : arr.map((item,i)=>{ const {title,sub}=labelFn(item); return `<div class="adm-list-item"><div class="adm-list-item-body"><div class="adm-list-item-title">${esc(title||'')}</div><div class="adm-list-item-sub">${esc(sub||'')}</div></div><div class="adm-list-actions"><button class="adm-btn-edit" onclick="openModal('${type}',${i})">편집</button><button class="adm-btn-del" onclick="deleteItem('${type}',${i},this)">삭제</button></div></div>`; }).join('');
 }
 
 function loadAdminFields() {
@@ -1043,8 +1043,12 @@ async function saveModal() {
   else showToast('저장 실패',true);
 }
 
-async function deleteItem(type, idx) {
-  if(!confirm('삭제하시겠습니까?')) return;
+async function deleteItem(type, idx, btn) {
+  if(btn && btn.dataset.confirm !== '1') {
+    btn.dataset.confirm='1'; btn.textContent='확인?'; btn.style.background='#c00';
+    setTimeout(()=>{ if(btn.dataset.confirm==='1'){btn.dataset.confirm='';btn.textContent='삭제';btn.style.background='';} },3000);
+    return;
+  }
   const d=JSON.parse(JSON.stringify(DATA||{}));
   const maps={cases:c=>({title:c.loc,sub:c.det}),reviews:r=>({title:r.name,sub:r.apt}),faq:f=>({title:f.q,sub:''}),prices:p=>({title:p.size,sub:p.range})};
   if(d[type]) d[type].splice(idx,1);
