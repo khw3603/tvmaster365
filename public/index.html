@@ -507,7 +507,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 
       <div class="adm-content">
         <!-- 기본 정보 -->
-        <div class="adm-section active" id="sec-info">
+        <div class="adm-section active" id="adm-sec-info">
           <div class="adm-sec-title">기본 정보</div>
           <div class="adm-sec-sub">회사명, 연락처, 사업자 정보를 설정합니다.</div>
           <div class="adm-card">
@@ -542,7 +542,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
         </div>
 
         <!-- 히어로 -->
-        <div class="adm-section" id="sec-hero">
+        <div class="adm-section" id="adm-sec-hero">
           <div class="adm-sec-title">히어로 섹션</div>
           <div class="adm-sec-sub">메인 화면 상단 배너를 수정합니다.</div>
           <div class="adm-card">
@@ -564,7 +564,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
         </div>
 
         <!-- 문제점 -->
-        <div class="adm-section" id="sec-problem">
+        <div class="adm-section" id="adm-sec-problem">
           <div class="adm-sec-title">문제점 섹션</div>
           <div class="adm-sec-sub">4개 체크리스트 카드와 하단 설명 박스를 수정합니다.</div>
           <div class="adm-card">
@@ -583,7 +583,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
         </div>
 
         <!-- 솔루션 -->
-        <div class="adm-section" id="sec-solution">
+        <div class="adm-section" id="adm-sec-solution">
           <div class="adm-sec-title">솔루션 섹션</div>
           <div class="adm-sec-sub">시공 방식 4단계와 수치 스펙을 수정합니다.</div>
           <div class="adm-card">
@@ -602,7 +602,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
         </div>
 
         <!-- 시공 사례 -->
-        <div class="adm-section" id="sec-cases">
+        <div class="adm-section" id="adm-sec-cases">
           <div class="adm-sec-title">시공 사례</div>
           <div class="adm-sec-sub">홈페이지에 표시할 시공 사례를 추가·편집·삭제합니다.</div>
           <div class="adm-card">
@@ -612,7 +612,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
         </div>
 
         <!-- 고객 후기 -->
-        <div class="adm-section" id="sec-reviews">
+        <div class="adm-section" id="adm-sec-reviews">
           <div class="adm-sec-title">고객 후기</div>
           <div class="adm-sec-sub">홈페이지에 표시할 후기를 추가·편집·삭제합니다.</div>
           <div class="adm-card">
@@ -622,7 +622,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
         </div>
 
         <!-- 비교 -->
-        <div class="adm-section" id="sec-compare">
+        <div class="adm-section" id="adm-sec-compare">
           <div class="adm-sec-title">비교 섹션</div>
           <div class="adm-sec-sub">일반 업체 vs 자사 비교 내용을 수정합니다.</div>
           <div class="adm-card">
@@ -644,7 +644,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
         </div>
 
         <!-- 가격 -->
-        <div class="adm-section" id="sec-price">
+        <div class="adm-section" id="adm-sec-price">
           <div class="adm-sec-title">가격 안내</div>
           <div class="adm-sec-sub">인치별 가격 카드와 포함 항목을 설정합니다.</div>
           <div class="adm-card">
@@ -661,7 +661,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
         </div>
 
         <!-- 프로세스 -->
-        <div class="adm-section" id="sec-process">
+        <div class="adm-section" id="adm-sec-process">
           <div class="adm-sec-title">프로세스 섹션</div>
           <div class="adm-sec-sub">예약~시공 4단계 절차를 수정합니다.</div>
           <div class="adm-card">
@@ -676,7 +676,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
         </div>
 
         <!-- FAQ -->
-        <div class="adm-section" id="sec-faq">
+        <div class="adm-section" id="adm-sec-faq">
           <div class="adm-sec-title">FAQ</div>
           <div class="adm-sec-sub">자주 묻는 질문을 추가·편집·삭제합니다.</div>
           <div class="adm-card">
@@ -686,7 +686,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
         </div>
 
         <!-- CTA -->
-        <div class="adm-section" id="sec-cta">
+        <div class="adm-section" id="adm-sec-cta">
           <div class="adm-sec-title">CTA 배너</div>
           <div class="adm-sec-sub">홈페이지 하단 행동 유도 배너를 수정합니다.</div>
           <div class="adm-card">
@@ -885,7 +885,7 @@ function toggleFaq(btn) {
 function showSec(id, btn) {
   document.querySelectorAll('.adm-section').forEach(e=>e.classList.remove('active'));
   document.querySelectorAll('.adm-nav-btn').forEach(e=>e.classList.remove('active'));
-  document.getElementById('sec-'+id).classList.add('active'); btn.classList.add('active');
+  document.getElementById('adm-sec-'+id).classList.add('active'); btn.classList.add('active');
 }
 
 function setVal(id, v) { const e=document.getElementById(id); if(e) e.value=v||''; }
