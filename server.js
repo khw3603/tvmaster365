@@ -37,6 +37,8 @@ app.get('/', (req, res) => {
     : (process.env.OG_IMAGE_URL || '');
 
   const ogTags = [
+    `<meta name="description" content="${ogDesc.replace(/"/g,'&quot;')}">`,
+    `<link rel="canonical" href="${siteUrl}/">`,
     `<meta property="og:type" content="website">`,
     `<meta property="og:site_name" content="TV마스터365">`,
     `<meta property="og:title" content="${ogTitle}">`,
@@ -53,8 +55,20 @@ app.get('/', (req, res) => {
       ? `<meta name="naver-site-verification" content="${process.env.NAVER_SITE_VERIFICATION}">` : '',
   ].filter(Boolean).join('\n');
 
+  // JSON-LD 구조화 데이터
+  const escJ = v => JSON.stringify(v || '');
+  const faqEntities = (d.faq || []).map(f =>
+    `{"@type":"Question","name":${escJ(f.q)},"acceptedAnswer":{"@type":"Answer","text":${escJ(f.a)}}}`
+  ).join(',');
+  const jsonLd = [
+    `<script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":${escJ(d.company)},"url":"${siteUrl}/","telephone":${escJ(d.phone)},"address":{"@type":"PostalAddress","streetAddress":"소사로730번길 58, 5동 지2호","addressLocality":"부천시","addressRegion":"경기도","addressCountry":"KR"},"areaServed":["서울","경기","인천"],"openingHours":["Mo-Fr 09:30-18:00","Sa 09:00-13:00"]${ogImgUrl ? `,"image":${escJ(ogImgUrl)}` : ''}}</script>`,
+    `<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":${escJ(d.company)},"url":"${siteUrl}/","contactPoint":{"@type":"ContactPoint","telephone":${escJ(d.phone)},"contactType":"customer service","availableLanguage":"Korean"}}</script>`,
+    faqEntities ? `<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[${faqEntities}]}</script>` : '',
+  ].filter(Boolean).join('\n');
+
   let html = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8');
   html = html.replace('<meta charset="UTF-8">', `<meta charset="UTF-8">\n${ogTags}`);
+  html = html.replace('</head>', `${jsonLd}\n</head>`);
   res.set('Content-Type', 'text/html');
   res.send(html);
 });
