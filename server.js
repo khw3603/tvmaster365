@@ -344,7 +344,7 @@ app.get('/rss.xml', (req, res) => {
   const posts = loadPosts();
   const escXml = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
-  const items = posts.slice(0, 50).map(p => {
+  const postItems = posts.slice(0, 50).map(p => {
     const pubDate = new Date(p.created_at).toUTCString();
     return [
       '  <item>',
@@ -355,7 +355,22 @@ app.get('/rss.xml', (req, res) => {
       `    <description><![CDATA[${p.meta_description || p.title || ''}]]></description>`,
       '  </item>',
     ].join('\n');
-  }).join('\n');
+  });
+
+  // 포스트가 없을 때 홈페이지를 기본 아이템으로 추가 (빈 피드는 네이버가 오류 처리)
+  if (postItems.length === 0) {
+    postItems.push([
+      '  <item>',
+      '    <title><![CDATA[TV마스터365 — 서울 경기 인천 TV 벽걸이 설치 전문]]></title>',
+      `    <link>${SITE_URL}/</link>`,
+      `    <guid isPermaLink="true">${SITE_URL}/</guid>`,
+      `    <pubDate>${new Date().toUTCString()}</pubDate>`,
+      '    <description><![CDATA[무타공 TV 벽걸이 설치 전문. 서울 경기 인천 전 지역 출장 시공. 010-6213-0555]]></description>',
+      '  </item>',
+    ].join('\n'));
+  }
+
+  const items = postItems.join('\n');
 
   const buildDate = new Date().toUTCString();
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
