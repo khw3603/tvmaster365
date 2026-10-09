@@ -5,9 +5,11 @@ const multer = require('multer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const DATA_FILE = path.join(__dirname, 'data', 'content.json');
-const POSTS_FILE = path.join(__dirname, 'data', 'posts.json');
-const UPLOADS_DIR = path.join(__dirname, 'data', 'uploads');
+// DATA_DIR 환경변수로 Railway Volume 경로 지정 가능 (기본: 앱 내 data/)
+const DATA_DIR   = process.env.DATA_DIR || path.join(__dirname, 'data');
+const DATA_FILE  = path.join(DATA_DIR, 'content.json');
+const POSTS_FILE = path.join(DATA_DIR, 'posts.json');
+const UPLOADS_DIR = path.join(DATA_DIR, 'uploads');
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin365';
 
 const storage = multer.diskStorage({
