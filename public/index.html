@@ -986,6 +986,8 @@ async function saveAll() {
 }
 
 function openModal(type, idx) {
+  const singular={cases:'case',reviews:'review',prices:'price'};
+  type = singular[type] || type;
   currentModalType=type; currentModalIdx=idx;
   const labels={case:'시공 사례',review:'고객 후기',faq:'FAQ',price:'가격 항목'};
   document.getElementById('modal-title').textContent=(idx!==null?'편집: ':'')+labels[type];
@@ -1050,7 +1052,7 @@ async function deleteItem(type, idx, btn) {
     return;
   }
   const d=JSON.parse(JSON.stringify(DATA||{}));
-  const maps={cases:c=>({title:c.loc,sub:c.det}),reviews:r=>({title:r.name,sub:r.apt}),faq:f=>({title:f.q,sub:''}),prices:p=>({title:p.size,sub:p.range})};
+  const maps={cases:c=>({title:c.loc,sub:c.det}),reviews:r=>({title:r.apt||'후기',sub:r.text?.slice(0,40)||''}),faq:f=>({title:f.q,sub:''}),prices:p=>({title:p.size,sub:p.range})};
   if(d[type]) d[type].splice(idx,1);
   const res=await apiSave(d);
   if(res.ok){DATA=d; renderAdmList(type,d[type]||[],maps[type]); showToast('✓ 삭제됐습니다');}
