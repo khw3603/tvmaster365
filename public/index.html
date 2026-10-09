@@ -101,7 +101,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
 .case-loc{font-size:15.5px;font-weight:700;margin-bottom:5px}
 .case-det{font-size:13px;color:var(--fg2)}
 .more-wrap{text-align:center;margin-top:36px}
-.btn-more{display:inline-flex;align-items:center;gap:7px;padding:11px 24px;border:2px solid var(--accent);color:var(--accent);font-size:14px;font-weight:700;border-radius:8px;transition:background .14s,color .14s}
+.btn-more{display:inline-flex;align-items:center;gap:7px;padding:11px 24px;border:2px solid var(--accent);color:var(--accent);font-size:14px;font-weight:700;border-radius:8px;transition:background .14s,color .14s;background:none;cursor:pointer;font-family:var(--font)}
 .btn-more:hover{background:var(--accent);color:#fff}
 
 /* REVIEWS */
@@ -364,7 +364,7 @@ img{max-width:100%;display:block}a{color:inherit;text-decoration:none}button{fon
     <h2 class="sec-title">실제 시공 사례로 확인하세요.</h2>
     <p class="sec-sub">완성 사진은 어느 업체나 비슷합니다. 어떤 벽에서 어떻게 시공했는지, 과정으로 비교하세요.</p>
     <div class="cases-grid" id="p-cases"></div>
-    <div class="more-wrap"><a href="#" class="btn-more">전체 사례 보기 →</a></div>
+    <div class="more-wrap"><button id="btn-cases-more" class="btn-more" onclick="toggleMoreCases(this)" style="display:none">전체 사례 보기 →</button></div>
   </div>
 </section>
 
@@ -725,7 +725,7 @@ async function route() {
     document.getElementById('public-view').style.display = 'block';
     document.getElementById('admin-view').style.display = 'none';
     if (!DATA) await fetchData();
-    renderPublic(DATA);
+    await renderPublic(DATA);
   }
 }
 window.addEventListener('hashchange', route);
@@ -763,7 +763,7 @@ function setHTML(id,v) { const e=document.getElementById(id); if(e) e.innerHTML=
 function setMulti(id,v) { const e=document.getElementById(id); if(e) e.innerHTML=String(v||'').split('\n').map(l=>esc(l)).join('<br>'); }
 function injectCompany(tpl, nm) { return tpl.replace(/\{company\}/g, `<strong>${esc(nm)}</strong>`); }
 
-function renderPublic(d) {
+async function renderPublic(d) {
   if (!d) return;
   const nm = d.company || 'TV마스터365';
   // Logo
@@ -798,9 +798,9 @@ function renderPublic(d) {
   setText('p-sol-sub', d.solution?.sub||'');
   if (d.solution?.steps) setHTML('p-sol-steps', d.solution.steps.map((s,i)=>`<div class="step"><div class="step-n">${i+1}</div><div class="step-title">${esc(s.title)}</div><p class="step-desc">${esc(s.desc)}</p></div>`).join(''));
   if (d.solution?.specs) setHTML('p-sol-specs', d.solution.specs.map(s=>`<div class="spec"><div class="spec-v">${esc(s.num)}<span>${esc(s.unit)}</span></div><div class="spec-l">${esc(s.label)}</div><div class="spec-n">${esc(s.note)}</div></div>`).join(''));
-  // Cases
+  // Cases — admin 사례 + 블로그 포스트 병합
   const bgs=['linear-gradient(135deg,#1a1b22,#141620)','linear-gradient(135deg,#1b1a22,#17161f)','linear-gradient(135deg,#181c1a,#151916)','linear-gradient(135deg,#1c1a18,#1a1815)','linear-gradient(135deg,#1a1b1c,#14161a)','linear-gradient(135deg,#191a1b,#141617)'];
-  if (d.cases) setHTML('p-cases', d.cases.map((c,i)=>{
+  function buildCaseCard(c, i) {
     const inner = c.img
       ? `<img class="case-thumb" src="${esc(c.img)}" alt="${esc(c.loc)}" loading="lazy"><div class="case-badge">${esc(c.badge||'무타공')}</div>${c.link?`<div class="case-ext">블로그 ↗</div>`:''}`
       : `<div class="case-img" style="background:${bgs[i%bgs.length]}"><div class="case-tv"></div><div class="case-badge">${esc(c.badge||'무타공')}</div>${c.link?`<div class="case-ext">블로그 ↗</div>`:''}</div>`;
@@ -809,7 +809,26 @@ function renderPublic(d) {
     return c.link
       ? `<a class="case case-link" href="${esc(c.link)}" target="_blank" rel="noopener noreferrer">${card}</a>`
       : `<div class="case">${card}</div>`;
-  }).join(''));
+  }
+  // 블로그 포스트를 사례 카드로 변환
+  let blogPosts = [];
+  try { blogPosts = await fetch('/api/posts').then(r=>r.json()); } catch {}
+  const blogCases = blogPosts.map(p=>({
+    loc: p.region || p.title,
+    det: p.title,
+    badge: '블로그',
+    img: p.thumbnail_url || '',
+    link: '/blog/' + p.slug
+  }));
+  const allCases = [...(d.cases||[]), ...blogCases];
+  const SHOW_MAX = 6;
+  const cards = allCases.map((c,i) => {
+    const html = buildCaseCard(c, i);
+    return i < SHOW_MAX ? html : `<div class="case-extra" style="display:none">${html}</div>`;
+  });
+  setHTML('p-cases', cards.join(''));
+  const moreBtn = document.getElementById('btn-cases-more');
+  if (moreBtn) moreBtn.style.display = allCases.length > SHOW_MAX ? 'inline-flex' : 'none';
   // Reviews
   if (d.reviews) setHTML('p-reviews', d.reviews.map(r=>{
     const thumb = r.img ? `<img class="rev-thumb" src="${esc(r.img)}" alt="시공 후기" loading="lazy">` : '';
@@ -991,6 +1010,13 @@ function openModal(type, idx) {
   },60);
 }
 function closeModal() { document.getElementById('adm-modal').style.display='none'; currentModalType=null; currentModalIdx=null; }
+
+function toggleMoreCases(btn) {
+  const extras = document.querySelectorAll('.case-extra');
+  const isHidden = extras.length > 0 && extras[0].style.display === 'none';
+  extras.forEach(el => el.style.display = isHidden ? '' : 'none');
+  btn.textContent = isHidden ? '접기 ↑' : '전체 사례 보기 →';
+}
 
 async function saveModal() {
   const type=currentModalType, idx=currentModalIdx;
