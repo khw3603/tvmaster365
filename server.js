@@ -346,32 +346,32 @@ app.get('/rss.xml', (req, res) => {
 
   const items = posts.slice(0, 50).map(p => {
     const pubDate = new Date(p.created_at).toUTCString();
-    const thumbnail = p.thumbnail_url
-      ? `<enclosure url="${SITE_URL}${escXml(p.thumbnail_url)}" type="image/jpeg" length="0"/>`
-      : '';
-    return `  <item>
-    <title>${escXml(p.title)}</title>
-    <link>${SITE_URL}/blog/${escXml(p.slug)}</link>
-    <guid isPermaLink="true">${SITE_URL}/blog/${escXml(p.slug)}</guid>
-    <pubDate>${pubDate}</pubDate>
-    <description>${escXml(p.meta_description || p.title)}</description>
-    ${thumbnail}
-  </item>`;
+    return [
+      '  <item>',
+      `    <title><![CDATA[${p.title||''}]]></title>`,
+      `    <link>${SITE_URL}/blog/${escXml(p.slug)}</link>`,
+      `    <guid isPermaLink="true">${SITE_URL}/blog/${escXml(p.slug)}</guid>`,
+      `    <pubDate>${pubDate}</pubDate>`,
+      `    <description><![CDATA[${p.meta_description || p.title || ''}]]></description>`,
+      '  </item>',
+    ].join('\n');
   }).join('\n');
 
+  const buildDate = new Date().toUTCString();
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0">
   <channel>
-    <title>TV마스터365 — TV 벽걸이 설치 전문</title>
+    <title>TV마스터365 블로그</title>
     <link>${SITE_URL}/</link>
-    <description>서울·경기·인천 TV 벽걸이 설치 전문 TV마스터365 블로그</description>
+    <description>서울 경기 인천 TV 벽걸이 설치 전문 TV마스터365 블로그</description>
     <language>ko</language>
-    <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
+    <lastBuildDate>${buildDate}</lastBuildDate>
+    <generator>TV마스터365</generator>
 ${items}
   </channel>
 </rss>`;
 
-  res.set('Content-Type', 'application/rss+xml; charset=utf-8');
+  res.set('Content-Type', 'text/xml; charset=utf-8');
   res.send(rss);
 });
 
