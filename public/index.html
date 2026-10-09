@@ -1009,10 +1009,18 @@ function openModal(type, idx) {
   const labels={case:'시공 사례',review:'고객 후기',faq:'FAQ',price:'가격 항목'};
   document.getElementById('modal-title').textContent=(idx!==null?'편집: ':'')+labels[type];
   const d=DATA||{}; let html='';
+  const imgUploadUI = (previewId, existingImg) => `
+    <input id="m-img" type="url" placeholder="https://... (URL 직접 입력)" value="${existingImg}" style="margin-bottom:8px">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <label class="adm-upload-btn" for="m-img-file">📁 파일 업로드</label>
+      <input id="m-img-file" type="file" accept="image/*" style="display:none" onchange="uploadModalImg(this)">
+      <span id="m-img-upload-status" style="font-size:12px;color:#888"></span>
+    </div>
+    <div id="${previewId}" style="margin-top:8px">${existingImg?`<img src="${existingImg}" style="max-width:100%;max-height:160px;border-radius:6px;object-fit:cover" onerror="this.style.display='none'">`:''}</div>`;
   if(type==='case'){ const it=(d.cases||[])[idx]||{};
-    html=`<div class="adm-fld"><label>아파트/단지명</label><input id="m-loc" type="text" value="${resc(it.loc||'')}"></div><div class="adm-fld"><label>인치·벽 종류·시공 방식</label><input id="m-det" type="text" value="${resc(it.det||'')}"></div><div class="adm-fld"><label>배지</label><input id="m-badge" type="text" value="${resc(it.badge||'무타공')}"></div><div class="adm-fld"><label>썸네일 이미지 URL</label><input id="m-img" type="url" placeholder="https://..." value="${resc(it.img||'')}"><div style="margin-top:8px;font-size:12px;color:#888">이미지 URL을 붙여넣으세요 (네이버 블로그 사진 등)</div>${it.img?`<div style="margin-top:8px"><img src="${resc(it.img)}" style="max-height:120px;border-radius:6px;border:1px solid #eee" onerror="this.style.display='none'"></div>`:''}</div><div class="adm-fld"><label>외부 링크 (네이버 블로그 등)</label><input id="m-link" type="url" placeholder="https://blog.naver.com/..." value="${resc(it.link||'')}"><div style="margin-top:6px;font-size:12px;color:#888">링크 입력 시 카드 클릭 시 새 탭으로 이동</div></div>`;}
+    html=`<div class="adm-fld"><label>아파트/단지명</label><input id="m-loc" type="text" value="${resc(it.loc||'')}"></div><div class="adm-fld"><label>인치·벽 종류·시공 방식</label><input id="m-det" type="text" value="${resc(it.det||'')}"></div><div class="adm-fld"><label>배지</label><input id="m-badge" type="text" value="${resc(it.badge||'무타공')}"></div><div class="adm-fld"><label>썸네일 이미지</label>${imgUploadUI('m-img-preview', resc(it.img||''))}</div><div class="adm-fld"><label>외부 링크 (네이버 블로그 등)</label><input id="m-link" type="url" placeholder="https://blog.naver.com/..." value="${resc(it.link||'')}"><div style="margin-top:6px;font-size:12px;color:#888">링크 입력 시 카드 클릭 시 새 탭으로 이동</div></div>`;}
   else if(type==='review'){ const it=(d.reviews||[])[idx]||{};
-    html=`<div class="adm-fld"><label>후기 내용</label><textarea id="m-text" style="min-height:120px">${resc(it.text||'')}</textarea></div><div class="adm-fld"><label>아파트/지역</label><input id="m-apt" type="text" value="${resc(it.apt||'')}"></div><div class="adm-fld"><label>썸네일 이미지 URL</label><input id="m-img" type="url" placeholder="https://..." value="${resc(it.img||'')}"><div id="m-img-preview" style="margin-top:8px">${it.img?`<img src="${resc(it.img)}" style="max-width:100%;max-height:160px;border-radius:6px;object-fit:cover">`:''}</div></div><div class="adm-fld"><label>외부 링크 (네이버 블로그 등)</label><input id="m-link" type="url" placeholder="https://blog.naver.com/..." value="${resc(it.link||'')}"></div>`;}
+    html=`<div class="adm-fld"><label>후기 내용</label><textarea id="m-text" style="min-height:120px">${resc(it.text||'')}</textarea></div><div class="adm-fld"><label>아파트/지역</label><input id="m-apt" type="text" value="${resc(it.apt||'')}"></div><div class="adm-fld"><label>썸네일 이미지</label>${imgUploadUI('m-img-preview', resc(it.img||''))}</div><div class="adm-fld"><label>외부 링크 (네이버 블로그 등)</label><input id="m-link" type="url" placeholder="https://blog.naver.com/..." value="${resc(it.link||'')}"></div>`;}
   else if(type==='faq'){ const it=(d.faq||[])[idx]||{};
     html=`<div class="adm-fld"><label>질문</label><input id="m-q" type="text" value="${resc(it.q||'')}"></div><div class="adm-fld"><label>답변</label><textarea id="m-a" style="min-height:130px">${resc(it.a||'')}</textarea></div>`;}
   else if(type==='price'){ const it=(d.prices||[])[idx]||{};
@@ -1029,6 +1037,31 @@ function openModal(type, idx) {
   },60);
 }
 function closeModal() { document.getElementById('adm-modal').style.display='none'; currentModalType=null; currentModalIdx=null; }
+
+async function uploadModalImg(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const status = document.getElementById('m-img-upload-status');
+  if (status) { status.textContent = '업로드 중...'; status.style.color = '#888'; }
+  const fd = new FormData();
+  fd.append('file', file);
+  try {
+    const r = await fetch('/api/upload', { method: 'POST', body: fd });
+    const data = await r.json();
+    if (data.url) {
+      const inp = document.getElementById('m-img');
+      if (inp) inp.value = data.url;
+      const prev = document.getElementById('m-img-preview');
+      if (prev) prev.innerHTML = `<img src="${data.url}" style="max-width:100%;max-height:160px;border-radius:6px;object-fit:cover">`;
+      if (status) { status.textContent = '✓ 업로드 완료'; status.style.color = '#2a9d5c'; }
+    } else {
+      if (status) { status.textContent = '업로드 실패'; status.style.color = '#c00'; }
+    }
+  } catch {
+    if (status) { status.textContent = '업로드 오류'; status.style.color = '#c00'; }
+  }
+  input.value = '';
+}
 
 async function uploadHeroImg(input) {
   const file = input.files[0];
