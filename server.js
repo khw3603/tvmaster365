@@ -22,6 +22,20 @@ const storage = multer.diskStorage({
 const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
 app.use(express.json({ limit: '2mb' }));
+
+// index.html에 네이버 인증 메타 태그 동적 주입
+app.get('/', (req, res) => {
+  const NAVER_VERIFY_TAG = process.env.NAVER_SITE_VERIFICATION
+    ? `<meta name="naver-site-verification" content="${process.env.NAVER_SITE_VERIFICATION}">`
+    : '';
+  let html = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8');
+  if (NAVER_VERIFY_TAG) {
+    html = html.replace('<meta charset="UTF-8">', `<meta charset="UTF-8">\n${NAVER_VERIFY_TAG}`);
+  }
+  res.set('Content-Type', 'text/html');
+  res.send(html);
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 const DEFAULT_DATA = {
@@ -296,6 +310,44 @@ tr:nth-child(even) td{background:#F5F5F4}
 </body></html>`;
   res.send(html);
 });
+
+// ── SEO: 사이트맵 & 네이버 서치 어드바이저 ────────────────────────────────────
+
+const SITE_URL = process.env.SITE_URL || 'https://tvmaster365-production.up.railway.app';
+const NAVER_VERIFY = process.env.NAVER_SITE_VERIFICATION || '';
+
+// 동적 sitemap.xml — 홈 + 블로그 포스트 자동 포함
+app.get('/sitemap.xml', (req, res) => {
+  const posts = loadPosts();
+  const today = new Date().toISOString().split('T')[0];
+
+  const staticUrls = [
+    `<url><loc>${SITE_URL}/</loc><changefreq>weekly</changefreq><priority>1.0</priority><lastmod>${today}</lastmod></url>`,
+  ];
+
+  const postUrls = posts.map(p => {
+    const date = new Date(p.created_at).toISOString().split('T')[0];
+    return `<url><loc>${SITE_URL}/blog/${p.slug}</loc><changefreq>monthly</changefreq><priority>0.8</priority><lastmod>${date}</lastmod></url>`;
+  });
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${[...staticUrls, ...postUrls].join('\n')}
+</urlset>`;
+
+  res.set('Content-Type', 'application/xml');
+  res.send(xml);
+});
+
+// 네이버 서치 어드바이저 HTML 인증 파일 (NAVER_HTML_FILE 환경변수로 파일명, NAVER_HTML_CONTENT로 내용 지정)
+const NAVER_HTML_FILE = process.env.NAVER_HTML_FILE || '';
+const NAVER_HTML_CONTENT = process.env.NAVER_HTML_CONTENT || '';
+if (NAVER_HTML_FILE && NAVER_HTML_CONTENT) {
+  app.get(`/${NAVER_HTML_FILE}`, (req, res) => {
+    res.set('Content-Type', 'text/html');
+    res.send(NAVER_HTML_CONTENT);
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`TV마스터365 서버 실행 중: http://localhost:${PORT}`);
