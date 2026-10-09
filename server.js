@@ -23,15 +23,38 @@ const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
 app.use(express.json({ limit: '2mb' }));
 
-// index.html에 네이버 인증 메타 태그 동적 주입
+// index.html — OG 메타 태그 + 네이버 인증 태그 동적 주입
 app.get('/', (req, res) => {
-  const NAVER_VERIFY_TAG = process.env.NAVER_SITE_VERIFICATION
-    ? `<meta name="naver-site-verification" content="${process.env.NAVER_SITE_VERIFICATION}">`
-    : '';
+  const d = loadData();
+  const siteUrl = process.env.SITE_URL || 'https://tvmaster365-production.up.railway.app';
+
+  const ogTitle = 'TV마스터365 — TV 벽걸이 설치 전문';
+  const ogDesc  = d.desc || '서울·경기·인천 TV 벽걸이 설치 전문. 무료 견적 010-6213-0555';
+  // OG 이미지: 어드민에서 설정한 히어로 이미지 → 환경변수 → 없으면 생략
+  const heroImg = d.hero?.img || '';
+  const ogImgUrl = heroImg
+    ? (heroImg.startsWith('http') ? heroImg : siteUrl + heroImg)
+    : (process.env.OG_IMAGE_URL || '');
+
+  const ogTags = [
+    `<meta property="og:type" content="website">`,
+    `<meta property="og:site_name" content="TV마스터365">`,
+    `<meta property="og:title" content="${ogTitle}">`,
+    `<meta property="og:description" content="${ogDesc.replace(/"/g,'&quot;')}">`,
+    `<meta property="og:url" content="${siteUrl}/">`,
+    ogImgUrl ? `<meta property="og:image" content="${ogImgUrl}">` : '',
+    ogImgUrl ? `<meta property="og:image:width" content="1200">` : '',
+    ogImgUrl ? `<meta property="og:image:height" content="630">` : '',
+    `<meta name="twitter:card" content="${ogImgUrl ? 'summary_large_image' : 'summary'}">`,
+    `<meta name="twitter:title" content="${ogTitle}">`,
+    `<meta name="twitter:description" content="${ogDesc.replace(/"/g,'&quot;')}">`,
+    ogImgUrl ? `<meta name="twitter:image" content="${ogImgUrl}">` : '',
+    process.env.NAVER_SITE_VERIFICATION
+      ? `<meta name="naver-site-verification" content="${process.env.NAVER_SITE_VERIFICATION}">` : '',
+  ].filter(Boolean).join('\n');
+
   let html = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8');
-  if (NAVER_VERIFY_TAG) {
-    html = html.replace('<meta charset="UTF-8">', `<meta charset="UTF-8">\n${NAVER_VERIFY_TAG}`);
-  }
+  html = html.replace('<meta charset="UTF-8">', `<meta charset="UTF-8">\n${ogTags}`);
   res.set('Content-Type', 'text/html');
   res.send(html);
 });
@@ -277,7 +300,19 @@ app.get('/blog/:slug', (req, res) => {
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${post.title} | TV마스터365</title>
 <meta name="description" content="${(post.meta_description||'').replace(/"/g,'&quot;')}">
-<link rel="canonical" href="https://tvmaster365-production.up.railway.app/blog/${post.slug}">
+<link rel="canonical" href="${SITE_URL}/blog/${post.slug}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="TV마스터365">
+<meta property="og:title" content="${post.title.replace(/"/g,'&quot;')} | TV마스터365">
+<meta property="og:description" content="${(post.meta_description||post.title).replace(/"/g,'&quot;')}">
+<meta property="og:url" content="${SITE_URL}/blog/${post.slug}">
+${post.thumbnail_url ? `<meta property="og:image" content="${SITE_URL}${post.thumbnail_url}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${SITE_URL}${post.thumbnail_url}">` : '<meta name="twitter:card" content="summary">'}
+<meta name="twitter:title" content="${post.title.replace(/"/g,'&quot;')}">
+<meta name="twitter:description" content="${(post.meta_description||post.title).replace(/"/g,'&quot;')}">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
