@@ -426,42 +426,61 @@ def _region_color(region):
 
 
 def make_thumbnail(region, bg_image_path=None):
-    """지역·주제 SVG 썸네일을 JPEG 바이트로 반환"""
+    """고정 4줄 브랜드 썸네일을 JPEG 바이트로 반환"""
     from PIL import Image, ImageDraw, ImageFont
-    import textwrap
     W, H = 1200, 630
-    img = Image.new("RGB", (W, H), (17, 18, 20))
+    ACCENT = (212, 43, 43)
+
+    # 배경: 진한 다크 그라디언트 느낌 (단색)
+    img = Image.new("RGB", (W, H), (14, 15, 18))
     draw = ImageDraw.Draw(img)
-    r, g, b = _region_color(region)
-    draw.rectangle([(0, 0), (W, H//3)], fill=(r//4, g//4, b//4))
-    draw.rectangle([(0, 0), (8, H)], fill=(r, g, b))
+
+    # 배경 이미지가 있으면 합성
     if bg_image_path and os.path.exists(bg_image_path):
         try:
             bg = Image.open(bg_image_path).convert("RGB")
             bg = bg.resize((W, H), Image.LANCZOS)
             bg_dark = Image.new("RGB", (W, H), (0, 0, 0))
-            blended = Image.blend(bg, bg_dark, 0.45)
+            blended = Image.blend(bg, bg_dark, 0.55)
             img.paste(blended, (0, 0))
             draw = ImageDraw.Draw(img)
         except Exception:
             pass
+
+    # 왼쪽 빨간 사이드바
+    draw.rectangle([(0, 0), (10, H)], fill=ACCENT)
+
+    # 폰트 로드
     try:
-        font_lg = ImageFont.truetype("C:/Windows/Fonts/malgunbd.ttf", 56)
-        font_md = ImageFont.truetype("C:/Windows/Fonts/malgun.ttf", 32)
-        font_sm = ImageFont.truetype("C:/Windows/Fonts/malgun.ttf", 26)
+        font_xl  = ImageFont.truetype("C:/Windows/Fonts/malgunbd.ttf", 90)
+        font_lg  = ImageFont.truetype("C:/Windows/Fonts/malgunbd.ttf", 72)
+        font_md  = ImageFont.truetype("C:/Windows/Fonts/malgun.ttf",   52)
+        font_sm  = ImageFont.truetype("C:/Windows/Fonts/malgun.ttf",   48)
     except Exception:
-        font_lg = ImageFont.load_default()
-        font_md = font_sm = font_lg
-    draw.text((52, 60), BRAND, font=font_md, fill=(r, g, b))
-    lines = textwrap.wrap(region, width=18)
-    y = 140
-    for line in lines[:2]:
-        draw.text((52, y), line, font=font_lg, fill=(255, 255, 255))
-        y += 70
-    draw.text((52, H - 80), f"TV 벽걸이 설치 전문 · {PHONE}", font=font_sm, fill=(180, 180, 180))
-    draw.text((52, H - 44), f"서울·경기·인천 전 지역 출장 시공", font=font_sm, fill=(130, 130, 130))
+        font_xl = font_lg = font_md = font_sm = ImageFont.load_default()
+
+    # 4줄 고정 텍스트
+    LINES = [
+        ("벽걸이 TV 설치 전문", font_lg,  (255, 255, 255)),
+        (BRAND,                 font_xl,  ACCENT),
+        (PHONE,                 font_md,  (220, 220, 220)),
+        ("24시간 365일 문의",   font_sm,  (160, 160, 160)),
+    ]
+
+    # 전체 블록 높이 계산 후 세로 중앙 정렬
+    line_gap = 24
+    total_h = sum(draw.textbbox((0,0), text, font=fnt)[3] for text, fnt, _ in LINES) \
+              + line_gap * (len(LINES) - 1)
+    y = (H - total_h) // 2
+
+    x = 60
+    for text, fnt, color in LINES:
+        draw.text((x, y), text, font=fnt, fill=color)
+        bbox = draw.textbbox((0, 0), text, font=fnt)
+        y += (bbox[3] - bbox[1]) + line_gap
+
     buf = io.BytesIO()
-    img.save(buf, "JPEG", quality=85)
+    img.save(buf, "JPEG", quality=88)
     buf.seek(0)
     return buf.read()
 
