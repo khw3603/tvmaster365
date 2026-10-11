@@ -367,27 +367,109 @@ tr:nth-child(even) td{background:#F5F5F4}
   res.send(html);
 });
 
-// ── 지역별 랜딩 페이지 ────────────────────────────────────────────────────────
+// ── 지역 동 데이터 ────────────────────────────────────────────────────────────
+const AREA_DATA = {
+  '서울': {
+    '강남구':['역삼동','삼성동','청담동','도곡동','개포동','일원동','수서동','대치동','압구정동','논현동','신사동','세곡동'],
+    '강동구':['천호동','성내동','암사동','강일동','길동','명일동','고덕동','상일동','둔촌동'],
+    '강북구':['미아동','번동','수유동','우이동','인수동'],
+    '강서구':['화곡동','방화동','등촌동','가양동','마곡동','발산동','염창동','우장산동','내발산동','외발산동'],
+    '관악구':['신림동','봉천동','서원동','남현동','청룡동','행운동','낙성대동'],
+    '광진구':['광장동','자양동','구의동','능동','중곡동','화양동','군자동'],
+    '구로구':['구로동','신도림동','가리봉동','오류동','천왕동','고척동','항동','개봉동'],
+    '금천구':['가산동','독산동','시흥동'],
+    '노원구':['상계동','중계동','하계동','공릉동','월계동'],
+    '도봉구':['도봉동','방학동','쌍문동','창동'],
+    '동대문구':['이문동','휘경동','청량리동','회기동','전농동','용두동','신설동','답십리동'],
+    '동작구':['사당동','흑석동','상도동','노량진동','대방동','신대방동'],
+    '마포구':['공덕동','합정동','망원동','서교동','상암동','성산동','용강동','아현동'],
+    '서대문구':['홍제동','홍은동','남가좌동','북가좌동','연희동','신촌동','창천동'],
+    '서초구':['서초동','방배동','잠원동','반포동','양재동','내곡동'],
+    '성동구':['성수동','왕십리동','금호동','옥수동','행당동','마장동','응봉동'],
+    '성북구':['성북동','정릉동','장위동','길음동','석관동','종암동','동소문동'],
+    '송파구':['잠실동','방이동','오금동','석촌동','풍납동','가락동','거여동','마천동'],
+    '양천구':['목동','신정동','신월동'],
+    '영등포구':['여의도동','영등포동','당산동','문래동','양평동','도림동','신길동','대림동'],
+    '용산구':['이태원동','한남동','후암동','용산동','서계동','원효로동','청파동'],
+    '은평구':['응암동','불광동','진관동','갈현동','구산동','녹번동','역촌동'],
+    '종로구':['종로동','창신동','숭인동','무악동','교남동','사직동','청운동','효자동'],
+    '중구':['명동','충무로','황학동','신당동','다산동','약수동','청구동'],
+    '중랑구':['면목동','신내동','상봉동','묵동','망우동','중화동'],
+  },
+  '인천': {
+    '계양구':['효성동','계산동','작전동','귤현동','박촌동','임학동','동양동'],
+    '남동구':['구월동','만수동','논현동','간석동','장수동','운연동','남촌동'],
+    '동구':['만석동','화수동','송현동','화평동','창영동'],
+    '미추홀구':['주안동','도화동','용현동','학익동','숭의동','문학동'],
+    '부평구':['부평동','갈산동','삼산동','청천동','십정동','산곡동','작전동','일신동','구산동','부개동'],
+    '서구':['검단동','가정동','신현동','연희동','청라동','석남동','심곡동'],
+    '연수구':['송도동','연수동','청학동','옥련동','선학동'],
+    '중구':['인현동','신흥동','신포동','운남동','율목동','도원동'],
+    '강화군':['강화읍','불은면','선원면','화도면','길상면'],
+    '옹진군':['북도면','자월면','영흥면','덕적면'],
+  },
+  '경기': {
+    '가평군':['가평읍','청평면','상면','조종면'],
+    '고양시':['일산동구','일산서구','덕양구'],
+    '과천시':['중앙동','별양동','갈현동','과천동','문원동'],
+    '광명시':['철산동','하안동','광명동','소하동','학온동'],
+    '광주시':['경안동','오포읍','초월읍','곤지암읍'],
+    '구리시':['수택동','인창동','교문동','토평동','아천동'],
+    '군포시':['산본동','금정동','부곡동','당정동','대야미동'],
+    '김포시':['풍무동','사우동','양촌읍','통진읍','고촌읍'],
+    '남양주시':['화도읍','다산동','오남읍','진접읍','별내동'],
+    '동두천시':['생연동','지행동','소요동','걸산동'],
+    '부천시':['소사구','오정구','원미구'],
+    '성남시':['분당구','중원구','수정구'],
+    '수원시':['팔달구','영통구','권선구','장안구'],
+    '시흥시':['정왕동','신천동','능곡동','월곶동','배곧동'],
+    '안산시':['단원구','상록구'],
+    '안성시':['안성읍','공도읍','원곡면','보개면'],
+    '안양시':['만안구','동안구'],
+    '양주시':['회천동','옥정동','광적면','남면'],
+    '양평군':['양평읍','지평면','용문면','강상면'],
+    '여주시':['여주읍','가남읍','점동면','흥천면'],
+    '연천군':['연천읍','전곡읍','청산면','신서면'],
+    '오산시':['오산동','세마동','가수동','금암동'],
+    '용인시':['수지구','기흥구','처인구'],
+    '의왕시':['오전동','청계동','내손동','고천동'],
+    '의정부시':['의정부동','가능동','호원동','신곡동','장암동'],
+    '이천시':['부발읍','창전동','중리동','진리동'],
+    '파주시':['운정동','금촌동','문산읍','법원읍'],
+    '평택시':['평택동','서정동','안중읍','팽성읍'],
+    '포천시':['포천동','소흘읍','군내면','내촌면'],
+    '하남시':['창우동','미사동','덕풍동','풍산동','감일동'],
+    '화성시':['동탄동','반월동','우정읍','봉담읍','향남읍'],
+  }
+};
+
+// ── 지역별 랜딩 페이지 (구/시 단위) ─────────────────────────────────────────
 app.get('/area/:region', (req, res) => {
-  const region = decodeURIComponent(req.params.region).replace(/-/g, ' ');
-  const [sido, gu] = region.split(' ');
-  const areaName = `${sido} ${gu}`;
-  const posts = loadPosts().filter(p => p.region && p.region.includes(gu)).slice(0, 10);
+  const regionSlug = req.params.region;
+  const region = decodeURIComponent(regionSlug).replace(/-/g, ' ');
+  const parts = region.split(' ');
+  const sido = parts[0];
+  const gu   = parts.slice(1).join(' ');
+  const areaName = gu ? `${sido} ${gu}` : sido;
+  const posts = loadPosts().filter(p => p.region && p.region.includes(gu || sido)).slice(0, 6);
   const d = loadData();
-  const desc = `${areaName} TV 벽걸이 설치 전문 TV마스터365. 무타공·가벽·대형 TV 설치. 무료 견적 ${d.phone||'010-6213-0555'}`;
-  const canonUrl = `${SITE_URL}/area/${req.params.region}`;
+  const phone = d.phone || '010-6213-0555';
+  const phoneDigits = phone.replace(/-/g,'');
+  const desc = `${areaName} TV 벽걸이 설치 전문 TV마스터365. 무타공·가벽·대형 TV 설치. 무료 견적 ${phone}`;
+  const canonUrl = `${SITE_URL}/area/${regionSlug}`;
 
-  const ldWebSite = `{"@context":"https://schema.org","@type":"WebSite","name":"TV마스터365","alternateName":"TV마스터365 — TV 벽걸이 설치 전문","url":"${SITE_URL}/"}`;
+  const dongs = (AREA_DATA[sido] && AREA_DATA[sido][gu]) ? AREA_DATA[sido][gu] : [];
+  const dongCards = dongs.map(dong => {
+    return `<a class="dong-card" href="/area/${regionSlug}/${encodeURIComponent(dong)}"><strong>${dong}</strong><span>TV 벽걸이 설치 안내</span></a>`;
+  }).join('');
+
+  const postItems = posts.length ? posts.map(p =>
+    `<article class="post-item"><time>${p.created_at ? new Date(p.created_at).toLocaleDateString('ko-KR') : ''}</time><a href="/blog/${p.slug}">${p.title}</a></article>`
+  ).join('') : `<p class="no-posts">블로그 포스트가 곧 등록됩니다.</p>`;
+
+  const ldWebSite = `{"@context":"https://schema.org","@type":"WebSite","name":"TV마스터365","url":"${SITE_URL}/"}`;
   const ldBreadcrumb = JSON.stringify({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"TV마스터365","item":SITE_URL+"/"},{"@type":"ListItem","position":2,"name":"서비스 지역","item":SITE_URL+"/#sec-area"},{"@type":"ListItem","position":3,"name":areaName,"item":canonUrl}]});
-  const ldJson = JSON.stringify({
-    "@context":"https://schema.org","@type":"LocalBusiness",
-    "name":d.company||"TV마스터365","url":SITE_URL+"/","telephone":d.phone||"010-6213-0555",
-    "areaServed":areaName,"address":{"@type":"PostalAddress","addressRegion":"경기도","addressCountry":"KR"}
-  });
-
-  const postLinks = posts.length ? posts.map(p =>
-    `<li><a href="${SITE_URL}/blog/${p.slug}">${p.title}</a></li>`
-  ).join('\n') : `<li>블로그 포스트가 곧 등록됩니다.</li>`;
+  const ldLocal = JSON.stringify({"@context":"https://schema.org","@type":"LocalBusiness","name":"TV마스터365","url":SITE_URL+"/","telephone":phone,"areaServed":areaName,"address":{"@type":"PostalAddress","streetAddress":"소사로730번길 58, 5동 지2호","addressLocality":"부천시","addressRegion":"경기도","addressCountry":"KR"}});
 
   const html = `<!DOCTYPE html><html lang="ko"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -395,61 +477,274 @@ app.get('/area/:region', (req, res) => {
 <meta name="description" content="${desc}">
 <link rel="canonical" href="${canonUrl}">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="TV마스터365">
 <meta property="og:title" content="${areaName} TV 벽걸이 설치 전문 | TV마스터365">
 <meta property="og:description" content="${desc}">
 <meta property="og:url" content="${canonUrl}">
-<meta property="og:site_name" content="TV마스터365">
 <meta name="twitter:card" content="summary">
 <script type="application/ld+json">${ldWebSite}</script>
 <script type="application/ld+json">${ldBreadcrumb}</script>
-<script type="application/ld+json">${ldJson}</script>
+<script type="application/ld+json">${ldLocal}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans KR',sans-serif;background:#F7F7F6;color:#111214;line-height:1.8}
-.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px}
-.hdr{background:#111214;padding:14px 24px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
-.hdr-logo{color:#fff;font-weight:900;font-size:16px;text-decoration:none}
-.hdr-logo span{color:#D42B2B}
-.hdr-back{color:rgba(255,255,255,.6);font-size:13px;text-decoration:none;margin-left:auto}
-.hdr-back:hover{color:#fff}
-h1{font-size:clamp(22px,3.5vw,36px);font-weight:900;line-height:1.3;margin-bottom:16px}
-h2{font-size:20px;font-weight:700;margin:36px 0 12px;padding-top:8px;border-top:2px solid #E8E8E8}
-p{margin-bottom:14px;font-size:15.5px}
-ul{padding-left:22px;margin-bottom:14px}
-li{margin-bottom:8px;font-size:15px}
-li a{color:#D42B2B;text-decoration:none}
-li a:hover{text-decoration:underline}
-.cta-box{background:#111214;color:#fff;border-radius:10px;padding:28px 24px;margin:40px 0;text-align:center}
-.cta-box h2{color:#fff;border:none;margin:0 0 8px;font-size:20px;padding:0}
-.cta-box p{color:rgba(255,255,255,.75);margin:0 0 16px}
-.cta-box a{display:inline-block;background:#D42B2B;color:#fff;padding:10px 28px;border-radius:7px;font-weight:700;text-decoration:none}
-.breadcrumb{font-size:13px;color:#888;margin-bottom:20px}
-.breadcrumb a{color:#D42B2B;text-decoration:none}
+body{font-family:'Noto Sans KR',sans-serif;background:#F7F7F6;color:#111214;line-height:1.75}
+a{color:inherit;text-decoration:none}
+.hdr{background:#111214;padding:14px 20px;display:flex;align-items:center;position:sticky;top:0;z-index:99}
+.hdr-logo{color:#fff;font-weight:900;font-size:17px}
+.hdr-logo em{color:#D42B2B;font-style:normal}
+.hdr-phone{margin-left:auto;background:#D42B2B;color:#fff;font-size:13px;font-weight:700;padding:7px 14px;border-radius:6px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px 80px}
+.bc{font-size:12px;color:#999;padding:14px 0 0;display:flex;gap:6px;align-items:center}
+.bc a{color:#D42B2B}
+.bc-sep{color:#ccc}
+/* HERO */
+.hero{padding:36px 0 28px;border-bottom:1px solid #E4E4E4}
+.hero-badge{font-size:11px;font-weight:700;letter-spacing:.12em;color:#D42B2B;margin-bottom:10px}
+.hero h1{font-size:clamp(20px,4vw,32px);font-weight:900;line-height:1.35;margin-bottom:18px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:15px}
+.checklist li::before{content:"✓";color:#D42B2B;font-weight:700;flex-shrink:0;margin-top:2px}
+.btn-cta{display:inline-flex;align-items:center;gap:8px;background:#D42B2B;color:#fff;font-size:15px;font-weight:700;padding:13px 28px;border-radius:8px;margin-top:4px}
+.btn-cta:hover{background:#B01E1E}
+/* NEIGHBORHOODS */
+.sec{padding:40px 0;border-bottom:1px solid #E4E4E4}
+.sec-badge{font-size:11px;font-weight:700;letter-spacing:.12em;color:#888;margin-bottom:8px}
+.sec h2{font-size:20px;font-weight:900;margin-bottom:8px}
+.sec-sub{font-size:14px;color:#666;margin-bottom:24px}
+.dong-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.dong-card{display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #E4E4E4;border-radius:8px;padding:14px 16px;transition:border-color .15s,box-shadow .15s}
+.dong-card:hover{border-color:#D42B2B;box-shadow:0 2px 8px rgba(212,43,43,.12)}
+.dong-card strong{font-size:15px;font-weight:700;color:#111214}
+.dong-card span{font-size:12px;color:#999}
+/* POSTS */
+.post-item{display:flex;flex-direction:column;gap:4px;padding:16px 0;border-bottom:1px solid #F0F0F0}
+.post-item:last-child{border-bottom:none}
+.post-item time{font-size:12px;color:#999}
+.post-item a{font-size:15px;font-weight:500;color:#111214;line-height:1.4}
+.post-item a:hover{color:#D42B2B}
+.no-posts{font-size:14px;color:#999;padding:16px 0}
+/* SERVICES */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:20px}
+.svc-item{background:#fff;border-radius:8px;padding:20px;border:1px solid #E8E8E8}
+.svc-icon{font-size:28px;margin-bottom:10px}
+.svc-item h3{font-size:14px;font-weight:700;margin-bottom:6px}
+.svc-item p{font-size:13px;color:#666;line-height:1.6}
+/* PROCESS */
+.proc-list{display:flex;flex-direction:column;gap:0;counter-reset:proc;margin-top:20px}
+.proc-item{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid #F0F0F0;counter-increment:proc}
+.proc-item:last-child{border-bottom:none}
+.proc-num{width:32px;height:32px;background:#D42B2B;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.proc-body h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.proc-body p{font-size:13px;color:#666}
+/* FAQ */
+.faq-item{padding:16px 0;border-bottom:1px solid #F0F0F0}
+.faq-item:last-child{border-bottom:none}
+.faq-q{font-size:15px;font-weight:700;margin-bottom:6px}
+.faq-a{font-size:14px;color:#555;line-height:1.7}
+/* FINAL CTA */
+.final-cta{background:#111214;border-radius:12px;padding:36px 28px;text-align:center;margin-top:40px}
+.final-cta h2{color:#fff;font-size:20px;font-weight:900;margin-bottom:8px}
+.final-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px}
+.final-cta .btn-group{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:#D42B2B;color:#fff;font-weight:700;font-size:14px;padding:12px 24px;border-radius:7px}
+.btn-ghost{background:transparent;color:#fff;font-weight:700;font-size:14px;padding:12px 24px;border-radius:7px;border:1px solid rgba(255,255,255,.3)}
+.footer{text-align:center;font-size:12px;color:#aaa;padding:30px 20px 0;border-top:1px solid #E4E4E4;margin-top:40px}
+@media(max-width:480px){.dong-grid{grid-template-columns:repeat(2,1fr)}.svc-grid{grid-template-columns:1fr}}
 </style></head><body>
-<nav class="hdr"><a class="hdr-logo" href="/"><span>TV</span>마스터365</a><a class="hdr-back" href="/">← 홈으로</a></nav>
+<header class="hdr">
+  <a class="hdr-logo" href="/"><em>TV</em>마스터365</a>
+  <a class="hdr-phone" href="tel:${phoneDigits}">☎ ${phone}</a>
+</header>
 <div class="wrap">
-<p class="breadcrumb"><a href="/">홈</a> &rsaquo; <a href="/#sec-area">서비스 지역</a> &rsaquo; ${areaName}</p>
-<h1>${areaName} TV 벽걸이 설치 전문 — TV마스터365</h1>
-<p>${areaName} 지역 TV 벽걸이 설치를 전문으로 합니다. 무타공 브라켓으로 벽에 구멍을 내지 않고 50~100인치 TV를 안전하게 거는 서울·경기·인천 출장 시공 전문 업체입니다.</p>
-<p>${areaName} 아파트, 오피스텔, 주택 등 모든 환경에서 시공 가능합니다. 콘크리트 벽·가벽·아트월 구분 없이 방문 후 최적 방법으로 진행합니다.</p>
+  <nav class="bc"><a href="/">홈</a><span class="bc-sep">›</span><a href="/#sec-area">서비스 지역</a><span class="bc-sep">›</span><span>${areaName}</span></nav>
 
-<h2>${areaName} TV 설치 관련 포스트</h2>
-<ul>${postLinks}</ul>
+  <section class="hero">
+    <p class="hero-badge">LOCAL SERVICE</p>
+    <h1>${areaName} TV 벽걸이 설치<br>전문 안내</h1>
+    <ul class="checklist">
+      <li>단자함 활용 무타공 TV 설치 — 벽에 구멍 없음</li>
+      <li>가벽·아트월·콘크리트 벽 구분 없이 시공</li>
+      <li>50~100인치 전 사이즈, 당일~익일 방문</li>
+      <li>배상책임보험 가입 · 시공 기록 보관 · A/S 보장</li>
+      <li>현장 추가 비용 없음 — 사전 견적 후 확정</li>
+    </ul>
+    <a class="btn-cta" href="tel:${phoneDigits}">☎ ${phone} 전화 상담</a>
+  </section>
 
-<h2>왜 TV마스터365인가요?</h2>
-<ul>
-<li>무타공 브라켓 — 벽에 구멍 없이 50~100인치 TV 설치</li>
-<li>배상책임보험 가입 — 시공 중 사고 발생 시 보상 보장</li>
-<li>시공 기록 보관 — 이사 재설치·A/S 사후관리까지 책임</li>
-<li>영업 전화 없음 — 무료 견적 후 결정, 강요 없음</li>
-</ul>
+  ${dongs.length ? `
+  <section class="sec">
+    <p class="sec-badge">NEIGHBORHOODS</p>
+    <h2>${areaName} TV 설치 서비스 지역</h2>
+    <p class="sec-sub">${areaName} 내 동·읍·면을 선택하면 상세 설치 안내를 확인할 수 있습니다.</p>
+    <div class="dong-grid">${dongCards}</div>
+  </section>` : ''}
 
-<div class="cta-box">
-<h2>무료 견적 받기</h2>
-<p>${areaName} TV 벽걸이 설치 무료 견적을 지금 바로 받아보세요.</p>
-<a href="tel:${(d.phone||'010-6213-0555').replace(/-/g,'')}">${d.phone||'010-6213-0555'} 전화 문의</a>
-</div>
+  ${posts.length ? `
+  <section class="sec">
+    <p class="sec-badge">BLOG CASE</p>
+    <h2>${areaName} TV 벽걸이 설치 사례</h2>
+    <p class="sec-sub">TV마스터365가 ${areaName}에서 진행한 실제 시공 사례입니다.</p>
+    ${postItems}
+  </section>` : ''}
+
+  <section class="sec">
+    <p class="sec-badge">SERVICE</p>
+    <h2>${areaName} TV 벽걸이 설치 안내</h2>
+    <div class="svc-grid">
+      <div class="svc-item"><div class="svc-icon">📺</div><h3>무타공 TV 설치</h3><p>단자함 안에 함체를 고정해 벽에 구멍 없이 50~100인치 TV를 설치합니다.</p></div>
+      <div class="svc-item"><div class="svc-icon">🔧</div><h3>가벽·석고보드</h3><p>보강플레이트로 가벽 환경에서도 대형 TV를 안전하게 거치합니다.</p></div>
+      <div class="svc-item"><div class="svc-icon">📦</div><h3>이사 재설치</h3><p>기존 자재 재사용 여부 확인 후 새 집에 빠르게 재설치합니다.</p></div>
+      <div class="svc-item"><div class="svc-icon">🔌</div><h3>선 정리·매립</h3><p>HDMI·셋톱박스·공유기 선 정리를 기본 포함합니다.</p></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="sec-badge">PROCESS</p>
+    <h2>TV 벽걸이 설치 과정</h2>
+    <div class="proc-list">
+      <div class="proc-item"><div class="proc-num">1</div><div class="proc-body"><h3>전화 상담 및 견적</h3><p>TV 크기·벽 구조·동 위치 확인 후 견적을 먼저 안내합니다.</p></div></div>
+      <div class="proc-item"><div class="proc-num">2</div><div class="proc-body"><h3>방문 일정 확정</h3><p>원하는 날짜·시간에 전문 기사가 방문합니다. 당일 시공도 가능합니다.</p></div></div>
+      <div class="proc-item"><div class="proc-num">3</div><div class="proc-body"><h3>현장 구조 확인</h3><p>벽 구조·단자함 위치 확인 후 최적 시공 방법을 결정합니다.</p></div></div>
+      <div class="proc-item"><div class="proc-num">4</div><div class="proc-body"><h3>설치 완료 및 마무리</h3><p>선 정리까지 완료 후 수평·고정력 최종 점검합니다.</p></div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="sec-badge">FAQ</p>
+    <h2>${areaName} 자주 묻는 질문</h2>
+    <div class="faq-item"><p class="faq-q">${areaName} TV 벽걸이 설치 비용은 얼마인가요?</p><p class="faq-a">TV 크기와 벽 구조에 따라 다릅니다. 전화 상담 시 크기와 벽 상태를 알려주시면 견적을 먼저 안내드립니다. 현장 추가 비용은 없습니다.</p></div>
+    <div class="faq-item"><p class="faq-q">${areaName}에서 당일 시공이 가능한가요?</p><p class="faq-a">예약 일정에 따라 당일~익일 시공이 가능합니다. 연락 시 기사 배치 현황을 바로 확인해 드립니다.</p></div>
+    <div class="faq-item"><p class="faq-q">임대 아파트에도 설치할 수 있나요?</p><p class="faq-a">무타공 시공은 벽에 구멍을 내지 않아 임대 아파트에서도 원상 복구 걱정 없이 설치 가능합니다.</p></div>
+    <div class="faq-item"><p class="faq-q">가벽에도 TV를 걸 수 있나요?</p><p class="faq-a">보강플레이트를 사용하면 석고보드 가벽에도 50~100인치 TV 설치가 가능합니다. 벽 상태를 사진으로 보내주시면 확인해 드립니다.</p></div>
+  </section>
+
+  <div class="final-cta">
+    <h2>${areaName} TV 벽걸이 설치<br>지금 무료 견적 받으세요</h2>
+    <p>365일 방문 시공 · 현장 추가 비용 없음 · 배상책임보험 가입</p>
+    <div class="btn-group">
+      <a class="btn-primary" href="tel:${phoneDigits}">☎ ${phone} 전화 문의</a>
+      <a class="btn-ghost" href="/#sec-area">← 지역 목록으로</a>
+    </div>
+  </div>
+
+  <footer class="footer">TV마스터365 · 서울·경기·인천 출장 TV 벽걸이 설치 전문 · ${phone}</footer>
+</div></body></html>`;
+  res.send(html);
+});
+
+// ── 동 단위 랜딩 페이지 (/area/서울-강남구/역삼동) ──────────────────────────
+app.get('/area/:regionSlug/:dong', (req, res, next) => {
+  const regionSlug = req.params.regionSlug;
+  const dong = decodeURIComponent(req.params.dong);
+  const regionStr = decodeURIComponent(regionSlug).replace(/-/g, ' ');
+  const sidoParts = regionStr.split(' ');
+  const sido = sidoParts[0];
+  const gu = sidoParts.slice(1).join(' ');
+  const dongs = (AREA_DATA[sido] && AREA_DATA[sido][gu]) ? AREA_DATA[sido][gu] : [];
+  if (!dongs.includes(dong)) return next();
+
+  const areaName = `${sido} ${gu} ${dong}`;
+  const d = loadData();
+  const phone = d.phone || '010-6213-0555';
+  const phoneDigits = phone.replace(/-/g,'');
+  const desc = `${areaName} TV 벽걸이 설치 전문 TV마스터365. 무료 견적 ${phone}`;
+  const canonUrl = `${SITE_URL}/area/${regionSlug}/${encodeURIComponent(dong)}`;
+  const posts = loadPosts().filter(p => p.region && (p.region.includes(dong) || p.region.includes(gu))).slice(0, 5);
+
+  const ldBreadcrumb = JSON.stringify({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"TV마스터365","item":SITE_URL+"/"},{"@type":"ListItem","position":2,"name":"서비스 지역","item":SITE_URL+"/#sec-area"},{"@type":"ListItem","position":3,"name":`${sido} ${gu}`,"item":`${SITE_URL}/area/${regionSlug}`},{"@type":"ListItem","position":4,"name":areaName,"item":canonUrl}]});
+  const ldLocal = JSON.stringify({"@context":"https://schema.org","@type":"LocalBusiness","name":"TV마스터365","url":SITE_URL+"/","telephone":phone,"areaServed":areaName});
+
+  const postItems = posts.map(p =>
+    `<div class="post-item"><time>${p.created_at ? new Date(p.created_at).toLocaleDateString('ko-KR') : ''}</time><a href="/blog/${p.slug}">${p.title}</a></div>`
+  ).join('');
+
+  const html = `<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${areaName} TV 벽걸이 설치 전문 | TV마스터365</title>
+<meta name="description" content="${desc}">
+<link rel="canonical" href="${canonUrl}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TV마스터365">
+<meta property="og:title" content="${areaName} TV 벽걸이 설치 전문 | TV마스터365">
+<meta property="og:url" content="${canonUrl}">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"TV마스터365","url":"${SITE_URL}/"}</script>
+<script type="application/ld+json">${ldBreadcrumb}</script>
+<script type="application/ld+json">${ldLocal}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:#F7F7F6;color:#111214;line-height:1.75}
+a{color:inherit;text-decoration:none}
+.hdr{background:#111214;padding:14px 20px;display:flex;align-items:center;position:sticky;top:0;z-index:99}
+.hdr-logo{color:#fff;font-weight:900;font-size:17px}
+.hdr-logo em{color:#D42B2B;font-style:normal}
+.hdr-phone{margin-left:auto;background:#D42B2B;color:#fff;font-size:13px;font-weight:700;padding:7px 14px;border-radius:6px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px 80px}
+.bc{font-size:12px;color:#999;padding:14px 0 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.bc a{color:#D42B2B}
+.bc-sep{color:#ccc}
+.hero{padding:36px 0 28px;border-bottom:1px solid #E4E4E4}
+.hero-badge{font-size:11px;font-weight:700;letter-spacing:.12em;color:#D42B2B;margin-bottom:10px}
+.hero h1{font-size:clamp(20px,4vw,32px);font-weight:900;line-height:1.35;margin-bottom:18px}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:15px}
+.checklist li::before{content:"✓";color:#D42B2B;font-weight:700;flex-shrink:0}
+.btn-cta{display:inline-flex;align-items:center;gap:8px;background:#D42B2B;color:#fff;font-size:15px;font-weight:700;padding:13px 28px;border-radius:8px}
+.sec{padding:36px 0;border-bottom:1px solid #E4E4E4}
+.sec-badge{font-size:11px;font-weight:700;letter-spacing:.12em;color:#888;margin-bottom:8px}
+.sec h2{font-size:20px;font-weight:900;margin-bottom:16px}
+.post-item{display:flex;flex-direction:column;gap:4px;padding:14px 0;border-bottom:1px solid #F0F0F0}
+.post-item time{font-size:12px;color:#999}
+.post-item a{font-size:15px;font-weight:500;color:#111214}
+.post-item a:hover{color:#D42B2B}
+.faq-item{padding:14px 0;border-bottom:1px solid #F0F0F0}
+.faq-q{font-size:15px;font-weight:700;margin-bottom:6px}
+.faq-a{font-size:14px;color:#555;line-height:1.7}
+.final-cta{background:#111214;border-radius:12px;padding:36px 28px;text-align:center;margin-top:40px}
+.final-cta h2{color:#fff;font-size:20px;font-weight:900;margin-bottom:8px}
+.final-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px}
+.btn-group{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:#D42B2B;color:#fff;font-weight:700;font-size:14px;padding:12px 24px;border-radius:7px}
+.btn-ghost{background:transparent;color:#fff;font-weight:700;font-size:14px;padding:12px 24px;border-radius:7px;border:1px solid rgba(255,255,255,.3)}
+.footer{text-align:center;font-size:12px;color:#aaa;padding:30px 20px 0;border-top:1px solid #E4E4E4;margin-top:40px}
+</style></head><body>
+<header class="hdr">
+  <a class="hdr-logo" href="/"><em>TV</em>마스터365</a>
+  <a class="hdr-phone" href="tel:${phoneDigits}">☎ ${phone}</a>
+</header>
+<div class="wrap">
+  <nav class="bc"><a href="/">홈</a><span class="bc-sep">›</span><a href="/#sec-area">서비스 지역</a><span class="bc-sep">›</span><a href="/area/${encodeURIComponent(regionSlug)}">${sido} ${gu}</a><span class="bc-sep">›</span><span>${dong}</span></nav>
+  <section class="hero">
+    <p class="hero-badge">LOCAL SERVICE</p>
+    <h1>${areaName} TV 벽걸이<br>설치 전문 안내</h1>
+    <ul class="checklist">
+      <li>무타공 TV 설치 — 벽에 구멍 없이 시공</li>
+      <li>가벽·콘크리트·아트월 모두 가능</li>
+      <li>50~100인치, 당일~익일 방문</li>
+      <li>배상책임보험 · A/S 보장</li>
+    </ul>
+    <a class="btn-cta" href="tel:${phoneDigits}">☎ ${phone} 전화 상담</a>
+  </section>
+  ${postItems ? `<section class="sec"><p class="sec-badge">BLOG</p><h2>${areaName} 시공 사례</h2>${postItems}</section>` : ''}
+  <section class="sec">
+    <p class="sec-badge">FAQ</p>
+    <h2>${areaName} 자주 묻는 질문</h2>
+    <div class="faq-item"><p class="faq-q">${areaName} TV 설치 비용은 얼마인가요?</p><p class="faq-a">TV 크기와 벽 구조에 따라 다릅니다. 전화 상담 시 먼저 견적을 안내드립니다.</p></div>
+    <div class="faq-item"><p class="faq-q">당일 방문이 가능한가요?</p><p class="faq-a">예약 현황에 따라 당일~익일 방문이 가능합니다. 전화로 바로 확인해 드립니다.</p></div>
+    <div class="faq-item"><p class="faq-q">임대 아파트에도 설치되나요?</p><p class="faq-a">무타공 시공은 벽에 구멍이 없어 임대 아파트에서도 원상 복구 걱정 없이 가능합니다.</p></div>
+  </section>
+  <div class="final-cta">
+    <h2>${areaName} TV 벽걸이 설치<br>무료 견적 받기</h2>
+    <p>365일 방문 · 현장 추가 비용 없음 · 배상책임보험 가입</p>
+    <div class="btn-group">
+      <a class="btn-primary" href="tel:${phoneDigits}">☎ ${phone} 전화 문의</a>
+      <a class="btn-ghost" href="/area/${regionSlug}">← ${sido} ${gu}로</a>
+    </div>
+  </div>
+  <footer class="footer">TV마스터365 · 서울·경기·인천 출장 TV 벽걸이 설치 전문 · ${phone}</footer>
 </div></body></html>`;
   res.send(html);
 });
