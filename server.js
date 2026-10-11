@@ -525,12 +525,6 @@ a{color:inherit;text-decoration:none}
 .post-item a{font-size:15px;font-weight:500;color:#111214;line-height:1.4}
 .post-item a:hover{color:#D42B2B}
 .no-posts{font-size:14px;color:#999;padding:16px 0}
-/* SERVICES */
-.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:20px}
-.svc-item{background:#fff;border-radius:8px;padding:20px;border:1px solid #E8E8E8}
-.svc-icon{font-size:28px;margin-bottom:10px}
-.svc-item h3{font-size:14px;font-weight:700;margin-bottom:6px}
-.svc-item p{font-size:13px;color:#666;line-height:1.6}
 /* PROCESS */
 .proc-list{display:flex;flex-direction:column;gap:0;counter-reset:proc;margin-top:20px}
 .proc-item{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid #F0F0F0;counter-increment:proc}
@@ -588,17 +582,6 @@ a{color:inherit;text-decoration:none}
     <p class="sec-sub">TV마스터365가 ${areaName}에서 진행한 실제 시공 사례입니다.</p>
     ${postItems}
   </section>` : ''}
-
-  <section class="sec">
-    <p class="sec-badge">SERVICE</p>
-    <h2>${areaName} TV 벽걸이 설치 안내</h2>
-    <div class="svc-grid">
-      <div class="svc-item"><div class="svc-icon">📺</div><h3>무타공 TV 설치</h3><p>단자함 안에 함체를 고정해 벽에 구멍 없이 50~100인치 TV를 설치합니다.</p></div>
-      <div class="svc-item"><div class="svc-icon">🔧</div><h3>가벽·석고보드</h3><p>보강플레이트로 가벽 환경에서도 대형 TV를 안전하게 거치합니다.</p></div>
-      <div class="svc-item"><div class="svc-icon">📦</div><h3>이사 재설치</h3><p>기존 자재 재사용 여부 확인 후 새 집에 빠르게 재설치합니다.</p></div>
-      <div class="svc-item"><div class="svc-icon">🔌</div><h3>선 정리·매립</h3><p>HDMI·셋톱박스·공유기 선 정리를 기본 포함합니다.</p></div>
-    </div>
-  </section>
 
   <section class="sec">
     <p class="sec-badge">PROCESS</p>
