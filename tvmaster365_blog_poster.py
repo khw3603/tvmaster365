@@ -473,10 +473,10 @@ def make_thumbnail(region, bg_image_path=None):
               + line_gap * (len(LINES) - 1)
     y = (H - total_h) // 2
 
-    x = 60
     for text, fnt, color in LINES:
-        draw.text((x, y), text, font=fnt, fill=color)
         bbox = draw.textbbox((0, 0), text, font=fnt)
+        x = (W - (bbox[2] - bbox[0])) // 2
+        draw.text((x, y), text, font=fnt, fill=color)
         y += (bbox[3] - bbox[1]) + line_gap
 
     buf = io.BytesIO()
