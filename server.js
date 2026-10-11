@@ -61,6 +61,7 @@ app.get('/', (req, res) => {
     `{"@type":"Question","name":${escJ(f.q)},"acceptedAnswer":{"@type":"Answer","text":${escJ(f.a)}}}`
   ).join(',');
   const jsonLd = [
+    `<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"TV마스터365","alternateName":"TV마스터365 — TV 벽걸이 설치 전문","url":"${siteUrl}/","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"${siteUrl}/blog?q={search_term_string}"},"query-input":"required name=search_term_string"}}</script>`,
     `<script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":${escJ(d.company)},"url":"${siteUrl}/","telephone":${escJ(d.phone)},"address":{"@type":"PostalAddress","streetAddress":"소사로730번길 58, 5동 지2호","addressLocality":"부천시","addressRegion":"경기도","addressCountry":"KR"},"areaServed":["서울","경기","인천"],"openingHours":["Mo-Fr 09:30-18:00","Sa 09:00-13:00"]${ogImgUrl ? `,"image":${escJ(ogImgUrl)}` : ''}}</script>`,
     `<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":${escJ(d.company)},"url":"${siteUrl}/","contactPoint":{"@type":"ContactPoint","telephone":${escJ(d.phone)},"contactType":"customer service","availableLanguage":"Korean"}}</script>`,
     faqEntities ? `<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[${faqEntities}]}</script>` : '',
@@ -366,6 +367,93 @@ tr:nth-child(even) td{background:#F5F5F4}
   res.send(html);
 });
 
+// ── 지역별 랜딩 페이지 ────────────────────────────────────────────────────────
+app.get('/area/:region', (req, res) => {
+  const region = decodeURIComponent(req.params.region).replace(/-/g, ' ');
+  const [sido, gu] = region.split(' ');
+  const areaName = `${sido} ${gu}`;
+  const posts = loadPosts().filter(p => p.region && p.region.includes(gu)).slice(0, 10);
+  const d = loadData();
+  const desc = `${areaName} TV 벽걸이 설치 전문 TV마스터365. 무타공·가벽·대형 TV 설치. 무료 견적 ${d.phone||'010-6213-0555'}`;
+  const canonUrl = `${SITE_URL}/area/${req.params.region}`;
+
+  const ldWebSite = `{"@context":"https://schema.org","@type":"WebSite","name":"TV마스터365","alternateName":"TV마스터365 — TV 벽걸이 설치 전문","url":"${SITE_URL}/"}`;
+  const ldBreadcrumb = JSON.stringify({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"TV마스터365","item":SITE_URL+"/"},{"@type":"ListItem","position":2,"name":"서비스 지역","item":SITE_URL+"/#sec-area"},{"@type":"ListItem","position":3,"name":areaName,"item":canonUrl}]});
+  const ldJson = JSON.stringify({
+    "@context":"https://schema.org","@type":"LocalBusiness",
+    "name":d.company||"TV마스터365","url":SITE_URL+"/","telephone":d.phone||"010-6213-0555",
+    "areaServed":areaName,"address":{"@type":"PostalAddress","addressRegion":"경기도","addressCountry":"KR"}
+  });
+
+  const postLinks = posts.length ? posts.map(p =>
+    `<li><a href="${SITE_URL}/blog/${p.slug}">${p.title}</a></li>`
+  ).join('\n') : `<li>블로그 포스트가 곧 등록됩니다.</li>`;
+
+  const html = `<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${areaName} TV 벽걸이 설치 전문 | TV마스터365</title>
+<meta name="description" content="${desc}">
+<link rel="canonical" href="${canonUrl}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${areaName} TV 벽걸이 설치 전문 | TV마스터365">
+<meta property="og:description" content="${desc}">
+<meta property="og:url" content="${canonUrl}">
+<meta property="og:site_name" content="TV마스터365">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">${ldWebSite}</script>
+<script type="application/ld+json">${ldBreadcrumb}</script>
+<script type="application/ld+json">${ldJson}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:#F7F7F6;color:#111214;line-height:1.8}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px 80px}
+.hdr{background:#111214;padding:14px 24px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+.hdr-logo{color:#fff;font-weight:900;font-size:16px;text-decoration:none}
+.hdr-logo span{color:#D42B2B}
+.hdr-back{color:rgba(255,255,255,.6);font-size:13px;text-decoration:none;margin-left:auto}
+.hdr-back:hover{color:#fff}
+h1{font-size:clamp(22px,3.5vw,36px);font-weight:900;line-height:1.3;margin-bottom:16px}
+h2{font-size:20px;font-weight:700;margin:36px 0 12px;padding-top:8px;border-top:2px solid #E8E8E8}
+p{margin-bottom:14px;font-size:15.5px}
+ul{padding-left:22px;margin-bottom:14px}
+li{margin-bottom:8px;font-size:15px}
+li a{color:#D42B2B;text-decoration:none}
+li a:hover{text-decoration:underline}
+.cta-box{background:#111214;color:#fff;border-radius:10px;padding:28px 24px;margin:40px 0;text-align:center}
+.cta-box h2{color:#fff;border:none;margin:0 0 8px;font-size:20px;padding:0}
+.cta-box p{color:rgba(255,255,255,.75);margin:0 0 16px}
+.cta-box a{display:inline-block;background:#D42B2B;color:#fff;padding:10px 28px;border-radius:7px;font-weight:700;text-decoration:none}
+.breadcrumb{font-size:13px;color:#888;margin-bottom:20px}
+.breadcrumb a{color:#D42B2B;text-decoration:none}
+</style></head><body>
+<nav class="hdr"><a class="hdr-logo" href="/"><span>TV</span>마스터365</a><a class="hdr-back" href="/">← 홈으로</a></nav>
+<div class="wrap">
+<p class="breadcrumb"><a href="/">홈</a> &rsaquo; <a href="/#sec-area">서비스 지역</a> &rsaquo; ${areaName}</p>
+<h1>${areaName} TV 벽걸이 설치 전문 — TV마스터365</h1>
+<p>${areaName} 지역 TV 벽걸이 설치를 전문으로 합니다. 무타공 브라켓으로 벽에 구멍을 내지 않고 50~100인치 TV를 안전하게 거는 서울·경기·인천 출장 시공 전문 업체입니다.</p>
+<p>${areaName} 아파트, 오피스텔, 주택 등 모든 환경에서 시공 가능합니다. 콘크리트 벽·가벽·아트월 구분 없이 방문 후 최적 방법으로 진행합니다.</p>
+
+<h2>${areaName} TV 설치 관련 포스트</h2>
+<ul>${postLinks}</ul>
+
+<h2>왜 TV마스터365인가요?</h2>
+<ul>
+<li>무타공 브라켓 — 벽에 구멍 없이 50~100인치 TV 설치</li>
+<li>배상책임보험 가입 — 시공 중 사고 발생 시 보상 보장</li>
+<li>시공 기록 보관 — 이사 재설치·A/S 사후관리까지 책임</li>
+<li>영업 전화 없음 — 무료 견적 후 결정, 강요 없음</li>
+</ul>
+
+<div class="cta-box">
+<h2>무료 견적 받기</h2>
+<p>${areaName} TV 벽걸이 설치 무료 견적을 지금 바로 받아보세요.</p>
+<a href="tel:${(d.phone||'010-6213-0555').replace(/-/g,'')}">${d.phone||'010-6213-0555'} 전화 문의</a>
+</div>
+</div></body></html>`;
+  res.send(html);
+});
+
 // ── SEO: 사이트맵 & 네이버 서치 어드바이저 ────────────────────────────────────
 
 const SITE_URL = process.env.SITE_URL || 'https://tvmaster365-production.up.railway.app';
@@ -376,8 +464,25 @@ app.get('/sitemap.xml', (req, res) => {
   const posts = loadPosts();
   const today = new Date().toISOString().split('T')[0];
 
+  const AREA_SLUGS = [
+    '서울-강남구','서울-강동구','서울-강북구','서울-강서구','서울-관악구','서울-광진구',
+    '서울-구로구','서울-금천구','서울-노원구','서울-도봉구','서울-동대문구','서울-동작구',
+    '서울-마포구','서울-서대문구','서울-서초구','서울-성동구','서울-성북구','서울-송파구',
+    '서울-양천구','서울-영등포구','서울-용산구','서울-은평구','서울-종로구','서울-중구','서울-중랑구',
+    '인천-계양구','인천-남동구','인천-동구','인천-미추홀구','인천-부평구',
+    '인천-서구','인천-연수구','인천-중구','인천-강화군','인천-옹진군',
+    '경기-가평군','경기-고양시','경기-과천시','경기-광명시','경기-광주시','경기-구리시',
+    '경기-군포시','경기-김포시','경기-남양주시','경기-동두천시','경기-부천시','경기-성남시',
+    '경기-수원시','경기-시흥시','경기-안산시','경기-안성시','경기-안양시','경기-양주시',
+    '경기-양평군','경기-여주시','경기-연천군','경기-오산시','경기-용인시','경기-의왕시',
+    '경기-의정부시','경기-이천시','경기-파주시','경기-평택시','경기-포천시','경기-하남시','경기-화성시',
+  ];
+  const areaUrls = AREA_SLUGS.map(s =>
+    `<url><loc>${SITE_URL}/area/${encodeURIComponent(s)}</loc><changefreq>monthly</changefreq><priority>0.7</priority><lastmod>${today}</lastmod></url>`
+  );
   const staticUrls = [
     `<url><loc>${SITE_URL}/</loc><changefreq>weekly</changefreq><priority>1.0</priority><lastmod>${today}</lastmod></url>`,
+    ...areaUrls,
   ];
 
   const postUrls = posts.map(p => {
