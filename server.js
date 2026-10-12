@@ -85,12 +85,12 @@ const DEFAULT_DATA = {
   address: '경기도 부천시 소사로730번길 58, 5동 지2호',
   hours: '평일 09:30~18:00 · 토요일 09:00~13:00',
   year: '2025',
-  desc: '벽에 구멍을 내지 않는 무타공 TV 벽걸이 설치 전문입니다. 서울·경기·인천 전 지역에서 50~100인치 TV를 책임 시공합니다.',
+  desc: 'TV 벽걸이 설치 전문입니다. 서울·경기·인천 전 지역에서 50~100인치 TV를 책임 시공합니다.',
 
   hero: {
     eyebrow: '서울·경기·인천 전 지역 출장 시공',
     title: '벽은 그대로,\n50~100인치\nTV 벽걸이 전문',
-    sub: '무타공 브라켓으로 구멍 없이 거는\nTV 벽걸이 설치 전문 TV마스터365.',
+    sub: '서울·경기·인천 전 지역\nTV 벽걸이 설치 전문 TV마스터365.',
     cta1: '무료 견적 받기 →',
     cta2: '우리 집도 가능한가요?',
     stats: [
@@ -102,7 +102,7 @@ const DEFAULT_DATA = {
 
   problem: {
     eyebrow: 'THE PROBLEM',
-    title: '무타공 업체를 고를 때,\n이 4가지를 꼭 확인하세요.',
+    title: 'TV 벽걸이 설치 업체를 고를 때,\n이 4가지를 꼭 확인하세요.',
     sub: '가격과 완성 사진만으로는 차이가 보이지 않습니다. 무엇이 적혀 있지 않은지를 보면 어떤 업체인지 알 수 있습니다.',
     cards: [
       { no: 'CHECK 01', text: '별점과 가격은 보여도, 대형 TV를 지탱할 수 있는 근거 자료는 적혀 있지 않습니다.' },
@@ -132,12 +132,12 @@ const DEFAULT_DATA = {
   },
 
   cases: [
-    { loc: '래미안 위례신도시', det: '75인치 · 콘크리트 벽 · 무타공 기본형', badge: '무타공', img: '', link: '' },
+    { loc: '래미안 위례신도시', det: '75인치 · 콘크리트 벽 · 브라켓 설치', badge: '콘크리트', img: '', link: '' },
     { loc: '힐스테이트 동탄', det: '85인치 · 석고보드 가벽 · 보강판 적용', badge: '가벽 보강', img: '', link: '' },
     { loc: '자이 마곡', det: '65인치 · 선 매립 마감 · 기기 거치대 포함', badge: '선 매립', img: '', link: '' },
-    { loc: '푸르지오 판교', det: '98인치 · 콘크리트 · 대형 TV 전용 브라켓', badge: '무타공', img: '', link: '' },
+    { loc: '푸르지오 판교', det: '98인치 · 콘크리트 · 대형 TV 전용 브라켓', badge: '대형전용', img: '', link: '' },
     { loc: 'e편한세상 용인', det: '75인치 · 아트월 단자함 일체형', badge: '아트월', img: '', link: '' },
-    { loc: '롯데캐슬 송파', det: '55인치 · 콘크리트 · 사운드바 추가 설치', badge: '무타공', img: '', link: '' }
+    { loc: '롯데캐슬 송파', det: '55인치 · 콘크리트 · 사운드바 추가 설치', badge: '사운드바', img: '', link: '' }
   ],
 
   reviews: [
@@ -189,14 +189,14 @@ const DEFAULT_DATA = {
     steps: [
       { title: '무료 견적 신청', desc: 'TV 크기와 벽면 정보를 알려주시면 예상 견적을 바로 안내드립니다.', tag: '30초 이내' },
       { title: '상담 및 일정 확정', desc: '담당자가 통화 1회로 설치 방식, 자재, 일정을 확인하고 최종 견적을 안내합니다.', tag: '영업 전화 없음' },
-      { title: '전문 기사 방문 시공', desc: '담당 기사가 방문해 무타공 브라켓 설치, 기기 거치, 선 정리까지 완료합니다.', tag: '1~2시간 소요' },
+      { title: '전문 기사 방문 시공', desc: '담당 기사가 방문해 TV 브라켓 설치, 기기 거치, 선 정리까지 완료합니다.', tag: '1~2시간 소요' },
       { title: '시공 확인 및 A/S 등록', desc: '시공 완료 후 현장 확인, 기록 등록, A/S 연락처 안내까지 마무리합니다.', tag: '사후관리 책임' }
     ]
   },
 
   faq: [
     { q: '철골+석고보드로 만든 가벽에도 시공되나요?', a: '가벽에도 시공됩니다. 단자함 뒤를 철판(보강플레이트)으로 받쳐 보강한 가벽이라면 전용 가벽 키트로 최대 100인치까지 시공합니다. 콘크리트 벽에 석고보드를 마감한 벽도 그대로 시공됩니다.' },
-    { q: '무타공인데 대형 TV가 떨어지지는 않나요?', a: '콘센트 안쪽 단자함에 본체(함체)를 고정하고 그 위에 프레임을 연결하는 2단계 구조입니다. 함체가 단자함을 상·하로 눌러 고정하고, 프레임과 패드가 벽면에 4면으로 밀착해 하중을 나눕니다.' },
+    { q: '설치된 TV가 벽에서 떨어지지는 않나요?', a: '전용 브라켓과 고강도 앵커볼트로 고정하므로 올바른 시공 시 하중 문제가 없습니다. 설치 후 하중 테스트를 완료하고 마무리합니다.' },
     { q: '이사할 때 떼었다가 다시 쓸 수 있나요?', a: '함체와 프레임이 분리되는 2단계 구조라 이사할 때 재사용이 쉽습니다. 새 집 벽이 같은 환경이면 함체를 재사용해 시공합니다.' },
     { q: '견적은 무료인가요? 영업 전화가 오나요?', a: '상담과 1차 견적 안내는 무료입니다. 통화 1회로 설치 방식·자재·일정을 확인하고 예상 금액을 안내합니다. 확인 통화 외 별도 영업 전화는 없습니다.' },
     { q: '98인치·100인치 대형 TV도 시공되나요?', a: '됩니다. 지원 범위는 50~100인치이고 98인치 시공 사례가 실제로 있습니다. 콘크리트 벽은 표준 시공으로 진행하고, 가벽은 보강플레이트를 댄 뒤 전용 가벽 키트로 시공합니다.' }
@@ -455,7 +455,7 @@ app.get('/area/:region', (req, res) => {
   const d = loadData();
   const phone = d.phone || '010-6213-0555';
   const phoneDigits = phone.replace(/-/g,'');
-  const desc = `${areaName} TV 벽걸이 설치 전문 TV마스터365. 무타공·가벽·대형 TV 설치. 무료 견적 ${phone}`;
+  const desc = `${areaName} TV 벽걸이 설치 전문 TV마스터365. 가벽·콘크리트·대형 TV 설치. 무료 견적 ${phone}`;
   const canonUrl = `${SITE_URL}/area/${regionSlug}`;
 
   const dongs = (AREA_DATA[sido] && AREA_DATA[sido][gu]) ? AREA_DATA[sido][gu] : [];
@@ -558,7 +558,6 @@ a{color:inherit;text-decoration:none}
     <p class="hero-badge">LOCAL SERVICE</p>
     <h1>${areaName} TV 벽걸이 설치<br>전문 안내</h1>
     <ul class="checklist">
-      <li>단자함 활용 무타공 TV 설치 — 벽에 구멍 없음</li>
       <li>가벽·아트월·콘크리트 벽 구분 없이 시공</li>
       <li>50~100인치 전 사이즈, 당일~익일 방문</li>
       <li>배상책임보험 가입 · 시공 기록 보관 · A/S 보장</li>
@@ -599,7 +598,7 @@ a{color:inherit;text-decoration:none}
     <h2>${areaName} 자주 묻는 질문</h2>
     <div class="faq-item"><p class="faq-q">${areaName} TV 벽걸이 설치 비용은 얼마인가요?</p><p class="faq-a">TV 크기와 벽 구조에 따라 다릅니다. 전화 상담 시 크기와 벽 상태를 알려주시면 견적을 먼저 안내드립니다. 현장 추가 비용은 없습니다.</p></div>
     <div class="faq-item"><p class="faq-q">${areaName}에서 당일 시공이 가능한가요?</p><p class="faq-a">예약 일정에 따라 당일~익일 시공이 가능합니다. 연락 시 기사 배치 현황을 바로 확인해 드립니다.</p></div>
-    <div class="faq-item"><p class="faq-q">임대 아파트에도 설치할 수 있나요?</p><p class="faq-a">무타공 시공은 벽에 구멍을 내지 않아 임대 아파트에서도 원상 복구 걱정 없이 설치 가능합니다.</p></div>
+    <div class="faq-item"><p class="faq-q">임대 아파트에도 설치할 수 있나요?</p><p class="faq-a">벽 구조에 따라 원상 복구가 가능한 방식으로 시공합니다. 임대 아파트도 상담 후 설치 가능합니다.</p></div>
     <div class="faq-item"><p class="faq-q">가벽에도 TV를 걸 수 있나요?</p><p class="faq-a">보강플레이트를 사용하면 석고보드 가벽에도 50~100인치 TV 설치가 가능합니다. 벽 상태를 사진으로 보내주시면 확인해 드립니다.</p></div>
   </section>
 
@@ -704,7 +703,6 @@ a{color:inherit;text-decoration:none}
     <p class="hero-badge">LOCAL SERVICE</p>
     <h1>${areaName} TV 벽걸이<br>설치 전문 안내</h1>
     <ul class="checklist">
-      <li>무타공 TV 설치 — 벽에 구멍 없이 시공</li>
       <li>가벽·콘크리트·아트월 모두 가능</li>
       <li>50~100인치, 당일~익일 방문</li>
       <li>배상책임보험 · A/S 보장</li>
@@ -717,7 +715,7 @@ a{color:inherit;text-decoration:none}
     <h2>${areaName} 자주 묻는 질문</h2>
     <div class="faq-item"><p class="faq-q">${areaName} TV 설치 비용은 얼마인가요?</p><p class="faq-a">TV 크기와 벽 구조에 따라 다릅니다. 전화 상담 시 먼저 견적을 안내드립니다.</p></div>
     <div class="faq-item"><p class="faq-q">당일 방문이 가능한가요?</p><p class="faq-a">예약 현황에 따라 당일~익일 방문이 가능합니다. 전화로 바로 확인해 드립니다.</p></div>
-    <div class="faq-item"><p class="faq-q">임대 아파트에도 설치되나요?</p><p class="faq-a">무타공 시공은 벽에 구멍이 없어 임대 아파트에서도 원상 복구 걱정 없이 가능합니다.</p></div>
+    <div class="faq-item"><p class="faq-q">임대 아파트에도 설치되나요?</p><p class="faq-a">벽 구조에 따라 원상 복구가 가능한 방식으로 시공합니다. 임대 아파트도 상담 후 설치 가능합니다.</p></div>
   </section>
   <div class="final-cta">
     <h2>${areaName} TV 벽걸이 설치<br>무료 견적 받기</h2>
@@ -803,7 +801,7 @@ app.get('/rss.xml', (req, res) => {
       `    <link>${SITE_URL}/</link>`,
       `    <guid isPermaLink="true">${SITE_URL}/</guid>`,
       `    <pubDate>${new Date().toUTCString()}</pubDate>`,
-      '    <description><![CDATA[무타공 TV 벽걸이 설치 전문. 서울 경기 인천 전 지역 출장 시공. 010-6213-0555]]></description>',
+      '    <description><![CDATA[TV 벽걸이 설치 전문. 서울 경기 인천 전 지역 출장 시공. 010-6213-0555]]></description>',
       '  </item>',
     ].join('\n'));
   }

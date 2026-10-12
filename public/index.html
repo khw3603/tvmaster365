@@ -849,8 +849,8 @@ async function renderPublic(d) {
   const bgs=['linear-gradient(135deg,#1a1b22,#141620)','linear-gradient(135deg,#1b1a22,#17161f)','linear-gradient(135deg,#181c1a,#151916)','linear-gradient(135deg,#1c1a18,#1a1815)','linear-gradient(135deg,#1a1b1c,#14161a)','linear-gradient(135deg,#191a1b,#141617)'];
   function buildCaseCard(c, i) {
     const inner = c.img
-      ? `<img class="case-thumb" src="${esc(c.img)}" alt="${esc(c.loc)}" loading="lazy"><div class="case-badge">${esc(c.badge||'무타공')}</div>${c.link?`<div class="case-ext">블로그 ↗</div>`:''}`
-      : `<div class="case-img" style="background:${bgs[i%bgs.length]}"><div class="case-tv"></div><div class="case-badge">${esc(c.badge||'무타공')}</div>${c.link?`<div class="case-ext">블로그 ↗</div>`:''}</div>`;
+      ? `<img class="case-thumb" src="${esc(c.img)}" alt="${esc(c.loc)}" loading="lazy"><div class="case-badge">${esc(c.badge||'설치')}</div>${c.link?`<div class="case-ext">블로그 ↗</div>`:''}`
+      : `<div class="case-img" style="background:${bgs[i%bgs.length]}"><div class="case-tv"></div><div class="case-badge">${esc(c.badge||'설치')}</div>${c.link?`<div class="case-ext">블로그 ↗</div>`:''}</div>`;
     const imgDiv = c.img ? `<div class="case-img" style="background:#111">${inner}</div>` : inner;
     const card = `${imgDiv}<div class="case-info"><div class="case-loc">${esc(c.loc)}</div><div class="case-det">${esc(c.det)}</div></div>`;
     return c.link
@@ -1054,7 +1054,7 @@ function openModal(type, idx) {
     </div>
     <div id="${previewId}" style="margin-top:8px">${existingImg?`<img src="${existingImg}" style="max-width:100%;max-height:160px;border-radius:6px;object-fit:cover" onerror="this.style.display='none'">`:''}</div>`;
   if(type==='case'){ const it=(d.cases||[])[idx]||{};
-    html=`<div class="adm-fld"><label>아파트/단지명</label><input id="m-loc" type="text" value="${resc(it.loc||'')}"></div><div class="adm-fld"><label>인치·벽 종류·시공 방식</label><input id="m-det" type="text" value="${resc(it.det||'')}"></div><div class="adm-fld"><label>배지</label><input id="m-badge" type="text" value="${resc(it.badge||'무타공')}"></div><div class="adm-fld"><label>썸네일 이미지</label>${imgUploadUI('m-img-preview', resc(it.img||''))}</div><div class="adm-fld"><label>외부 링크 (네이버 블로그 등)</label><input id="m-link" type="url" placeholder="https://blog.naver.com/..." value="${resc(it.link||'')}"><div style="margin-top:6px;font-size:12px;color:#888">링크 입력 시 카드 클릭 시 새 탭으로 이동</div></div>`;}
+    html=`<div class="adm-fld"><label>아파트/단지명</label><input id="m-loc" type="text" value="${resc(it.loc||'')}"></div><div class="adm-fld"><label>인치·벽 종류·시공 방식</label><input id="m-det" type="text" value="${resc(it.det||'')}"></div><div class="adm-fld"><label>배지</label><input id="m-badge" type="text" value="${resc(it.badge||'설치')}"></div><div class="adm-fld"><label>썸네일 이미지</label>${imgUploadUI('m-img-preview', resc(it.img||''))}</div><div class="adm-fld"><label>외부 링크 (네이버 블로그 등)</label><input id="m-link" type="url" placeholder="https://blog.naver.com/..." value="${resc(it.link||'')}"><div style="margin-top:6px;font-size:12px;color:#888">링크 입력 시 카드 클릭 시 새 탭으로 이동</div></div>`;}
   else if(type==='review'){ const it=(d.reviews||[])[idx]||{};
     html=`<div class="adm-fld"><label>후기 내용</label><textarea id="m-text" style="min-height:120px">${resc(it.text||'')}</textarea></div><div class="adm-fld"><label>아파트/지역</label><input id="m-apt" type="text" value="${resc(it.apt||'')}"></div><div class="adm-fld"><label>썸네일 이미지</label>${imgUploadUI('m-img-preview', resc(it.img||''))}</div><div class="adm-fld"><label>외부 링크 (네이버 블로그 등)</label><input id="m-link" type="url" placeholder="https://blog.naver.com/..." value="${resc(it.link||'')}"></div>`;}
   else if(type==='faq'){ const it=(d.faq||[])[idx]||{};
@@ -1136,7 +1136,7 @@ async function saveModal() {
   const type=currentModalType, idx=currentModalIdx;
   const d=JSON.parse(JSON.stringify(DATA||{}));
   let listKey='', item={}, labelFn;
-  if(type==='case'){ item={loc:gv('m-loc'),det:gv('m-det'),badge:gv('m-badge')||'무타공',img:gv('m-img'),link:gv('m-link')};
+  if(type==='case'){ item={loc:gv('m-loc'),det:gv('m-det'),badge:gv('m-badge')||'설치',img:gv('m-img'),link:gv('m-link')};
     if(!item.loc){showToast('단지명을 입력해주세요.',true);return;}
     if(!d.cases)d.cases=[]; if(idx!==null)d.cases[idx]=item;else d.cases.push(item);
     listKey='cases'; labelFn=c=>({title:c.loc,sub:c.det}); }
