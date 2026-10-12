@@ -633,7 +633,7 @@ app.get('/area/:regionSlug/:dong', (req, res, next) => {
   const phoneDigits = phone.replace(/-/g,'');
   const desc = `${areaName} TV 벽걸이 설치 전문 TV마스터365. 무료 견적 ${phone}`;
   const canonUrl = `${SITE_URL}/area/${regionSlug}/${encodeURIComponent(dong)}`;
-  const posts = loadPosts().filter(p => p.region && (p.region.includes(dong) || p.region.includes(gu))).slice(0, 5);
+  const posts = loadPosts().filter(p => p.region && p.region.includes(dong)).slice(0, 5);
 
   const ldBreadcrumb = JSON.stringify({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"TV마스터365","item":SITE_URL+"/"},{"@type":"ListItem","position":2,"name":"서비스 지역","item":SITE_URL+"/#sec-area"},{"@type":"ListItem","position":3,"name":`${sido} ${gu}`,"item":`${SITE_URL}/area/${regionSlug}`},{"@type":"ListItem","position":4,"name":areaName,"item":canonUrl}]});
   const ldLocal = JSON.stringify({"@context":"https://schema.org","@type":"LocalBusiness","name":"TV마스터365","url":SITE_URL+"/","telephone":phone,"areaServed":areaName});
