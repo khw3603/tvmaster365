@@ -328,6 +328,9 @@ ${post.thumbnail_url ? `<meta property="og:image" content="${SITE_URL}${post.thu
 <meta name="twitter:image" content="${SITE_URL}${post.thumbnail_url}">` : '<meta name="twitter:card" content="summary">'}
 <meta name="twitter:title" content="${post.title.replace(/"/g,'&quot;')}">
 <meta name="twitter:description" content="${(post.meta_description||post.title).replace(/"/g,'&quot;')}">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"TV마스터365","alternateName":"TV마스터365","url":"${SITE_URL}/"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"TV마스터365","item":"${SITE_URL}/"},{"@type":"ListItem","position":2,"name":"블로그","item":"${SITE_URL}/blog"},{"@type":"ListItem","position":3,"name":"${post.title.replace(/"/g,'&quot;')}","item":"${SITE_URL}/blog/${post.slug}"}]}</script>
+${post.thumbnail_url ? `<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${post.title.replace(/"/g,'&quot;')}","image":["${SITE_URL}${post.thumbnail_url}"],"datePublished":"${new Date(post.created_at).toISOString()}","dateModified":"${new Date(post.created_at).toISOString()}","author":{"@type":"Organization","name":"TV마스터365","url":"${SITE_URL}/"},"publisher":{"@type":"Organization","name":"TV마스터365","url":"${SITE_URL}/"}}</script>` : ''}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
