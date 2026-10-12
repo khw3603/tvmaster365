@@ -463,9 +463,13 @@ app.get('/area/:region', (req, res) => {
     return `<a class="dong-card" href="/area/${regionSlug}/${encodeURIComponent(dong)}"><strong>${dong}</strong><span>TV 벽걸이 설치 안내</span></a>`;
   }).join('');
 
-  const postItems = posts.length ? posts.map(p =>
-    `<article class="post-item"><time>${p.created_at ? new Date(p.created_at).toLocaleDateString('ko-KR') : ''}</time><a href="/blog/${p.slug}">${p.title}</a></article>`
-  ).join('') : `<p class="no-posts">블로그 포스트가 곧 등록됩니다.</p>`;
+  const postItems = posts.length ? posts.map(p => {
+    const thumb = p.thumbnail_url
+      ? `<img class="pc-thumb" src="${p.thumbnail_url}" alt="${p.title}" loading="lazy">`
+      : `<div class="pc-thumb pc-thumb-placeholder"><span class="pc-pl-area">${p.region||areaName}</span><span class="pc-pl-svc">TV 벽걸이 설치</span><span class="pc-pl-phone">${phone}</span></div>`;
+    const dt = p.created_at ? new Date(p.created_at).toLocaleDateString('ko-KR').replace(/\. /g,'.').replace('.','') : '';
+    return `<article class="pc"><a href="/blog/${p.slug}" class="pc-link">${thumb}<div class="pc-info"><time class="pc-date">${dt}</time><h3 class="pc-title">${p.title}</h3><span class="pc-more">자세히 보기 ›</span></div></a></article>`;
+  }).join('') : `<p class="no-posts">블로그 포스트가 곧 등록됩니다.</p>`;
 
   const ldWebSite = `{"@context":"https://schema.org","@type":"WebSite","name":"TV마스터365","url":"${SITE_URL}/"}`;
   const ldBreadcrumb = JSON.stringify({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"TV마스터365","item":SITE_URL+"/"},{"@type":"ListItem","position":2,"name":"서비스 지역","item":SITE_URL+"/#sec-area"},{"@type":"ListItem","position":3,"name":areaName,"item":canonUrl}]});
@@ -518,12 +522,21 @@ a{color:inherit;text-decoration:none}
 .dong-card:hover{border-color:#D42B2B;box-shadow:0 2px 8px rgba(212,43,43,.12)}
 .dong-card strong{font-size:15px;font-weight:700;color:#111214}
 .dong-card span{font-size:12px;color:#999}
-/* POSTS */
-.post-item{display:flex;flex-direction:column;gap:4px;padding:16px 0;border-bottom:1px solid #F0F0F0}
-.post-item:last-child{border-bottom:none}
-.post-item time{font-size:12px;color:#999}
-.post-item a{font-size:15px;font-weight:500;color:#111214;line-height:1.4}
-.post-item a:hover{color:#D42B2B}
+/* BLOG CARD GRID */
+.pc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+@media(max-width:640px){.pc-grid{grid-template-columns:1fr}}
+.pc{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);transition:box-shadow .15s}
+.pc:hover{box-shadow:0 4px 16px rgba(0,0,0,.14)}
+.pc-link{display:block;color:inherit;text-decoration:none}
+.pc-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.pc-thumb-placeholder{width:100%;aspect-ratio:16/9;background:#111421;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px;text-align:center}
+.pc-pl-area{font-size:13px;font-weight:700;color:#4FC3F7;letter-spacing:.04em}
+.pc-pl-svc{font-size:16px;font-weight:900;color:#fff}
+.pc-pl-phone{font-size:14px;font-weight:700;color:#fff;margin-top:4px}
+.pc-info{padding:14px 16px 16px}
+.pc-date{font-size:11px;color:#999;display:block;margin-bottom:6px}
+.pc-title{font-size:14px;font-weight:700;color:#111214;line-height:1.45;margin-bottom:8px}
+.pc-more{font-size:12px;color:#D42B2B;font-weight:600}
 .no-posts{font-size:14px;color:#999;padding:16px 0}
 /* PROCESS */
 .proc-list{display:flex;flex-direction:column;gap:0;counter-reset:proc;margin-top:20px}
@@ -579,7 +592,7 @@ a{color:inherit;text-decoration:none}
     <p class="sec-badge">BLOG CASE</p>
     <h2>${areaName} TV 벽걸이 설치 사례</h2>
     <p class="sec-sub">TV마스터365가 ${areaName}에서 진행한 실제 시공 사례입니다.</p>
-    ${postItems}
+    <div class="pc-grid">${postItems}</div>
   </section>` : ''}
 
   <section class="sec">
@@ -638,9 +651,13 @@ app.get('/area/:regionSlug/:dong', (req, res, next) => {
   const ldBreadcrumb = JSON.stringify({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"TV마스터365","item":SITE_URL+"/"},{"@type":"ListItem","position":2,"name":"서비스 지역","item":SITE_URL+"/#sec-area"},{"@type":"ListItem","position":3,"name":`${sido} ${gu}`,"item":`${SITE_URL}/area/${regionSlug}`},{"@type":"ListItem","position":4,"name":areaName,"item":canonUrl}]});
   const ldLocal = JSON.stringify({"@context":"https://schema.org","@type":"LocalBusiness","name":"TV마스터365","url":SITE_URL+"/","telephone":phone,"areaServed":areaName});
 
-  const postItems = posts.map(p =>
-    `<div class="post-item"><time>${p.created_at ? new Date(p.created_at).toLocaleDateString('ko-KR') : ''}</time><a href="/blog/${p.slug}">${p.title}</a></div>`
-  ).join('');
+  const postItems = posts.map(p => {
+    const thumb = p.thumbnail_url
+      ? `<img class="pc-thumb" src="${p.thumbnail_url}" alt="${p.title}" loading="lazy">`
+      : `<div class="pc-thumb pc-thumb-placeholder"><span class="pc-pl-area">${p.region||areaName}</span><span class="pc-pl-svc">TV 벽걸이 설치</span><span class="pc-pl-phone">${phone}</span></div>`;
+    const dt = p.created_at ? new Date(p.created_at).toLocaleDateString('ko-KR').replace(/\. /g,'.').replace('.','') : '';
+    return `<article class="pc"><a href="/blog/${p.slug}" class="pc-link">${thumb}<div class="pc-info"><time class="pc-date">${dt}</time><h3 class="pc-title">${p.title}</h3><span class="pc-more">자세히 보기 ›</span></div></a></article>`;
+  }).join('');
 
   const html = `<!DOCTYPE html><html lang="ko"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -678,10 +695,20 @@ a{color:inherit;text-decoration:none}
 .sec{padding:36px 0;border-bottom:1px solid #E4E4E4}
 .sec-badge{font-size:11px;font-weight:700;letter-spacing:.12em;color:#888;margin-bottom:8px}
 .sec h2{font-size:20px;font-weight:900;margin-bottom:16px}
-.post-item{display:flex;flex-direction:column;gap:4px;padding:14px 0;border-bottom:1px solid #F0F0F0}
-.post-item time{font-size:12px;color:#999}
-.post-item a{font-size:15px;font-weight:500;color:#111214}
-.post-item a:hover{color:#D42B2B}
+.pc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px}
+@media(max-width:640px){.pc-grid{grid-template-columns:1fr}}
+.pc{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);transition:box-shadow .15s}
+.pc:hover{box-shadow:0 4px 16px rgba(0,0,0,.14)}
+.pc-link{display:block;color:inherit;text-decoration:none}
+.pc-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.pc-thumb-placeholder{width:100%;aspect-ratio:16/9;background:#111421;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px;text-align:center}
+.pc-pl-area{font-size:12px;font-weight:700;color:#4FC3F7;letter-spacing:.04em}
+.pc-pl-svc{font-size:15px;font-weight:900;color:#fff}
+.pc-pl-phone{font-size:13px;font-weight:700;color:#fff;margin-top:4px}
+.pc-info{padding:12px 14px 14px}
+.pc-date{font-size:11px;color:#999;display:block;margin-bottom:5px}
+.pc-title{font-size:13px;font-weight:700;color:#111214;line-height:1.45;margin-bottom:7px}
+.pc-more{font-size:12px;color:#D42B2B;font-weight:600}
 .faq-item{padding:14px 0;border-bottom:1px solid #F0F0F0}
 .faq-q{font-size:15px;font-weight:700;margin-bottom:6px}
 .faq-a{font-size:14px;color:#555;line-height:1.7}
@@ -709,7 +736,7 @@ a{color:inherit;text-decoration:none}
     </ul>
     <a class="btn-cta" href="tel:${phoneDigits}">☎ ${phone} 전화 상담</a>
   </section>
-  ${postItems ? `<section class="sec"><p class="sec-badge">BLOG</p><h2>${areaName} 시공 사례</h2>${postItems}</section>` : ''}
+  ${postItems ? `<section class="sec"><p class="sec-badge">BLOG CASE</p><h2>${areaName} 실제 시공 사례</h2><p style="font-size:14px;color:#666;margin-bottom:16px">TV마스터365가 ${areaName}에서 진행한 실제 시공 사례입니다.</p><div class="pc-grid">${postItems}</div></section>` : ''}
   <section class="sec">
     <p class="sec-badge">FAQ</p>
     <h2>${areaName} 자주 묻는 질문</h2>
