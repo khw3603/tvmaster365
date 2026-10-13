@@ -365,7 +365,7 @@ tr:nth-child(even) td{background:#F5F5F4}
 .hdr-back:hover{color:#fff}
 </style></head><body>
 <nav class="hdr"><a class="hdr-logo" href="/"><span>TV</span>마스터365</a><a class="hdr-back" href="/">← 홈으로</a></nav>
-<div class="wrap">${post.body}</div>
+<div class="wrap">${post.thumbnail_url ? `<img src="${SITE_URL}${post.thumbnail_url}" alt="${post.title.replace(/"/g,'&quot;')}" style="width:100%;border-radius:8px;display:block;margin-bottom:24px;aspect-ratio:1200/630;object-fit:cover" loading="eager">` : ''}${post.body}</div>
 </body></html>`;
   res.send(html);
 });
