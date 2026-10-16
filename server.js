@@ -53,6 +53,8 @@ app.get('/', (req, res) => {
     ogImgUrl ? `<meta name="twitter:image" content="${ogImgUrl}">` : '',
     process.env.NAVER_SITE_VERIFICATION
       ? `<meta name="naver-site-verification" content="${process.env.NAVER_SITE_VERIFICATION}">` : '',
+    process.env.GOOGLE_SITE_VERIFICATION
+      ? `<meta name="google-site-verification" content="${process.env.GOOGLE_SITE_VERIFICATION}">` : '',
   ].filter(Boolean).join('\n');
 
   // JSON-LD 구조화 데이터
