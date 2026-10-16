@@ -76,6 +76,25 @@ app.get('/', (req, res) => {
   res.send(html);
 });
 
+// robots.txt — SITE_URL 자동 반영 (static 파일보다 먼저 처리)
+app.get('/robots.txt', (req, res) => {
+  res.set('Content-Type', 'text/plain');
+  res.send([
+    'User-agent: *',
+    'Allow: /',
+    'Disallow: /api/',
+    'Disallow: /admin',
+    '',
+    'User-agent: Yeti',
+    'Allow: /',
+    'Disallow: /api/',
+    'Disallow: /admin',
+    '',
+    `Sitemap: ${SITE_URL}/sitemap.xml`,
+    `Sitemap: ${SITE_URL}/rss.xml`,
+  ].join('\n'));
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 const DEFAULT_DATA = {
@@ -841,8 +860,15 @@ app.get('/rss.xml', (req, res) => {
   const items = postItems.join('\n');
 
   const buildDate = new Date().toUTCString();
+  const ogImg = process.env.OG_IMAGE_URL || '';
+  const channelImage = ogImg ? `
+    <image>
+      <url>${ogImg}</url>
+      <title>TV마스터365 블로그</title>
+      <link>${SITE_URL}/</link>
+    </image>` : '';
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>TV마스터365 블로그</title>
     <link>${SITE_URL}/</link>
@@ -850,6 +876,7 @@ app.get('/rss.xml', (req, res) => {
     <language>ko</language>
     <lastBuildDate>${buildDate}</lastBuildDate>
     <generator>TV마스터365</generator>
+    <atom:link href="${SITE_URL}/feed/" rel="self" type="application/rss+xml"/>${channelImage}
 ${items}
   </channel>
 </rss>`;
@@ -857,6 +884,10 @@ ${items}
   res.set('Content-Type', 'text/xml; charset=utf-8');
   res.send(rss);
 });
+
+// /feed/ — 네이버 RSS 제출 표준 경로 별칭
+app.get('/feed/', (req, res) => res.redirect(301, '/rss.xml'));
+app.get('/feed', (req, res) => res.redirect(301, '/rss.xml'));
 
 // 네이버 서치 어드바이저 HTML 인증 파일 (NAVER_HTML_FILE 환경변수로 파일명, NAVER_HTML_CONTENT로 내용 지정)
 const NAVER_HTML_FILE = process.env.NAVER_HTML_FILE || '';
