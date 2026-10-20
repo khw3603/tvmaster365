@@ -55,6 +55,8 @@ app.get('/', (req, res) => {
       ? `<meta name="naver-site-verification" content="${process.env.NAVER_SITE_VERIFICATION}">` : '',
     process.env.GOOGLE_SITE_VERIFICATION
       ? `<meta name="google-site-verification" content="${process.env.GOOGLE_SITE_VERIFICATION}">` : '',
+    `<link rel="sitemap" type="application/xml" title="사이트맵" href="/sitemap.xml">`,
+    `<link rel="alternate" type="application/rss+xml" title="TV마스터365 블로그" href="/rss.xml">`,
   ].filter(Boolean).join('\n');
 
   // JSON-LD 구조화 데이터
@@ -352,6 +354,8 @@ ${post.thumbnail_url ? `<meta property="og:image" content="${SITE_URL}${post.thu
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"TV마스터365","alternateName":"TV마스터365","url":"${SITE_URL}/"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"TV마스터365","item":"${SITE_URL}/"},{"@type":"ListItem","position":2,"name":"블로그","item":"${SITE_URL}/blog"},{"@type":"ListItem","position":3,"name":"${post.title.replace(/"/g,'&quot;')}","item":"${SITE_URL}/blog/${post.slug}"}]}</script>
 ${post.thumbnail_url ? `<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${post.title.replace(/"/g,'&quot;')}","image":["${SITE_URL}${post.thumbnail_url}"],"datePublished":"${new Date(post.created_at).toISOString()}","dateModified":"${new Date(post.created_at).toISOString()}","author":{"@type":"Organization","name":"TV마스터365","url":"${SITE_URL}/"},"publisher":{"@type":"Organization","name":"TV마스터365","url":"${SITE_URL}/"}}</script>` : ''}
+<link rel="sitemap" type="application/xml" title="사이트맵" href="/sitemap.xml">
+<link rel="alternate" type="application/rss+xml" title="TV마스터365 블로그" href="/rss.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -517,6 +521,8 @@ ${ogImgFull ? `<meta property="og:image" content="${ogImgFull}"><meta property="
 <script type="application/ld+json">${ldBreadcrumb}</script>
 <script type="application/ld+json">${ldLocal}</script>
 ${ldArticle ? `<script type="application/ld+json">${ldArticle}</script>` : ''}
+<link rel="sitemap" type="application/xml" title="사이트맵" href="/sitemap.xml">
+<link rel="alternate" type="application/rss+xml" title="TV마스터365 블로그" href="/rss.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
@@ -705,6 +711,8 @@ ${dongOgImg ? `<meta property="og:image" content="${dongOgImg}"><meta property="
 <script type="application/ld+json">${ldBreadcrumb}</script>
 <script type="application/ld+json">${ldLocal}</script>
 ${ldDongArticle ? `<script type="application/ld+json">${ldDongArticle}</script>` : ''}
+<link rel="sitemap" type="application/xml" title="사이트맵" href="/sitemap.xml">
+<link rel="alternate" type="application/rss+xml" title="TV마스터365 블로그" href="/rss.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -824,11 +832,16 @@ app.get('/sitemap.xml', (req, res) => {
 
   const postUrls = posts.map(p => {
     const date = new Date(p.created_at).toISOString().split('T')[0];
-    return `<url><loc>${SITE_URL}/blog/${p.slug}</loc><changefreq>monthly</changefreq><priority>0.8</priority><lastmod>${date}</lastmod></url>`;
+    const thumbFull = p.thumbnail_url ? (p.thumbnail_url.startsWith('http') ? p.thumbnail_url : SITE_URL + p.thumbnail_url) : '';
+    const imgTag = thumbFull
+      ? `<image:image><image:loc>${thumbFull}</image:loc><image:title>${(p.title||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</image:title></image:image>`
+      : '';
+    return `<url><loc>${SITE_URL}/blog/${p.slug}</loc><changefreq>monthly</changefreq><priority>0.8</priority><lastmod>${date}</lastmod>${imgTag}</url>`;
   });
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${[...staticUrls, ...postUrls].join('\n')}
 </urlset>`;
 
@@ -843,6 +856,7 @@ app.get('/rss.xml', (req, res) => {
 
   const postItems = posts.slice(0, 50).map(p => {
     const pubDate = new Date(p.created_at).toUTCString();
+    const thumbFull = p.thumbnail_url ? (p.thumbnail_url.startsWith('http') ? p.thumbnail_url : SITE_URL + p.thumbnail_url) : '';
     return [
       '  <item>',
       `    <title><![CDATA[${p.title||''}]]></title>`,
@@ -850,8 +864,9 @@ app.get('/rss.xml', (req, res) => {
       `    <guid isPermaLink="true">${SITE_URL}/blog/${escXml(p.slug)}</guid>`,
       `    <pubDate>${pubDate}</pubDate>`,
       `    <description><![CDATA[${p.meta_description || p.title || ''}]]></description>`,
+      thumbFull ? `    <enclosure url="${escXml(thumbFull)}" type="image/jpeg" length="0"/>` : '',
       '  </item>',
-    ].join('\n');
+    ].filter(Boolean).join('\n');
   });
 
   // 포스트가 없을 때 홈페이지를 기본 아이템으로 추가 (빈 피드는 네이버가 오류 처리)
