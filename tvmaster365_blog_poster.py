@@ -7,7 +7,7 @@ import io, os, sys, threading, tkinter as tk, time, random
 from tkinter import filedialog, ttk, scrolledtext, messagebox
 from datetime import datetime, date
 
-RAILWAY_URL_DEFAULT = "https://tvmaster365-production.up.railway.app"
+RAILWAY_URL_DEFAULT = "https://www.tvmaster365.co.kr"
 PHONE         = "010-6213-0555"
 PHONE_DIGITS  = "01062130555"
 EMAIL         = "roqkq8202@naver.com"
@@ -416,6 +416,376 @@ TOPIC_TEMPLATES = {
         ],
         "cta": f"가격 먼저 확인하고 결정하세요. {BRAND} 무료 견적 문의.",
     },
+    "TV 스탠드 제거 후 벽걸이": {
+        "url_kw": "TV-스탠드-제거-벽걸이",
+        "title_variants": [
+            "TV 스탠드 제거하고 벽걸이로 교체하는 방법",
+            "TV 스탠드를 빼고 벽에 거는 벽걸이 전환 가이드",
+            "TV 스탠드 대신 벽걸이 설치 — 교체 과정 안내",
+            "기존 TV 스탠드 제거 후 벽걸이 설치 전 체크사항",
+        ],
+        "intro_variants": [
+            "TV 스탠드를 제거하고 벽걸이로 전환하면 공간 활용도가 높아지고 인테리어가 깔끔해집니다.",
+            f"새로 구매한 TV도, 기존에 스탠드로 쓰던 TV도 모두 벽걸이로 교체 가능합니다. {BRAND}가 안전하게 시공합니다.",
+            "TV 스탠드를 떼고 벽에 거는 과정에서 VESA 규격 확인이 가장 중요합니다.",
+            "스탠드 제거 후 벽걸이 브라켓 선택과 설치까지 한 번에 해결하세요.",
+        ],
+        "cta_variants": [
+            f"TV 스탠드 제거 후 벽걸이 전환, {BRAND}에 문의하세요.",
+            "VESA 규격 확인부터 시공까지 원스탑으로 해결합니다.",
+            f"{BRAND} 전문 시공팀이 스탠드 제거와 벽걸이 설치를 동시에 진행합니다.",
+            "TV 스탠드 없이 깔끔하게 벽에 거세요.",
+        ],
+        "sections": [
+            ("스탠드 제거 전 확인 사항", [
+                "VESA 홀 규격 확인 (75×75 ~ 800×400 mm)",
+                "벽면 구조 파악 (콘크리트 vs 가벽)",
+                "TV 무게 확인 — 브라켓 하중 선택 기준",
+                "전선·단자 위치 정리 계획 수립",
+            ]),
+        ],
+        "table": [
+            ("VESA 규격", "해당 TV 크기", "비고"),
+            ("200×200", "55인치 이하", "소형"),
+            ("400×400", "55~75인치", "표준"),
+            ("600×400", "75~85인치", "대형"),
+            ("800×400", "85인치 이상", "초대형"),
+        ],
+        "faq": [
+            ("TV 스탠드를 제거하면 하단 홀이 남는데 괜찮나요?",
+             "VESA 홀은 브라켓 장착용이므로 문제없습니다. 브라켓을 끼우면 홀이 가려집니다."),
+        ],
+        "cta": f"TV 스탠드 제거부터 벽걸이 설치까지, {BRAND}가 한 번에 처리합니다.",
+    },
+    "TV 설치 높이 기준": {
+        "url_kw": "TV-설치-높이-기준",
+        "title_variants": [
+            "TV 벽걸이 설치 최적 높이 기준과 계산법",
+            "TV를 얼마나 높이 걸어야 할까 — 설치 높이 완벽 가이드",
+            "눈 피로 없는 TV 설치 높이, 이렇게 결정하세요",
+            "TV 설치 높이 기준 — 거실·침실별 최적 가이드",
+        ],
+        "intro_variants": [
+            "TV 설치 높이는 시청자의 눈 높이를 기준으로 화면 중앙이 오도록 맞추는 것이 원칙입니다.",
+            "잘못된 높이에 설치된 TV는 목과 눈에 피로를 줍니다. 올바른 높이 기준으로 시공하세요.",
+            f"TV 벽걸이 설치 높이는 소파 높이와 시청 거리를 함께 고려해야 합니다. {BRAND}가 최적 위치를 제안합니다.",
+            "거실·침실·식당 등 공간별로 권장 설치 높이가 다릅니다. 기준을 알면 더 편안하게 시청할 수 있습니다.",
+        ],
+        "cta_variants": [
+            f"최적의 TV 설치 높이 결정, {BRAND}에 상담하세요.",
+            "시청 환경에 맞는 높이로 TV를 설치해드립니다.",
+            f"{BRAND} 전문 시공팀이 현장에서 최적 위치를 잡아드립니다.",
+            "눈 피로 없는 TV 설치 높이, 지금 확인하세요.",
+        ],
+        "sections": [
+            ("TV 설치 높이 공식", [
+                "소파 앉은 눈 높이(약 110~120cm) = 화면 중앙 높이",
+                "소파~TV 거리: 화면 대각선 × 1.5~2.5배 권장",
+                "침실 — 침대 누운 눈높이 기준으로 약간 낮게",
+                "주방·식당 — 서서 보는 높이 기준 설정",
+            ]),
+        ],
+        "table": [
+            ("공간", "권장 화면 중앙 높이", "비고"),
+            ("거실(소파)", "110~120cm", "앉은 눈높이 기준"),
+            ("침실(침대)", "80~100cm", "누운 눈높이 기준"),
+            ("주방·식당", "140~160cm", "서서 보는 기준"),
+        ],
+        "faq": [
+            ("TV를 너무 높이 달면 어떤 문제가 있나요?",
+             "목을 위로 젖혀야 해 장시간 시청 시 목 통증과 눈 피로가 생깁니다. 화면 중앙이 눈높이에 오도록 설치하는 것이 중요합니다."),
+        ],
+        "cta": f"TV 설치 높이 고민, {BRAND} 전문가가 현장에서 최적 위치를 잡아드립니다.",
+    },
+    "새 TV 구매 후 벽걸이 설치": {
+        "url_kw": "새TV-구매-벽걸이-설치",
+        "title_variants": [
+            "새 TV 구매 후 바로 벽걸이 설치하는 방법",
+            "TV 구매와 동시에 벽걸이 설치 — 주의사항 안내",
+            "새 TV 벽걸이 설치, 구매 전에 알아야 할 것들",
+            "새 TV 개봉 후 벽걸이 시공까지 원스탑 가이드",
+        ],
+        "intro_variants": [
+            "TV를 새로 구매할 때 벽걸이 설치까지 함께 계획하면 시간과 비용을 아낄 수 있습니다.",
+            f"새 TV 박스를 열자마자 {BRAND}가 출동해 바로 벽걸이 시공을 완료합니다.",
+            "TV 구매 시 VESA 규격과 무게를 확인하면 브라켓 선택이 쉬워집니다.",
+            "새 TV를 구매했다면 설치 전에 벽 구조와 브라켓 호환성을 먼저 확인하세요.",
+        ],
+        "cta_variants": [
+            f"새 TV 구매 후 설치까지 {BRAND}가 한 번에 해결합니다.",
+            "TV 수령 당일 설치도 가능합니다. 지금 바로 예약하세요.",
+            f"{BRAND} 빠른 출동 — 새 TV 개봉 당일 설치 완료.",
+            "구매와 설치를 같은 날 끝내세요.",
+        ],
+        "sections": [
+            ("구매 전 체크리스트", [
+                "VESA 홀 규격 확인 (제품 스펙 페이지)",
+                "TV 무게 확인 — 브라켓 허용 하중 대비",
+                "설치 벽면 구조 파악 (타공 가능 여부)",
+                "전선 정리 방향 사전 결정",
+            ]),
+        ],
+        "table": [
+            ("TV 인치", "평균 무게", "권장 브라켓 하중"),
+            ("65인치", "20~25kg", "40kg 이상"),
+            ("75인치", "30~38kg", "60kg 이상"),
+            ("85인치", "45~55kg", "80kg 이상"),
+        ],
+        "faq": [
+            ("새 TV 박스 포장재는 어떻게 처리하나요?",
+             f"{BRAND}는 설치 후 포장재 수거 서비스를 제공합니다. 설치와 동시에 처리됩니다."),
+        ],
+        "cta": f"새 TV 구매 후 설치까지, {BRAND}가 당일 출동·완료합니다.",
+    },
+    "사운드바·기기 함께 설치": {
+        "url_kw": "사운드바-기기-TV-설치",
+        "title_variants": [
+            "TV 벽걸이 설치 시 사운드바·셋톱박스 함께 시공하는 법",
+            "TV + 사운드바 동시 설치 — 선 정리까지 완벽 가이드",
+            "TV 설치 시 각종 기기 배선 정리 노하우",
+            "사운드바·OTT 기기 포함 TV 벽걸이 설치 완전 정복",
+        ],
+        "intro_variants": [
+            "TV를 벽에 걸 때 사운드바·셋톱박스·게임기 등 주변 기기도 함께 정리하면 깔끔한 인테리어가 완성됩니다.",
+            f"{BRAND}는 TV 설치와 동시에 사운드바·OTT 기기 배선 정리까지 한 번에 처리합니다.",
+            "TV 벽걸이 후 케이블이 늘어지면 인테리어 효과가 반감됩니다. 기기 배선도 함께 설계하세요.",
+            "사운드바를 TV 아래에 벽걸이로 함께 달면 공간이 훨씬 깔끔해집니다.",
+        ],
+        "cta_variants": [
+            f"TV + 사운드바 동시 설치, {BRAND}에 문의하세요.",
+            "배선 정리까지 완벽하게. 지금 예약하세요.",
+            f"{BRAND} — TV·사운드바·기기 한 번에 설치 완료.",
+            "선 없는 깔끔한 거실, 지금 시작하세요.",
+        ],
+        "sections": [
+            ("함께 설치 가능한 기기", [
+                "사운드바 — TV 아래 벽걸이 브라켓 추가",
+                "셋톱박스·OTT 박스 — 벽면 수납 박스 활용",
+                "게임 콘솔 — 선반 또는 TV 후면 거치",
+                "HDMI·광케이블 — 몰딩·벽 내부 배선 정리",
+            ]),
+        ],
+        "table": [
+            ("기기", "설치 방법", "추가 자재"),
+            ("사운드바", "TV 하단 벽걸이", "사운드바 전용 브라켓"),
+            ("셋톱박스", "벽면 수납 또는 선반", "수납 박스"),
+            ("게임 콘솔", "TV 후면 거치", "VESA 거치대"),
+        ],
+        "faq": [
+            ("사운드바도 벽에 달 수 있나요?",
+             "네, 전용 사운드바 브라켓을 사용하면 TV 아래에 깔끔하게 벽걸이로 설치할 수 있습니다."),
+        ],
+        "cta": f"TV + 사운드바 + 기기 동시 설치, {BRAND}가 한 번에 완료합니다.",
+    },
+    "상업공간 TV 설치": {
+        "url_kw": "상업공간-TV-벽걸이-설치",
+        "title_variants": [
+            "카페·식당 상업공간 TV 벽걸이 설치 가이드",
+            "상업공간 TV 설치 — 고정형·회전형 브라켓 선택 기준",
+            "매장·사무실 TV 설치 시 주의사항과 추천 방법",
+            "상업용 TV 벽걸이 설치, 가정용과 다른 점",
+        ],
+        "intro_variants": [
+            f"카페·음식점·사무실 등 상업공간의 TV 설치는 가정과 달리 장시간 운용과 다양한 시청 각도를 고려해야 합니다. {BRAND}가 상업 시공 경험으로 최적 솔루션을 제공합니다.",
+            "매장 TV는 오랜 시간 켜 두기 때문에 방열과 고정력이 더욱 중요합니다.",
+            f"인테리어 콘셉트에 맞는 TV 배치부터 배선 정리까지, {BRAND}의 상업공간 설치 서비스로 해결하세요.",
+            "회전형 브라켓을 활용하면 다양한 방향에서 TV를 볼 수 있어 카페·식당에 최적입니다.",
+        ],
+        "cta_variants": [
+            f"매장 TV 설치는 {BRAND} 상업 시공 전문팀에 맡기세요.",
+            "카페·식당·사무실 TV 설치 전문 상담.",
+            f"{BRAND} 상업공간 TV 설치, 무료 현장 견적.",
+            "매장 인테리어에 맞는 TV 설치 솔루션을 제안합니다.",
+        ],
+        "sections": [
+            ("상업공간 설치 포인트", [
+                "회전형 브라켓 — 카운터·홀 등 다방향 시청",
+                "상업용 고하중 브라켓 적용",
+                "배선 완전 은폐 — 인테리어 훼손 최소화",
+                "야간 점등 상태 방열 공간 확보",
+            ]),
+        ],
+        "table": [
+            ("공간", "권장 브라켓", "비고"),
+            ("카페·식당", "회전형", "다방향 시청"),
+            ("사무실", "고정형", "정면 시청"),
+            ("헬스장", "틸트형", "위에서 아래로"),
+        ],
+        "faq": [
+            ("매장 TV 설치는 주말·야간에도 가능한가요?",
+             f"네, {BRAND}는 매장 영업 시간 외 설치도 가능합니다. 사전 예약으로 편한 시간에 시공합니다."),
+        ],
+        "cta": f"상업공간 TV 설치 전문 {BRAND}, 현장 무료 견적을 받아보세요.",
+    },
+    "98인치 초대형 TV 설치": {
+        "url_kw": "98인치-초대형-TV-설치",
+        "title_variants": [
+            "98인치 초대형 TV 벽걸이 설치 가이드",
+            "100인치 대형 TV 설치 — 전문가만 가능한 이유",
+            "98·100인치 TV 벽걸이 설치 주의사항 완벽 정리",
+            "초대형 TV 벽걸이 설치, 어떤 브라켓이 필요할까",
+        ],
+        "intro_variants": [
+            f"98인치 이상 초대형 TV는 무게만 80kg을 넘는 경우도 있어 일반 시공과는 다른 전문 장비와 기술이 필요합니다. {BRAND}가 안전하게 시공합니다.",
+            "초대형 TV 설치는 브라켓 선택부터 앵커 깊이, 시공 인원 구성까지 달라집니다.",
+            f"100인치 TV 하나면 거실이 영화관으로 변합니다. {BRAND}의 초대형 TV 전문 시공으로 완성하세요.",
+            "98인치 TV는 혼자 들기도 힘듭니다. 전문 2인 시공팀이 안전하게 설치합니다.",
+        ],
+        "cta_variants": [
+            f"초대형 TV 설치는 {BRAND} 전문팀에게 맡기세요.",
+            "98인치·100인치 TV 전문 시공, 지금 예약하세요.",
+            f"{BRAND} — 초대형 TV 안전 설치 전문.",
+            "대형 TV도 안전하게. 무료 견적 문의.",
+        ],
+        "sections": [
+            ("초대형 TV 설치 특이사항", [
+                "80kg+ 하중 대응 전용 헤비듀티 브라켓 사용",
+                "콘크리트 타공 필수 — 무타공 불가",
+                "2인 시공팀 파견",
+                "설치 후 수평·하중 테스트 필수",
+            ]),
+        ],
+        "table": [
+            ("TV 크기", "무게 범위", "권장 앵커"),
+            ("85인치", "45~60kg", "M10 앵커"),
+            ("98인치", "70~90kg", "M12 헤비듀티"),
+            ("100인치+", "80~100kg", "M12 더블 앵커"),
+        ],
+        "faq": [
+            ("98인치 TV를 일반 아파트에 설치할 수 있나요?",
+             "콘크리트 내력벽 여부를 먼저 확인해야 합니다. 가벽이면 보강 작업 후 시공 가능합니다. 현장 확인 후 안내드립니다."),
+        ],
+        "cta": f"98인치·100인치 초대형 TV 설치, {BRAND} 전문팀이 안전하게 시공합니다.",
+    },
+    "TV 벽걸이 브라켓 종류": {
+        "url_kw": "TV-벽걸이-브라켓-종류",
+        "title_variants": [
+            "TV 벽걸이 브라켓 종류와 선택 기준 완벽 가이드",
+            "고정형·틸트형·회전형 TV 브라켓 차이 비교",
+            "TV 브라켓 어떤 걸 골라야 할까 — 종류별 장단점",
+            "TV 벽걸이 브라켓 선택 가이드 — 상황별 추천",
+        ],
+        "intro_variants": [
+            "TV 브라켓은 크게 고정형·틸트형·풀모션(회전형) 세 가지로 나뉩니다. 시청 환경에 맞는 브라켓을 선택해야 최적의 결과를 얻을 수 있습니다.",
+            f"같은 TV라도 어떤 브라켓을 쓰느냐에 따라 편의성과 안전성이 크게 달라집니다. {BRAND}가 최적 브라켓을 추천합니다.",
+            "브라켓 선택이 잘못되면 TV가 기울거나 흔들릴 수 있습니다. 종류와 선택 기준을 꼭 확인하세요.",
+            "고정형은 가장 저렴하고 안전하지만, 각도 조절이 필요하다면 틸트형이나 풀모션 브라켓을 선택하세요.",
+        ],
+        "cta_variants": [
+            f"브라켓 선택부터 시공까지, {BRAND}에 맡기세요.",
+            "내 상황에 맞는 브라켓, 지금 상담하세요.",
+            f"{BRAND} — 브라켓 무료 추천 + 전문 시공.",
+            "최적의 브라켓으로 완벽한 TV 설치를 완성하세요.",
+        ],
+        "sections": [
+            ("브라켓 종류 비교", [
+                "고정형: 가장 저렴·안전 — 각도 조절 불가",
+                "틸트형: 상하 각도 조절 가능 — 벽 위쪽 설치 시 유용",
+                "풀모션(회전형): 상하좌우 자유 조절 — 가격 높음",
+                "천장형: 식당·매장 천장 설치 전용",
+            ]),
+        ],
+        "table": [
+            ("브라켓 종류", "각도 조절", "가격대", "추천 상황"),
+            ("고정형", "없음", "저렴", "정면 단일 시청"),
+            ("틸트형", "상하 15°", "중간", "벽 높이 설치"),
+            ("풀모션", "상하좌우", "높음", "다방향 시청"),
+        ],
+        "faq": [
+            ("풀모션 브라켓은 무거운 TV에도 안전한가요?",
+             "제품 허용 하중 내에서는 안전합니다. TV 무게보다 20~30% 여유 있는 허용 하중의 브라켓을 선택하세요."),
+        ],
+        "cta": f"내 TV와 환경에 맞는 브라켓 선택, {BRAND}가 무료로 추천해드립니다.",
+    },
+}
+
+# ── 지역 데이터 ─────────────────────────────────────────────────────────────────
+AREA_DATA = {
+    "서울": {
+        "강남구": ["역삼동","삼성동","청담동","도곡동","개포동","일원동","수서동","대치동","압구정동","논현동","신사동","세곡동"],
+        "강동구": ["천호동","성내동","암사동","강일동","길동","명일동","고덕동","상일동","둔촌동"],
+        "강북구": ["미아동","번동","수유동","우이동","인수동"],
+        "강서구": ["화곡동","방화동","등촌동","가양동","염창동","마곡동","공항동","개화동","과해동"],
+        "관악구": ["신림동","봉천동","남현동"],
+        "광진구": ["화양동","군자동","중곡동","광장동","자양동","구의동","능동","구의동"],
+        "구로구": ["구로동","신도림동","가리봉동","고척동","개봉동","오류동","온수동","항동"],
+        "금천구": ["시흥동","가산동","독산동"],
+        "노원구": ["상계동","중계동","하계동","공릉동","월계동"],
+        "도봉구": ["도봉동","쌍문동","방학동","창동"],
+        "동대문구": ["전농동","답십리동","장안동","회기동","청량리동","휘경동","이문동","용두동","신설동"],
+        "동작구": ["노량진동","대방동","상도동","흑석동","사당동","신대방동"],
+        "마포구": ["공덕동","아현동","도화동","용강동","합정동","망원동","연남동","성산동","상암동","신수동"],
+        "서대문구": ["충정로동","천연동","북아현동","홍제동","남가좌동","북가좌동","홍은동","연희동","창천동"],
+        "서초구": ["서초동","잠원동","반포동","방배동","양재동","내곡동","우면동"],
+        "성동구": ["왕십리동","행당동","응봉동","금호동","옥수동","성수동","마장동","사근동","송정동","용답동"],
+        "성북구": ["성북동","삼선동","동선동","돈암동","안암동","보문동","정릉동","길음동","종암동","월곡동","장위동","석관동"],
+        "송파구": ["잠실동","신천동","풍납동","송파동","석촌동","삼전동","가락동","문정동","장지동","방이동","오금동","거여동","마천동"],
+        "양천구": ["목동","신정동","신월동"],
+        "영등포구": ["영등포동","여의도동","당산동","도림동","문래동","양평동","신길동","대림동","양화동"],
+        "용산구": ["한강로동","원효로동","청파동","용문동","후암동","남영동","서빙고동","동빙고동","이촌동","이태원동","한남동","보광동"],
+        "은평구": ["녹번동","불광동","갈현동","구산동","대조동","응암동","역촌동","신사동","증산동","수색동","진관동"],
+        "종로구": ["청운효자동","사직동","삼청동","부암동","평창동","무악동","교남동","가회동","종로동","이화동","혜화동","명륜진명동","창신동","숭인동","세검정동"],
+        "중구": ["소공동","회현동","명동","필동","장충동","광희동","을지로동","신당동","다산동","약수동","청구동","동화동"],
+        "중랑구": ["면목동","상봉동","중화동","묵동","망우동","신내동"],
+    },
+    "인천": {
+        "계양구": ["효성동","계산동","작전동","귤현동","박촌동","임학동","동양동","이화동","용종동","병방동","노오지동","오조마을"],
+        "남동구": ["구월동","만수동","간석동","논현동","남촌도림동","수산동","장수동","운연동"],
+        "동구": ["창영동","송림동","송현동","금곡동","화수화평동"],
+        "미추홀구": ["주안동","도화동","숭의동","용현동","학익동","관교동","문학동"],
+        "부평구": ["부평동","삼산동","청천동","갈산동","부개동","일신동","산곡동"],
+        "서구": ["가정동","석남동","연희동","검암동","경서동","심곡동","공촌동","연수동","원당동","당하동","오류동","마전동","금곡동","불로동","대곡동","王길동","청라동"],
+        "연수구": ["연수동","청학동","동춘동","옥련동","선학동","송도동"],
+        "중구": ["중앙동","신흥동","신포동","답동","운서동","중산동","운남동","을왕동","남북동"],
+        "강화군": ["강화읍","선원면","불은면","길상면","화도면","양도면","내가면","하점면","양사면","송해면","교동면","삼산면","서도면"],
+        "옹진군": ["북도면","영흥면","영종면","용유면","덕적면","자월면","대청면"],
+    },
+    "경기": {
+        "가평군": ["가평읍","청평면","상면","조종면","북면","설악면"],
+        "고양시 덕양구": ["행신동","화정동","관산동","대덕동","사리현동","토당동","성사동","효자동","벽제동","고양동","원흥동","삼송동","지축동","향동동"],
+        "고양시 일산동구": ["백석동","마두동","장항동","주엽동","대화동","식사동","중산동","풍동","산황동","정발산동"],
+        "고양시 일산서구": ["일산동","탄현동","대화동","법곶동","송포동","덕이동","가좌동","주엽동"],
+        "과천시": ["갈현동","과천동","관문동","문원동","별양동","부림동","원문동","중앙동","주암동"],
+        "광명시": ["광명동","철산동","하안동","소하동","노온사동","가학동","옥길동","학온동"],
+        "광주시": ["경안동","송정동","탄벌동","목현동","삼동","초월읍","곤지암읍","도척면","퇴촌면","남종면","남한산성면"],
+        "구리시": ["인창동","교문동","수택동","아천동","갈매동","사노동","토평동","수평동"],
+        "군포시": ["산본동","당동","금정동","속달동","대야미동","둔대동","부곡동"],
+        "김포시": ["사우동","통진읍","양촌읍","대곶면","월곶면","하성면","고촌읍","장기동","운양동"],
+        "남양주시": ["금곡동","양정동","평내동","호평동","오남읍","화도읍","수동면","조안면","진접읍","별내면","퇴계원읍","와부읍","진건읍"],
+        "동두천시": ["생연동","중앙동","보산동","광암동","신흥동","안흥동","상봉암동","하봉암동","지행동"],
+        "부천시 원미구": ["심곡동","원미동","역곡동","중동","상동","춘의동","도당동","약대동","소사동"],
+        "부천시 소사구": ["소사동","괴안동","심곡본동","범박동","옥길동","계수동","송내동"],
+        "부천시 오정구": ["오정동","원종동","삼정동","여월동","작동","대장동","고강동"],
+        "성남시 수정구": ["수진동","신흥동","태평동","성남동","중앙동","단대동","산성동","양지동","복정동","창곡동","시흥동","심곡동","금토동","사송동"],
+        "성남시 중원구": ["성남동","중앙동","금광동","은행동","상대원동","하대원동","도촌동"],
+        "성남시 분당구": ["수내동","정자동","서현동","이매동","야탑동","삼평동","백현동","판교동","운중동","석운동","하산운동"],
+        "수원시 장안구": ["파장동","정자동","율전동","조원동","이목동","우만동","영화동","연무동","송죽동","천천동","탑동"],
+        "수원시 권선구": ["권선동","서둔동","구운동","호매실동","금곡동","평동","고색동","오목천동","입북동","세류동","장지동","대황교동"],
+        "수원시 팔달구": ["교동","구천동","남창동","매교동","매산동","문화동","화서동","지동","인계동"],
+        "수원시 영통구": ["영통동","매탄동","원천동","이의동","하동","광교동","신동"],
+        "시흥시": ["대야동","신천동","은행동","군자동","월곳동","장현동","능곡동","안현동","미산동","매화동","목감동","과림동","화정동","하중동","하상동","배곧동","거모동"],
+        "안산시 상록구": ["사동","본오동","팔곡동","건건동","수암동","성포동","월피동","이동","양상동","부곡동","일동","이동"],
+        "안산시 단원구": ["고잔동","원곡동","와동","신길동","초지동","화정동","선부동","대부동","풍도동","원시동"],
+        "안성시": ["안성1동","안성2동","안성3동","보개면","금광면","서운면","미양면","대덕면","양성면","원곡면","일죽면","죽산면","삼죽면","고삼면","이죽면","남사면"],
+        "안양시 만안구": ["안양동","박달동","석수동"],
+        "안양시 동안구": ["비산동","관양동","호계동","평촌동","귀인동","갈산동","부흥동","부안동"],
+        "양주시": ["회암동","회정동","유양동","광적면","장흥면","은현면","남면","백석읍","옥정동","고읍동"],
+        "양평군": ["양평읍","강상면","강하면","양서면","옥천면","서종면","단월면","청운면","양동면","지평면","용문면","개군면"],
+        "여주시": ["여주1동","여주2동","가남읍","점동면","흥천면","금사면","북내면","대신면","능서면","산북면"],
+        "연천군": ["연천읍","전곡읍","청산면","백학면","미산면","왕징면","신서면","중면","장남면","군남면"],
+        "오산시": ["오산동","신장동","대원동","남촌동","세마동","초평동"],
+        "용인시 처인구": ["김량장동","남동","역북동","삼가동","유방동","고림동","마평동","운학동","이동읍","남사읍","원삼면","백암면","양지면","포곡읍","모현읍"],
+        "용인시 기흥구": ["구갈동","상갈동","보라동","지곡동","공세동","고매동","농서동","서천동","언남동","영덕동","구성동","마북동","동백동","중동","상하동","보정동"],
+        "용인시 수지구": ["풍덕천동","신봉동","죽전동","동천동","고기동","상현동","성복동"],
+        "의왕시": ["오전동","고천동","내손동","청계동","왕곡동","학의동","포일동"],
+        "의정부시": ["의정부1동","의정부2동","의정부3동","호원동","장암동","신곡동","용현동","민락동","낙양동","가능동","녹양동"],
+        "이천시": ["이천1동","이천2동","장호원읍","부발읍","신둔면","백사면","호법면","마장면","대월면","모가면","설성면","율면"],
+        "파주시": ["금촌1동","금촌2동","금촌3동","조리읍","법원읍","파평면","적성면","군내면","장단면","진동면","진서면","탄현면","광탄면","교하동","운정1동","운정2동","운정3동"],
+        "평택시": ["평택동","서정동","송탄동","독곡동","신평동","진위면","서탄면","고덕면","오성면","청북읍","포승읍","안중읍","현덕면","팽성읍","유천동","이충동","비전1동","비전2동"],
+        "포천시": ["포천1동","포천2동","소흘읍","군내면","내촌면","가산면","신북면","창수면","영중면","일동면","이동면","영북면","관인면","화현면"],
+        "하남시": ["신장1동","신장2동","덕풍1동","덕풍2동","덕풍3동","위례동","미사1동","미사2동","감북동","감일동","춘궁동","초일동","천현동","풍산동"],
+        "화성시": ["동탄1동","동탄2동","동탄3동","동탄4동","동탄5동","동탄6동","동탄7동","동탄8동","병점1동","병점2동","반월동","기산동","봉담읍","우정읍","장안면","양감면","정남면","비봉면","마도면","송산면","서신면","팔탄면","향남읍","남양읍","매송면","남양읍"],
+    },
 }
 
 
@@ -639,11 +1009,14 @@ class App(tk.Tk):
 
         tab1 = ttk.Frame(nb)
         tab2 = ttk.Frame(nb)
+        tab3 = ttk.Frame(nb)
         nb.add(tab1, text=" 📝 개별 등록 ")
-        nb.add(tab2, text=" 📋 발행 목록 ")
+        nb.add(tab2, text=" 🗂 지역별 일괄 생성 ")
+        nb.add(tab3, text=" 📋 발행 목록 ")
 
         self._build_tab1(tab1)
         self._build_tab2(tab2)
+        self._build_tab3(tab3)
 
     def _build_tab1(self, parent):
         lf = ttk.LabelFrame(parent, text=" 설정 ", padding=12)
@@ -708,7 +1081,272 @@ class App(tk.Tk):
         self.preview_txt = scrolledtext.ScrolledText(pf, font=("Consolas", 10), wrap="word", height=16)
         self.preview_txt.pack(fill="both", expand=True)
 
+    # ── Tab 2: 지역별 일괄 생성 ────────────────────────────────────────────────
     def _build_tab2(self, parent):
+        self._bulk_stop_event = threading.Event()
+
+        top_bar = ttk.Frame(parent)
+        top_bar.pack(fill="x", padx=12, pady=(10, 4))
+        ttk.Label(top_bar, text="서버 URL:").pack(side="left")
+        self.bulk_url_var = tk.StringVar(value=RAILWAY_URL_DEFAULT)
+        ttk.Entry(top_bar, textvariable=self.bulk_url_var, width=52).pack(side="left", padx=6)
+
+        body = ttk.Frame(parent)
+        body.pack(fill="both", expand=True, padx=12, pady=4)
+
+        # ── 왼쪽: 지역 트리 ──────────────────────────────────────────────────
+        left = ttk.LabelFrame(body, text=" 지역 선택 (시도 → 구/시 → 동) ", padding=4)
+        left.pack(side="left", fill="both", expand=True, padx=(0, 6))
+
+        tree_btns = ttk.Frame(left)
+        tree_btns.pack(fill="x")
+        ttk.Button(tree_btns, text="전체 선택", command=lambda: self._area_tree_toggle(True)).pack(side="left", padx=2)
+        ttk.Button(tree_btns, text="전체 해제", command=lambda: self._area_tree_toggle(False)).pack(side="left", padx=2)
+
+        frame_tree = ttk.Frame(left)
+        frame_tree.pack(fill="both", expand=True)
+        self.area_tree = ttk.Treeview(frame_tree, selectmode="none")
+        vsb = ttk.Scrollbar(frame_tree, orient="vertical", command=self.area_tree.yview)
+        self.area_tree.configure(yscrollcommand=vsb.set)
+        self.area_tree.pack(side="left", fill="both", expand=True)
+        vsb.pack(side="right", fill="y")
+
+        self._area_check_state = {}  # iid -> bool
+        for sido, gu_dict in AREA_DATA.items():
+            sido_iid = self.area_tree.insert("", "end", text=f"☐ {sido}", open=False)
+            self._area_check_state[sido_iid] = False
+            for gu, dongs in gu_dict.items():
+                gu_iid = self.area_tree.insert(sido_iid, "end", text=f"☐ {gu}", open=False)
+                self._area_check_state[gu_iid] = False
+                for dong in dongs:
+                    d_iid = self.area_tree.insert(gu_iid, "end", text=f"☐ {dong}")
+                    self._area_check_state[d_iid] = False
+
+        self.area_tree.bind("<Button-1>", self._on_area_tree_click)
+
+        # ── 오른쪽: 주제 + 딜레이 ────────────────────────────────────────────
+        right = ttk.Frame(body)
+        right.pack(side="left", fill="y", padx=(0, 0))
+
+        tf = ttk.LabelFrame(right, text=" 주제 선택 ", padding=6)
+        tf.pack(fill="x", pady=(0, 6))
+        topic_all_btns = ttk.Frame(tf)
+        topic_all_btns.pack(fill="x", pady=(0, 4))
+        ttk.Button(topic_all_btns, text="전체 선택", command=lambda: self._topic_toggle(True)).pack(side="left", padx=2)
+        ttk.Button(topic_all_btns, text="전체 해제", command=lambda: self._topic_toggle(False)).pack(side="left", padx=2)
+
+        self._topic_vars = {}
+        for key in TOPIC_TEMPLATES:
+            v = tk.BooleanVar(value=True)
+            self._topic_vars[key] = v
+            ttk.Checkbutton(tf, text=key, variable=v).pack(anchor="w")
+
+        df = ttk.LabelFrame(right, text=" 딜레이 설정 ", padding=6)
+        df.pack(fill="x", pady=(0, 6))
+        drow = ttk.Frame(df)
+        drow.pack(fill="x")
+        ttk.Label(drow, text="최소(분):").pack(side="left")
+        self.delay_min_var = tk.DoubleVar(value=1.0)
+        ttk.Spinbox(drow, textvariable=self.delay_min_var, from_=0, to=60, increment=0.5, width=6).pack(side="left", padx=4)
+        ttk.Label(drow, text="최대(분):").pack(side="left")
+        self.delay_max_var = tk.DoubleVar(value=3.0)
+        ttk.Spinbox(drow, textvariable=self.delay_max_var, from_=0, to=60, increment=0.5, width=6).pack(side="left", padx=4)
+
+        # 버튼
+        btn_f = ttk.Frame(right)
+        btn_f.pack(fill="x", pady=4)
+        ttk.Button(btn_f, text="📊 엑셀만 생성", command=self._bulk_excel_only).pack(fill="x", pady=2)
+        ttk.Button(btn_f, text="🚀 생성+업로드", style="Accent.TButton", command=self._bulk_start).pack(fill="x", pady=2)
+        ttk.Button(btn_f, text="⏹ 중단", command=self._bulk_stop).pack(fill="x", pady=2)
+
+        # 로그
+        log_f = ttk.LabelFrame(parent, text=" 진행 로그 ", padding=4)
+        log_f.pack(fill="x", padx=12, pady=(4, 8))
+        self.bulk_log = scrolledtext.ScrolledText(log_f, height=8, font=("Consolas", 9), wrap="word")
+        self.bulk_log.pack(fill="both", expand=True)
+
+    def _on_area_tree_click(self, event):
+        item = self.area_tree.identify_row(event.y)
+        if not item:
+            return
+        cur = self._area_check_state.get(item, False)
+        new_state = not cur
+        self._set_subtree(item, new_state)
+        self._update_parent_state(item)
+
+    def _set_subtree(self, iid, state):
+        self._area_check_state[iid] = state
+        text = self.area_tree.item(iid, "text")
+        label = text[2:] if len(text) > 2 else text
+        self.area_tree.item(iid, text=("☑ " if state else "☐ ") + label)
+        for child in self.area_tree.get_children(iid):
+            self._set_subtree(child, state)
+
+    def _update_parent_state(self, iid):
+        parent = self.area_tree.parent(iid)
+        if not parent:
+            return
+        children = self.area_tree.get_children(parent)
+        states = [self._area_check_state.get(c, False) for c in children]
+        if all(states):
+            new = True; sym = "☑ "
+        elif any(states):
+            new = None; sym = "▣ "
+        else:
+            new = False; sym = "☐ "
+        self._area_check_state[parent] = new
+        text = self.area_tree.item(parent, "text")
+        label = text[2:] if len(text) > 2 else text
+        self.area_tree.item(parent, text=sym + label)
+        self._update_parent_state(parent)
+
+    def _area_tree_toggle(self, state):
+        for iid in list(self._area_check_state.keys()):
+            self._set_subtree(iid, state)
+
+    def _topic_toggle(self, state):
+        for v in self._topic_vars.values():
+            v.set(state)
+
+    def _get_checked_dongs(self):
+        results = []  # [(sido, gu, dong)]
+        for sido_iid in self.area_tree.get_children():
+            sido = self.area_tree.item(sido_iid, "text")[2:]
+            for gu_iid in self.area_tree.get_children(sido_iid):
+                gu = self.area_tree.item(gu_iid, "text")[2:]
+                for dong_iid in self.area_tree.get_children(gu_iid):
+                    if self._area_check_state.get(dong_iid, False):
+                        dong = self.area_tree.item(dong_iid, "text")[2:]
+                        results.append((sido, gu, dong))
+        return results
+
+    def _get_checked_topics(self):
+        return [k for k, v in self._topic_vars.items() if v.get()]
+
+    def _bulk_log_append(self, msg):
+        self.bulk_log.insert("end", msg + "\n")
+        self.bulk_log.see("end")
+
+    def _collect_tasks(self):
+        dongs = self._get_checked_dongs()
+        topics = self._get_checked_topics()
+        if not dongs:
+            messagebox.showwarning("선택 없음", "지역을 1개 이상 선택하세요.")
+            return None
+        if not topics:
+            messagebox.showwarning("선택 없음", "주제를 1개 이상 선택하세요.")
+            return None
+        tasks = [(sido, gu, dong, topic) for (sido, gu, dong) in dongs for topic in topics]
+        return tasks
+
+    def _bulk_excel_only(self):
+        tasks = self._collect_tasks()
+        if tasks is None:
+            return
+        try:
+            import openpyxl
+            wb = openpyxl.Workbook()
+            ws = wb.active
+            ws.title = "블로그 URL 목록"
+            ws.append(["지역", "주제", "Slug", "URL", "네이버 색인 요청 URL"])
+            base = self.bulk_url_var.get().rstrip("/")
+            for (sido, gu, dong, topic) in tasks:
+                region = f"{sido} {gu} {dong}"
+                tpl = TOPIC_TEMPLATES[topic]
+                url_kw = tpl["url_kw"]
+                region_slug = region.replace(" ", "-")
+                date_sfx = date.today().strftime("%y%m")
+                slug = f"{region_slug}-{url_kw}-{date_sfx}"
+                url = f"{base}/blog/{slug}"
+                from urllib.parse import quote as _q
+                naver_url = f"https://searchadvisor.naver.com/indexnow?url={_q(url)}&key=tvmaster365"
+                ws.append([region, topic, slug, url, naver_url])
+            from tkinter.filedialog import asksaveasfilename
+            path = asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel", "*.xlsx")], title="엑셀 저장 위치")
+            if path:
+                wb.save(path)
+                messagebox.showinfo("완료", f"엑셀 저장 완료:\n{path}")
+        except ImportError:
+            messagebox.showerror("오류", "openpyxl 패키지가 필요합니다.\npip install openpyxl")
+        except Exception as e:
+            messagebox.showerror("오류", str(e))
+
+    def _bulk_start(self):
+        if getattr(self, '_bulk_running', False):
+            messagebox.showwarning("실행 중", "이미 업로드가 진행 중입니다.\n중단 버튼을 먼저 눌러주세요.")
+            return
+        tasks = self._collect_tasks()
+        if tasks is None:
+            return
+        self._bulk_stop_event.clear()
+        self._bulk_running = True
+        self.bulk_log.delete("1.0", "end")
+        self._bulk_log_append(f"총 {len(tasks)}개 작업 시작...")
+
+        def run():
+            import requests as _req
+            base = self.bulk_url_var.get().rstrip("/")
+            delay_min = self.delay_min_var.get() * 60
+            delay_max = self.delay_max_var.get() * 60
+            excel_rows = [["지역", "주제", "Slug", "URL", "네이버 색인 요청 URL"]]
+            for i, (sido, gu, dong, topic) in enumerate(tasks, 1):
+                if self._bulk_stop_event.is_set():
+                    self.after(0, lambda: self._bulk_log_append("⏹ 중단됨"))
+                    break
+                region = f"{sido} {gu} {dong}"
+                self.after(0, lambda r=region, t=topic, n=i, tot=len(tasks):
+                    self._bulk_log_append(f"[{n}/{tot}] {r} / {t} — 생성 중..."))
+                try:
+                    title, body_html, meta_desc, url_kw = generate_html(region, topic)
+                    region_slug = region.replace(" ", "-")
+                    date_sfx = date.today().strftime("%y%m")
+                    slug = f"{region_slug}-{url_kw}-{date_sfx}"
+                    thumbnail = make_thumbnail(region)
+                    meta = {"description": meta_desc}
+                    res = upload_post(base, region, title, body_html, slug, meta, thumbnail)
+                    post_url = base + res.get("url", f"/blog/{slug}")
+                    from urllib.parse import quote as _q
+                    naver_url = f"https://searchadvisor.naver.com/indexnow?url={_q(post_url)}&key=tvmaster365"
+                    excel_rows.append([region, topic, slug, post_url, naver_url])
+                    self.after(0, lambda u=post_url: self._bulk_log_append(f"  ✓ {u}"))
+                except Exception as e:
+                    err_str = str(e)
+                    if "409" in err_str or "Conflict" in err_str:
+                        self.after(0, lambda r=region, t=topic: self._bulk_log_append(f"  ⚠ 중복: [{r} / {t}] 이미 등록된 포스트입니다 (같은 달 중복)"))
+                    else:
+                        self.after(0, lambda err=err_str: self._bulk_log_append(f"  ✗ 실패: {err}"))
+
+                if i < len(tasks) and not self._bulk_stop_event.is_set():
+                    delay = random.uniform(delay_min, delay_max)
+                    time.sleep(delay)
+
+            # 엑셀 저장
+            try:
+                import openpyxl
+                wb = openpyxl.Workbook()
+                ws = wb.active
+                ws.title = "블로그 URL 목록"
+                for row in excel_rows:
+                    ws.append(row)
+                from tkinter.filedialog import asksaveasfilename
+                def save_excel():
+                    path = asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel", "*.xlsx")], title="엑셀 저장")
+                    if path:
+                        wb.save(path)
+                        self._bulk_log_append(f"📊 엑셀 저장: {path}")
+                self.after(0, save_excel)
+            except ImportError:
+                self.after(0, lambda: self._bulk_log_append("⚠ openpyxl 없음 — 엑셀 저장 건너뜀"))
+            self.after(0, lambda: self._bulk_log_append("✅ 전체 완료"))
+            self._bulk_running = False
+
+        threading.Thread(target=run, daemon=True).start()
+
+    def _bulk_stop(self):
+        self._bulk_stop_event.set()
+        self._bulk_running = False
+
+    def _build_tab3(self, parent):
         top = ttk.Frame(parent)
         top.pack(fill="x", padx=12, pady=8)
         ttk.Label(top, text="서버 URL:").pack(side="left")
@@ -768,7 +1406,8 @@ class App(tk.Tk):
             try:
                 title, body, meta, url_kw = generate_html(region, topic, note)
                 region_slug = region.replace(" ", "-")
-                slug_safe = slug or f"{region_slug}-{url_kw}"
+                date_sfx = date.today().strftime("%y%m")
+                slug_safe = slug or f"{region_slug}-{url_kw}-{date_sfx}"
                 res = upload_post(url, region, title, body, slug_safe, meta, bg)
                 post_url = url.rstrip("/") + res.get("url", "")
                 self.after(0, lambda: (
@@ -776,10 +1415,17 @@ class App(tk.Tk):
                     messagebox.showinfo("완료", f"포스트가 등록됐습니다!\n\n{post_url}")
                 ))
             except Exception as e:
-                self.after(0, lambda: (
-                    self.status_lbl.config(text=f"✗ 실패: {e}", foreground="red"),
-                    messagebox.showerror("업로드 실패", str(e))
-                ))
+                err_str = str(e)
+                if "409" in err_str or "Conflict" in err_str:
+                    self.after(0, lambda: (
+                        self.status_lbl.config(text="⚠ 중복: 이미 등록된 포스트", foreground="orange"),
+                        messagebox.showwarning("중복 포스트", "이미 같은 슬러그로 등록된 포스트가 있습니다.\n슬러그를 변경하거나 다음 달에 다시 시도하세요.")
+                    ))
+                else:
+                    self.after(0, lambda: (
+                        self.status_lbl.config(text=f"✗ 실패: {e}", foreground="red"),
+                        messagebox.showerror("업로드 실패", str(e))
+                    ))
         threading.Thread(target=run, daemon=True).start()
 
     def _load_list(self):

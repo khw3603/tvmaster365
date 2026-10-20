@@ -498,6 +498,9 @@ app.get('/area/:region', (req, res) => {
   const ldWebSite = `{"@context":"https://schema.org","@type":"WebSite","name":"TV마스터365","url":"${SITE_URL}/"}`;
   const ldBreadcrumb = JSON.stringify({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"TV마스터365","item":SITE_URL+"/"},{"@type":"ListItem","position":2,"name":"서비스 지역","item":SITE_URL+"/#sec-area"},{"@type":"ListItem","position":3,"name":areaName,"item":canonUrl}]});
   const ldLocal = JSON.stringify({"@context":"https://schema.org","@type":"LocalBusiness","name":"TV마스터365","url":SITE_URL+"/","telephone":phone,"areaServed":areaName,"address":{"@type":"PostalAddress","streetAddress":"소사로730번길 58, 5동 지2호","addressLocality":"부천시","addressRegion":"경기도","addressCountry":"KR"}});
+  const areaThumb = posts.find(p => p.thumbnail_url)?.thumbnail_url;
+  const ogImgFull = areaThumb ? (areaThumb.startsWith('http') ? areaThumb : SITE_URL + areaThumb) : (process.env.OG_IMAGE_URL || '');
+  const ldArticle = ogImgFull ? JSON.stringify({"@context":"https://schema.org","@type":"WebPage","name":`${areaName} TV 벽걸이 설치 전문`,"description":desc,"url":canonUrl,"image":ogImgFull}) : '';
 
   const html = `<!DOCTYPE html><html lang="ko"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -509,10 +512,11 @@ app.get('/area/:region', (req, res) => {
 <meta property="og:title" content="${areaName} TV 벽걸이 설치 전문 | TV마스터365">
 <meta property="og:description" content="${desc}">
 <meta property="og:url" content="${canonUrl}">
-<meta name="twitter:card" content="summary">
+${ogImgFull ? `<meta property="og:image" content="${ogImgFull}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${ogImgFull}">` : '<meta name="twitter:card" content="summary">'}
 <script type="application/ld+json">${ldWebSite}</script>
 <script type="application/ld+json">${ldBreadcrumb}</script>
 <script type="application/ld+json">${ldLocal}</script>
+${ldArticle ? `<script type="application/ld+json">${ldArticle}</script>` : ''}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
@@ -590,7 +594,7 @@ a{color:inherit;text-decoration:none}
 </header>
 <div class="wrap">
   <nav class="bc"><a href="/">홈</a><span class="bc-sep">›</span><a href="/#sec-area">서비스 지역</a><span class="bc-sep">›</span><span>${areaName}</span></nav>
-
+  ${ogImgFull ? `<div style="margin:16px 0 0;border-radius:12px;overflow:hidden"><img src="${ogImgFull}" alt="${areaName} TV 벽걸이 설치" style="width:100%;aspect-ratio:1200/630;object-fit:cover;display:block" loading="eager"></div>` : ''}
   <section class="hero">
     <p class="hero-badge">LOCAL SERVICE</p>
     <h1>${areaName} TV 벽걸이 설치<br>전문 안내</h1>
@@ -674,6 +678,9 @@ app.get('/area/:regionSlug/:dong', (req, res, next) => {
 
   const ldBreadcrumb = JSON.stringify({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"TV마스터365","item":SITE_URL+"/"},{"@type":"ListItem","position":2,"name":"서비스 지역","item":SITE_URL+"/#sec-area"},{"@type":"ListItem","position":3,"name":`${sido} ${gu}`,"item":`${SITE_URL}/area/${regionSlug}`},{"@type":"ListItem","position":4,"name":areaName,"item":canonUrl}]});
   const ldLocal = JSON.stringify({"@context":"https://schema.org","@type":"LocalBusiness","name":"TV마스터365","url":SITE_URL+"/","telephone":phone,"areaServed":areaName});
+  const dongThumb = posts.find(p => p.thumbnail_url)?.thumbnail_url;
+  const dongOgImg = dongThumb ? (dongThumb.startsWith('http') ? dongThumb : SITE_URL + dongThumb) : (process.env.OG_IMAGE_URL || '');
+  const ldDongArticle = dongOgImg ? JSON.stringify({"@context":"https://schema.org","@type":"WebPage","name":`${areaName} TV 벽걸이 설치 전문`,"description":desc,"url":canonUrl,"image":dongOgImg}) : '';
 
   const postItems = posts.map(p => {
     const thumb = p.thumbnail_url
@@ -691,11 +698,13 @@ app.get('/area/:regionSlug/:dong', (req, res, next) => {
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="TV마스터365">
 <meta property="og:title" content="${areaName} TV 벽걸이 설치 전문 | TV마스터365">
+<meta property="og:description" content="${desc}">
 <meta property="og:url" content="${canonUrl}">
-<meta name="twitter:card" content="summary">
+${dongOgImg ? `<meta property="og:image" content="${dongOgImg}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${dongOgImg}">` : '<meta name="twitter:card" content="summary">'}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"TV마스터365","url":"${SITE_URL}/"}</script>
 <script type="application/ld+json">${ldBreadcrumb}</script>
 <script type="application/ld+json">${ldLocal}</script>
+${ldDongArticle ? `<script type="application/ld+json">${ldDongArticle}</script>` : ''}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -750,6 +759,7 @@ a{color:inherit;text-decoration:none}
 </header>
 <div class="wrap">
   <nav class="bc"><a href="/">홈</a><span class="bc-sep">›</span><a href="/#sec-area">서비스 지역</a><span class="bc-sep">›</span><a href="/area/${encodeURIComponent(regionSlug)}">${sido} ${gu}</a><span class="bc-sep">›</span><span>${dong}</span></nav>
+  ${dongOgImg ? `<div style="margin:16px 0 0;border-radius:12px;overflow:hidden"><img src="${dongOgImg}" alt="${areaName} TV 벽걸이 설치" style="width:100%;aspect-ratio:1200/630;object-fit:cover;display:block" loading="eager"></div>` : ''}
   <section class="hero">
     <p class="hero-badge">LOCAL SERVICE</p>
     <h1>${areaName} TV 벽걸이<br>설치 전문 안내</h1>
